@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Avaliar produto | Minha Loja</title>
+<style>
+:root{color-scheme:dark;--bg:#080e1b;--surface:#111b2e;--border:#28364e;--muted:#9cacc7;--text:#f4f7ff;--primary:#8265ff;--accent:#27d9bb}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);background:radial-gradient(ellipse at 70% -15%,#293067 0,transparent 48%),var(--bg)}
+button,textarea{font:inherit}button{cursor:pointer}.shell{max-width:1040px;margin:auto;padding:26px 22px 70px}.nav{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:45px}.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}.brandmark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(140deg,#9b72ff,#4d7aff);font-size:21px}.back{background:#19243a;border:1px solid var(--border);color:#e8eeff;padding:11px 17px;border-radius:12px}.layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:26px;align-items:start}.eyebrow{font-size:12px;letter-spacing:2px;font-weight:800;color:#b5a6ff;text-transform:uppercase}.heading{font-size:clamp(30px,5vw,46px);line-height:1.12;letter-spacing:-1.5px;margin:12px 0}.intro{color:var(--muted);line-height:1.6;margin:0 0 29px}.panel{background:linear-gradient(145deg,#142039,#101827);border:1px solid var(--border);border-radius:24px;padding:27px;margin-bottom:19px;box-shadow:0 15px 40px #0002}.step{display:inline-grid;place-items:center;background:#2c2756;color:#c9baff;border-radius:9px;width:30px;height:30px;font-size:13px;font-weight:800;margin-right:10px}.panel h2{font-size:19px;margin:0 0 19px;display:flex;align-items:center}.rating{display:flex;gap:9px;flex-wrap:wrap}.star{border:1px solid #35425e;background:#1c2a42;color:#59677e;border-radius:14px;width:62px;height:64px;font-size:37px;transition:.15s}.star:hover{transform:translateY(-3px)}.star.active{color:#ffca64;border-color:#ffca6480;background:#554126}.rating-note{min-height:24px;color:#f8d08b;margin:15px 0 0;font-weight:650}.review{width:100%;min-height:160px;resize:vertical;background:#0d1728;border:1px solid #394863;color:white;border-radius:15px;padding:17px;outline:none;line-height:1.6}.review:focus{border-color:#9c89ff;box-shadow:0 0 0 3px #8165ff22}.count{text-align:right;color:var(--muted);font-size:12px;margin-top:8px}.publish{width:100%;padding:17px;border:0;border-radius:15px;color:#fff;background:linear-gradient(110deg,#755cff,#9b67ee);font-weight:800;font-size:16px;box-shadow:0 10px 28px #755cff35}.publish:disabled{opacity:.5;cursor:wait}.hint{font-size:12px;color:var(--muted);text-align:center;line-height:1.5;margin-top:12px}
+.product-card{position:sticky;top:24px;background:linear-gradient(160deg,#192745,#111a2b);border:1px solid #344362;border-radius:24px;padding:23px}.product-icon{width:110px;height:110px;border-radius:24px;object-fit:cover;background:#283550;border:1px solid #4b5a76;display:block}.product-card h3{font-size:23px;overflow-wrap:anywhere;margin:17px 0 5px}.muted{color:var(--muted);font-size:14px}.divider{height:1px;background:var(--border);margin:23px 0}.profile{display:flex;gap:12px;align-items:center}.avatar{height:43px;width:43px;border-radius:50%;display:grid;place-items:center;background:#6548bd;font-weight:800;overflow:hidden}.avatar img{width:100%;height:100%;object-fit:cover}.profile-name{font-size:14px;font-weight:700;overflow-wrap:anywhere}.privacy{font-size:13px;line-height:1.65;color:var(--muted);margin:19px 0 0}.privacy strong{color:#e9efff}.status{display:none;padding:13px 16px;border-radius:12px;margin-bottom:18px;font-size:14px}.status.show{display:block}.status.error{background:#512632;color:#ffd2d8}.status.ok{background:#17443e;color:#aaf9df}.status.loading{background:#253351;color:#d5e4ff}
+.photo-label{font-size:11px;color:#b5a6ff;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin:16px 0 7px}.photo-source{font-size:11px;color:#7f90ad;word-break:break-all;margin-top:7px}.product-icon.loaded{box-shadow:0 10px 30px #0005}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.product-card{grid-row:1;position:static}.shell{padding:18px 15px 50px}.nav{margin-bottom:28px}.panel{padding:21px}.star{width:calc((100% - 36px)/5);height:59px;font-size:33px}.product-card{display:grid;grid-template-columns:110px 1fr;gap:0 15px}.product-icon{width:110px;height:110px}.product-card h3{margin:7px 0}.product-card .divider,.product-card .profile,.product-card .privacy,.product-card .photo-label,.product-card .photo-source{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="nav"><div class="brand"><span class="brandmark">✦</span> MINHA LOJA</div><button class="back" id="back">← Voltar</button></header>
+<div class="layout">
+<main>
+<div class="eyebrow">Sua opinião importa</div>
+<h1 class="heading">Conte como foi<br>sua experiência.</h1>
+<p class="intro">Sua avaliação ajuda outras pessoas a conhecer este aplicativo.</p>
+<div id="status" class="status" role="status" aria-live="polite"></div>
+<section class="panel"><h2><span class="step">01</span> Qual é a sua nota?</h2><div class="rating" id="rating" role="group" aria-label="Nota de 1 a 5 estrelas"><button class="star" data-note="1" aria-label="1 estrela" aria-pressed="false">★</button><button class="star" data-note="2" aria-label="2 estrelas" aria-pressed="false">★</button><button class="star" data-note="3" aria-label="3 estrelas" aria-pressed="false">★</button><button class="star" data-note="4" aria-label="4 estrelas" aria-pressed="false">★</button><button class="star" data-note="5" aria-label="5 estrelas" aria-pressed="false">★</button></div><p class="rating-note" id="ratingNote">Selecione de 1 a 5 estrelas</p></section>
+<section class="panel"><h2><span class="step">02</span> Escreva sua avaliação</h2><textarea class="review" id="review" maxlength="500" placeholder="O que você gostou? O que poderia melhorar?"></textarea><div class="count"><span id="count">0</span> / 500 caracteres</div></section>
+<button class="publish" id="publish">Publicar avaliação →</button><p class="hint">Sua avaliação será pública. Publique apenas informações que deseja compartilhar.</p>
+</main>
+<aside class="product-card">
+<img class="product-icon" id="productImage" alt="Foto do aplicativo">
+<div><div class="eyebrow">Você está avaliando</div><h3 id="productName">Carregando produto...</h3><div class="muted">Aplicativo da loja</div></div>
+<div id="photoSource" class="photo-source"></div>
+<div class="divider"></div>
+<div class="profile"><div class="avatar" id="avatar">C</div><div><div class="muted">Publicando como</div><div class="profile-name" id="userName">Carregando...</div></div></div>
+<p class="privacy"><strong>🔒 Antes de publicar</strong><br>Sua nota, comentário e nome de perfil poderão aparecer publicamente na loja.</p>
+</aside>
+</div></div>
+<script type="module">
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js';
+import {getAuth,onAuthStateChanged,signInAnonymously} from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
+import {getDatabase,ref,get,push,set} from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js';
+
+const firebaseConfig={apiKey:'AIzaSyAMG8workhkRJapQm1AHSMOSIPOnSWltpw',authDomain:'minha-loja-5477a.firebaseapp.com',databaseURL:'https://minha-loja-5477a-default-rtdb.europe-west1.firebasedatabase.app',projectId:'minha-loja-5477a',storageBucket:'minha-loja-5477a.firebasestorage.app',messagingSenderId:'680448342361',appId:'1:680448342361:web:e35226b350ac4504d6f448',measurementId:'G-0FBN3SDTNR'};
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getDatabase(app),params=new URLSearchParams(location.search),produtoId=params.get('id')||params.get('produtoId');
+let usuario=null,perfil={nome:'Cliente',foto:''},nota=0,enviando=false;
+const $=id=>document.getElementById(id);
+const placeholder='data:image/svg+xml;charset=UTF-8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240"><rect width="240" height="240" rx="42" fill="#2a3754"/><text x="120" y="150" text-anchor="middle" font-size="92">📱</text></svg>');
+$('productImage').src=placeholder;
+function status(mensagem,tipo='error'){const el=$('status');el.textContent=mensagem;el.className='status show '+tipo;el.scrollIntoView({behavior:'smooth',block:'nearest'});}
+function limparStatus(){$('status').className='status';}
+function voltar(){if(history.length>1)history.back();else location.href=produtoId?'produto.html?id='+encodeURIComponent(produtoId):'loja.html';}
+$('back').addEventListener('click',voltar);
+for(const b of document.querySelectorAll('.star'))b.addEventListener('click',()=>{nota=Number(b.dataset.note);document.querySelectorAll('.star').forEach(s=>{const ativo=Number(s.dataset.note)<=nota;s.classList.toggle('active',ativo);s.setAttribute('aria-pressed',String(Number(s.dataset.note)===nota));});$('ratingNote').textContent=['','Muito ruim','Ruim','Regular','Bom','Excelente'][nota];limparStatus();});
+$('review').addEventListener('input',()=>{$('count').textContent=$('review').value.length;});
+
+function urlImagem(v){
+ if(typeof v==='string')return v.trim();
+ if(v&&typeof v==='object')return String(v.url||v.downloadURL||v.downloadUrl||v.dataUrl||v.dataURL||v.src||v.link||v.href||'').trim();
+ return '';
+}
+
+function encontrarImagem(dados){
+ const campos=['imagem','imagemUrl','imagemURL','image','imageUrl','imageURL','foto','fotoUrl','fotoURL','fotoApp','imagemApp','imagemAplicativo','icone','iconeUrl','iconeURL','logo','logoUrl','capa','capaUrl','thumbnail','thumbnailUrl'];
+ for(const campo of campos){const valor=urlImagem(dados?.[campo]);if(valor)return {url:valor,campo};}
+ return {url:'',campo:''};
+}
+
+async function obterPerfil(user){
+ let nome=user.displayName||user.email?.split('@')[0]||'Cliente',foto=user.photoURL||'';
+ try{const s=await get(ref(db,'usuarios/'+user.uid));if(s.exists()){const p=s.val()||{};nome=p.nome||p.nomeCompleto||p.displayName||nome;foto=p.foto||p.fotoUrl||p.fotoURL||p.photoURL||p.imagem||foto;}}catch(e){console.warn('Perfil:',e);}
+ return {nome:String(nome).trim()||'Cliente',foto:typeof foto==='string'?foto:''};
+}
+
+async function carregarProduto(){
+ if(!produtoId){$('productName').textContent='Produto não informado';status('Abra esta página a partir do produto que deseja avaliar.');return;}
+ try{
+  let dados=null, caminhoEncontrado='';
+  for(const path of ['produtos/','aplicativos/','apps/','lojas/produtos/']){
+   const s=await get(ref(db,path+produtoId));
+   if(s.exists()){dados=s.val()||{};caminhoEncontrado=path+produtoId;break;}
+  }
+  if(!dados){$('productName').textContent='Produto não encontrado';$('productImage').src=placeholder;status('Não foi possível encontrar este produto.');return;}
+  const nome=dados.nome||dados.nomeProduto||dados.nomeApp||dados.titulo||dados.name||'Aplicativo';
+  $('productName').textContent=nome;
+  const imagem=encontrarImagem(dados);
+  const foto=$('productImage');
+  foto.alt='Foto do aplicativo '+nome;
+  if(imagem.url){
+   foto.src=imagem.url;foto.classList.add('loaded');$('photoSource').textContent='Foto carregada do campo: '+imagem.campo;
+  }else{
+   foto.src=placeholder;$('photoSource').textContent='Este aplicativo não possui uma foto cadastrada.';
+  }
+  foto.onerror=()=>{foto.src=placeholder;foto.classList.remove('loaded');$('photoSource').textContent='A foto cadastrada não pôde ser carregada.';};
+  console.log('Produto carregado:',caminhoEncontrado,dados);
+ }catch(e){console.error(e);$('productName').textContent='Erro ao carregar';$('productImage').src=placeholder;status('Não foi possível carregar o produto.');}
+}
+
+$('productImage').addEventListener('error',()=>{$('productImage').src=placeholder;});
+
+onAuthStateChanged(auth,async user=>{
+ if(!user){try{status('Preparando sua sessão...','loading');await signInAnonymously(auth);}catch(e){console.error(e);status('Entre na sua conta ou ative a autenticação anônima no Firebase.');}return;}
+ usuario=user;perfil=await obterPerfil(user);$('userName').textContent=perfil.nome;$('avatar').textContent=perfil.nome[0].toUpperCase();
+ if(perfil.foto){const img=document.createElement('img');img.alt='';img.src=perfil.foto;img.onerror=()=>img.remove();$('avatar').append(img);}
+ limparStatus();await carregarProduto();
+});
+
+$('publish').addEventListener('click',async()=>{
+ if(enviando)return;if(!produtoId){status('Abra esta página com o ID do produto.');return;}if(!usuario){status('Aguarde a autenticação e tente novamente.');return;}if(!nota){status('Escolha uma nota de 1 a 5 estrelas.');return;}
+ const avaliacao={produtoId:String(produtoId),usuarioId:usuario.uid,usuarioNome:perfil.nome,usuarioFoto:perfil.foto,nota,comentario:$('review').value.trim(),criadoEm:new Date().toISOString()};
+ enviando=true;$('publish').disabled=true;status('Publicando sua avaliação...','loading');
+ try{await set(push(ref(db,'avaliacoes/'+produtoId)),avaliacao);status('Avaliação publicada com sucesso!','ok');$('publish').textContent='✓ Avaliação publicada';setTimeout(()=>{location.href='produto.html?id='+encodeURIComponent(produtoId);},1400);}
+ catch(e){console.error(e);status(e.code==='PERMISSION_DENIED'?'O Firebase bloqueou a publicação. Verifique as regras do Realtime Database.':'Não foi possível publicar. Verifique sua conexão e tente novamente.');enviando=false;$('publish').disabled=false;}
+});
+</script>
+</body>
+</html>

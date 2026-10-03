@@ -1,0 +1,5615 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<!-- =========================================================
+     MINHA LOJA DE APLICATIVOS
+     PÁGINA DE DETALHES DO PRODUTO
+     ---------------------------------------------------------
+     Estrutura: HTML • CSS • Firebase • JavaScript
+     Objetivo: deixar o código organizado e fácil de manter
+     ========================================================= -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111827">
+<meta name="description" content="Detalhes do aplicativo">
+<title>Produto | Minha Loja de Aplicativos</title>
+
+<style>
+
+/* =========================================================
+   ESTILIZAÇÃO DA PÁGINA
+   ---------------------------------------------------------
+   Todas as regras visuais ficam centralizadas neste bloco.
+   ========================================================= */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:linear-gradient(135deg,#f1f5f9,#e2e8f0);
+    color:#111827;
+    min-height:100vh;
+}
+
+button,
+input,
+textarea,
+select{
+    font:inherit;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+    transition:
+        transform .2s,
+        box-shadow .2s,
+        background .2s,
+        opacity .2s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+    transform:none!important;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:linear-gradient(135deg,#111827,#1e293b);
+    color:#fff;
+    padding:17px 25px;
+    box-shadow:0 5px 25px rgba(0,0,0,.18);
+}
+
+.header-inner{
+    width:min(1150px,100%);
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:10px;
+}
+
+.header-actions .header-btn,
+.header-actions .btn-avaliacoes{
+    width:auto;
+    min-height:44px;
+    margin:0;
+    white-space:nowrap;
+}
+
+.header-actions .btn-avaliacoes{
+    padding:10px 17px;
+    background:#eef2ff;
+    color:#4338ca;
+    border:1px solid #c7d2fe;
+    border-radius:11px;
+    font-size:14px;
+}
+
+.header-actions .btn-aplicativos-salvos{
+    width:auto;
+    min-height:44px;
+    margin:0;
+    padding:10px 17px;
+    background:#ecfdf5;
+    color:#047857;
+    border:1px solid #a7f3d0;
+    border-radius:11px;
+    font-size:14px;
+    white-space:nowrap;
+}
+
+.header-actions .btn-aplicativos-salvos:hover{
+    background:#d1fae5;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:20px;
+    font-weight:800;
+}
+
+.logo-icon{
+    width:42px;
+    height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    border-radius:13px;
+    font-size:22px;
+}
+
+.header-btn{
+    width:auto;
+    margin:0;
+    padding:10px 17px;
+    background:#ffffff15;
+    color:#fff;
+    border:1px solid #ffffff20;
+    border-radius:11px;
+    font-size:14px;
+    cursor:pointer;
+}
+
+/* =========================================================
+   CONTAINER
+   ========================================================= */
+
+.container{
+    width:min(1150px,calc(100% - 30px));
+    margin:30px auto 50px;
+}
+
+/* =========================================================
+   PRODUTO
+   ========================================================= */
+
+.produto-card{
+    background:#fff;
+    padding:32px;
+    border-radius:28px;
+    box-shadow:0 15px 45px rgba(15,23,42,.12);
+    border:1px solid #e5e7eb;
+}
+
+.produto{
+    display:grid;
+    grid-template-columns:350px 1fr;
+    gap:45px;
+    align-items:start;
+}
+
+.imagem-box{
+    position:relative;
+}
+
+.imagem{
+    width:350px;
+    height:350px;
+    object-fit:cover;
+    display:block;
+    border-radius:28px;
+    background:#f1f5f9;
+    box-shadow:0 15px 35px rgba(0,0,0,.15);
+}
+
+.badge-app{
+    position:absolute;
+    top:15px;
+    left:15px;
+    padding:8px 13px;
+    background:#111827dd;
+    color:#fff;
+    border-radius:30px;
+    font-size:12px;
+    font-weight:bold;
+    backdrop-filter:blur(10px);
+    z-index:2;
+}
+
+/* =========================================================
+   INFORMAÇÕES
+   ========================================================= */
+
+.info{
+    min-width:0;
+}
+
+.info h1{
+    font-size:42px;
+    line-height:1.15;
+    margin-bottom:12px;
+    word-break:break-word;
+}
+
+.categoria{
+    display:inline-flex;
+    padding:7px 12px;
+    background:#eff6ff;
+    color:#2563eb;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.preco-box{
+    margin:20px 0;
+    padding:18px;
+    background:linear-gradient(135deg,#f0fdf4,#ecfdf5);
+    border:1px solid #bbf7d0;
+    border-radius:17px;
+}
+
+.preco-label{
+    display:block;
+    color:#64748b;
+    font-size:13px;
+    margin-bottom:5px;
+}
+
+.preco{
+    font-size:38px;
+    font-weight:900;
+    color:#16a34a;
+}
+
+/* =========================================================
+   AÇÕES
+   ========================================================= */
+
+.acoes-compra{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:18px;
+}
+
+.acoes-secundarias{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:14px;
+}
+
+.acoes-reembolso{
+    margin-top:14px;
+}
+
+.btn{
+    width:100%;
+    min-height:52px;
+    padding:14px 18px;
+    border-radius:14px;
+    font-size:15px;
+    font-weight:800;
+}
+
+.btn-comprar{
+    background:linear-gradient(135deg,#16a34a,#15803d);
+    color:#fff;
+    box-shadow:0 8px 20px rgba(22,163,74,.22);
+}
+
+.btn-salvar{
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    color:#fff;
+}
+
+.btn-download{
+    margin-top:12px;
+    background:linear-gradient(135deg,#64748b,#475569);
+    color:#fff;
+}
+
+.btn-download.liberado{
+    background:linear-gradient(135deg,#16a34a,#15803d);
+    box-shadow:0 8px 20px rgba(22,163,74,.22);
+}
+
+.btn-compartilhar{
+    background:linear-gradient(135deg,#7c3aed,#6d28d9);
+    color:#fff;
+}
+
+/* =========================================================
+   AÇÕES LIBERADAS SOMENTE APÓS COMPRA
+   ========================================================= */
+#btnAvaliar,
+#btnReembolso{
+    display:none;
+}
+
+#btnAvaliar.compra-confirmada,
+#btnReembolso.compra-confirmada{
+    display:block;
+}
+
+.btn-avaliar{
+    background:linear-gradient(135deg,#f59e0b,#d97706);
+    color:#fff;
+}
+
+.btn-chat{
+    background:linear-gradient(135deg,#0ea5e9,#2563eb);
+    color:#fff;
+}
+
+.btn-avaliacoes{
+    background:#eef2ff;
+    color:#4338ca;
+    border:1px solid #c7d2fe;
+}
+
+.btn-reembolso{
+    background:linear-gradient(135deg,#dc2626,#b91c1c);
+    color:#fff;
+    box-shadow:0 8px 20px rgba(220,38,38,.22);
+}
+
+.btn-reembolso:hover{
+    background:linear-gradient(135deg,#ef4444,#dc2626);
+}
+
+/* =========================================================
+   STATUS REEMBOLSO
+   ========================================================= */
+
+.status-reembolso{
+    display:none;
+    padding:14px 16px;
+    margin-top:10px;
+    border-radius:14px;
+    font-size:14px;
+    font-weight:700;
+    line-height:1.5;
+}
+
+.status-reembolso.mostrar{
+    display:block;
+}
+
+.status-reembolso.pendente{
+    background:#fff7ed;
+    border:1px solid #fed7aa;
+    color:#c2410c;
+}
+
+.status-reembolso.aprovado{
+    background:#f0fdf4;
+    border:1px solid #bbf7d0;
+    color:#15803d;
+}
+
+.status-reembolso.recusado{
+    background:#fef2f2;
+    border:1px solid #fecaca;
+    color:#b91c1c;
+}
+
+/* =========================================================
+   DESCRIÇÃO
+   ========================================================= */
+
+.descricao-section{
+    margin-top:25px;
+    background:#fff;
+    padding:30px;
+    border-radius:24px;
+    border:1px solid #e5e7eb;
+    box-shadow:0 8px 30px rgba(15,23,42,.07);
+}
+
+.section-title{
+    font-size:25px;
+    margin-bottom:13px;
+}
+
+.descricao-texto{
+    color:#475569;
+    font-size:17px;
+    line-height:1.8;
+    white-space:pre-wrap;
+    word-break:break-word;
+}
+
+/* =========================================================
+   VÍDEO
+   ========================================================= */
+
+.video-section{
+    margin-top:30px;
+}
+
+.section-header{
+    margin-bottom:18px;
+}
+
+.section-kicker{
+    display:block;
+    color:#2563eb;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:1.5px;
+    margin-bottom:7px;
+}
+
+.section-header h2{
+    font-size:26px;
+    margin-bottom:6px;
+}
+
+.section-header p{
+    color:#64748b;
+}
+
+.video-container{
+    position:relative;
+    width:100%;
+    min-height:450px;
+    overflow:hidden;
+    border-radius:22px;
+    background:#020617;
+    box-shadow:0 15px 40px rgba(0,0,0,.20);
+}
+
+.video-container video{
+    width:100%;
+    height:auto;
+    min-height:450px;
+    max-height:650px;
+    display:none;
+    background:#020617;
+    object-fit:contain;
+}
+
+.video-placeholder{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:30px;
+    color:#fff;
+    background:radial-gradient(circle,#1e293b,#020617 75%);
+}
+
+.video-placeholder.hidden{
+    display:none;
+}
+
+.video-icon{
+    width:82px;
+    height:82px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding-left:5px;
+    border-radius:50%;
+    background:#2563eb;
+    font-size:30px;
+    box-shadow:0 10px 35px #2563eb66;
+    margin-bottom:20px;
+}
+
+.video-placeholder h3{
+    font-size:22px;
+    margin-bottom:8px;
+}
+
+.video-placeholder p{
+    max-width:500px;
+    color:#cbd5e1;
+    line-height:1.6;
+}
+
+.video-info{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:18px;
+}
+
+.video-info-item{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    padding:16px;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:15px;
+}
+
+.video-info-item span{
+    width:44px;
+    height:44px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff;
+    border-radius:12px;
+    font-size:20px;
+    box-shadow:0 3px 10px #0000000d;
+}
+
+.video-info-item strong{
+    display:block;
+    font-size:14px;
+    margin-bottom:4px;
+}
+
+.video-info-item small{
+    color:#64748b;
+    line-height:1.4;
+}
+
+/* =========================================================
+   AVALIAÇÕES
+   ========================================================= */
+
+.avaliacoes-section{
+    margin-top:30px;
+}
+
+.resumo-avaliacoes{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    flex-wrap:wrap;
+    padding:20px;
+    margin-bottom:20px;
+    background:#fffbeb;
+    border:1px solid #fde68a;
+    border-radius:18px;
+}
+
+.nota-grande{
+    font-size:50px;
+    font-weight:900;
+    color:#f59e0b;
+}
+
+.estrelas-media{
+    color:#f59e0b;
+    font-size:25px;
+    letter-spacing:2px;
+}
+
+.total-avaliacoes{
+    color:#64748b;
+    margin-top:5px;
+}
+
+#listaAvaliacoes{
+    display:grid;
+    gap:15px;
+}
+
+.avaliacao{
+    position:relative;
+    background:#fff;
+    padding:22px;
+    border:1px solid #e5e7eb;
+    border-radius:18px;
+    box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
+
+.avaliacao-usuario{
+    font-weight:800;
+    margin-bottom:8px;
+}
+
+.avaliacao h3{
+    color:#f59e0b;
+    font-size:20px;
+    margin-bottom:10px;
+}
+
+.avaliacao p{
+    color:#475569;
+    line-height:1.65;
+    word-break:break-word;
+}
+
+.avaliacao-data{
+    margin-top:12px;
+    color:#94a3b8;
+    font-size:12px;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.loading{
+    padding:30px;
+    text-align:center;
+    color:#64748b;
+    background:#f8fafc;
+    border-radius:15px;
+}
+
+.spinner{
+    width:35px;
+    height:35px;
+    border:4px solid #e2e8f0;
+    border-top-color:#2563eb;
+    border-radius:50%;
+    animation:girar .8s linear infinite;
+    margin:0 auto 12px;
+}
+
+@keyframes girar{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:#020617b8;
+    backdrop-filter:blur(5px);
+}
+
+.modal.aberto{
+    display:flex;
+}
+
+.modal-card{
+    width:min(520px,100%);
+    max-height:90vh;
+    overflow:auto;
+    background:#fff;
+    border-radius:23px;
+    padding:25px;
+    box-shadow:0 25px 80px #0006;
+    animation:abrirModal .2s ease;
+}
+
+@keyframes abrirModal{
+    from{
+        opacity:0;
+        transform:scale(.92) translateY(15px);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1) translateY(0);
+    }
+}
+
+.modal-header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:10px;
+}
+
+.modal-header h2{
+    font-size:22px;
+}
+
+.btn-fechar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:#f1f5f9;
+    color:#111827;
+    font-size:20px;
+}
+
+.modal-description{
+    color:#64748b;
+    line-height:1.6;
+    margin-bottom:20px;
+}
+
+/* =========================================================
+   REEMBOLSO
+   ========================================================= */
+
+.reembolso-resumo{
+    display:grid;
+    gap:10px;
+    margin-bottom:18px;
+    padding:15px;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:15px;
+}
+
+.reembolso-resumo-item{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    font-size:14px;
+}
+
+.reembolso-resumo-item span{
+    color:#64748b;
+}
+
+.reembolso-resumo-item strong{
+    text-align:right;
+    word-break:break-word;
+}
+
+.campo-label{
+    display:block;
+    margin-bottom:7px;
+    font-size:14px;
+    font-weight:800;
+    color:#111827;
+}
+
+.select-reembolso{
+    width:100%;
+    padding:13px;
+    border:1px solid #cbd5e1;
+    border-radius:13px;
+    background:#fff;
+    font-family:inherit;
+    font-size:14px;
+    outline:none;
+}
+
+.select-reembolso:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 3px #2563eb15;
+}
+
+/* =========================================================
+   MODAL BOTÕES
+   ========================================================= */
+
+.botoes-modal{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:15px;
+}
+
+.btn-cancelar{
+    background:#e5e7eb;
+    color:#111827;
+}
+
+.btn-enviar{
+    background:#dc2626;
+    color:#fff;
+}
+
+.btn-confirmar-reembolso{
+    background:linear-gradient(135deg,#dc2626,#b91c1c);
+    color:#fff;
+}
+
+/* =========================================================
+   MENU DE COMENTÁRIO • DENUNCIAR
+   ========================================================= */
+.avaliacao-acoes{position:absolute;top:14px;right:14px;}
+.btn-menu-comentario{width:36px;height:36px;border-radius:10px;background:#f8fafc;color:#475569;font-size:22px;line-height:1;border:1px solid #e2e8f0;}
+.btn-menu-comentario:hover{background:#eef2ff;color:#4338ca;transform:none;}
+.menu-comentario{position:absolute;right:0;top:42px;z-index:20;display:none;width:170px;padding:6px;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 12px 35px rgba(15,23,42,.16);}
+.menu-comentario.aberto{display:block;}
+.menu-comentario button{width:100%;padding:11px 12px;border-radius:9px;background:#fff;color:#b91c1c;text-align:left;font-size:13px;font-weight:800;}
+.menu-comentario button:hover{background:#fef2f2;transform:none;}
+.menu-comentario .btn-excluir-comentario{color:#b91c1c;}
+.menu-comentario .btn-excluir-comentario:hover{background:#fef2f2;}
+
+/* =========================================================
+   MODAL DENÚNCIA DE COMENTÁRIO
+   ========================================================= */
+.denuncia-resumo{padding:14px;margin-bottom:18px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;}
+.denuncia-resumo strong{display:block;margin-bottom:5px;}
+.denuncia-resumo p{color:#64748b;font-size:13px;line-height:1.5;word-break:break-word;}
+.campo-denuncia{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:13px;background:#fff;outline:none;margin-bottom:14px;}
+.campo-denuncia:focus{border-color:#dc2626;box-shadow:0 0 0 3px #dc262615;}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    z-index:10001;
+    max-width:380px;
+    padding:15px 20px;
+    border-radius:14px;
+    background:#111827;
+    color:#fff;
+    box-shadow:0 15px 40px #0005;
+    transform:translateY(120px);
+    opacity:0;
+    pointer-events:none;
+    transition:.3s;
+}
+
+.toast.mostrar{
+    transform:translateY(0);
+    opacity:1;
+}
+
+
+/* =========================================================
+   ARQUIVO APK
+   ========================================================= */
+.apk-section{
+    margin-top:30px;
+}
+.apk-card{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:18px;
+    background:#fff;
+    border:1px solid #e2e8f0;
+    border-radius:18px;
+    box-shadow:0 8px 25px rgba(15,23,42,.07);
+}
+.apk-icon{
+    width:58px;
+    height:58px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#eff6ff;
+    border-radius:15px;
+    font-size:28px;
+}
+.apk-dados{
+    min-width:0;
+    flex:1;
+}
+.apk-dados strong{
+    display:block;
+    font-size:15px;
+    word-break:break-word;
+}
+.apk-dados small{
+    display:block;
+    color:#64748b;
+    margin-top:5px;
+}
+.apk-download-btn{
+    width:auto;
+    min-width:190px;
+    margin-top:0;
+}
+@media(max-width:600px){
+    .apk-card{
+        align-items:stretch;
+        flex-direction:column;
+    }
+    .apk-download-btn{
+        width:100%;
+    }
+}
+
+/* =========================================================
+   RESPONSIVO
+   ========================================================= */
+
+@media(max-width:850px){
+
+    .produto{
+        grid-template-columns:1fr;
+        gap:25px;
+    }
+
+    .imagem-box{
+        max-width:450px;
+        width:100%;
+        margin:auto;
+    }
+
+    .imagem{
+        width:100%;
+        height:auto;
+        aspect-ratio:1/1;
+    }
+
+    .info h1{
+        font-size:32px;
+    }
+
+    .video-info{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    header{
+        padding:12px 15px;
+    }
+
+    .header-inner{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .logo{
+        justify-content:center;
+    }
+
+    .header-actions{
+        width:100%;
+    }
+
+    .header-actions .header-btn,
+    .header-actions .btn-avaliacoes,
+    .header-actions .btn-aplicativos-salvos{
+        flex:1;
+        width:auto;
+    }
+
+    .header-btn{
+        width:100%;
+    }
+
+    .container{
+        width:calc(100% - 20px);
+        margin:10px auto 30px;
+    }
+
+    .produto-card,
+    .descricao-section{
+        padding:18px;
+        border-radius:20px;
+    }
+
+    .info h1{
+        font-size:27px;
+    }
+
+    .preco{
+        font-size:30px;
+    }
+
+    .acoes-compra,
+    .acoes-secundarias{
+        grid-template-columns:1fr;
+    }
+
+    .video-container{
+        min-height:220px;
+        border-radius:16px;
+    }
+
+    .video-container video{
+        min-height:220px;
+    }
+
+    .video-placeholder{
+        padding:20px;
+    }
+
+    .video-icon{
+        width:60px;
+        height:60px;
+        font-size:22px;
+    }
+
+    .video-placeholder h3{
+        font-size:18px;
+    }
+
+    .botoes-modal{
+        grid-template-columns:1fr;
+    }
+
+    .toast{
+        left:15px;
+        right:15px;
+        bottom:15px;
+        max-width:none;
+    }
+}
+
+/* =========================================================
+   CHAT COM O VENDEDOR
+   ========================================================= */
+.chat-modal{
+    position:fixed;
+    inset:0;
+    z-index:10000;
+    display:none;
+    align-items:flex-end;
+    justify-content:flex-end;
+    padding:20px;
+    background:#02061766;
+    backdrop-filter:blur(4px);
+}
+.chat-modal.aberto{display:flex;}
+.chat-card{
+    width:min(430px,100%);
+    height:min(680px,calc(100vh - 40px));
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    background:#fff;
+    border:1px solid #e2e8f0;
+    border-radius:24px;
+    box-shadow:0 25px 80px #0004;
+    animation:abrirChat .22s ease;
+}
+@keyframes abrirChat{
+    from{opacity:0;transform:translateY(25px) scale(.97)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+}
+.chat-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:16px 18px;
+    color:#fff;
+    background:linear-gradient(135deg,#111827,#1e293b);
+}
+.chat-vendedor{display:flex;align-items:center;gap:11px;min-width:0;}
+.chat-avatar{
+    width:44px;height:44px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    border-radius:50%;
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    font-size:21px;
+}
+.chat-vendedor-info{min-width:0;}
+.chat-vendedor-info strong{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.chat-vendedor-info small{display:block;color:#cbd5e1;margin-top:3px;font-size:12px;}
+.chat-close{
+    width:38px;height:38px;flex-shrink:0;border-radius:50%;
+    background:#ffffff18;color:#fff;font-size:22px;
+}
+.chat-mensagens{
+    flex:1;
+    overflow-y:auto;
+    padding:18px 14px;
+    background:#f8fafc;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+.chat-vazio{text-align:center;color:#64748b;font-size:13px;padding:35px 20px;line-height:1.6;}
+.chat-msg{max-width:82%;padding:10px 13px;border-radius:16px;line-height:1.45;font-size:14px;word-break:break-word;white-space:pre-wrap;box-shadow:0 2px 7px #0000000a;}
+.chat-msg.cliente{align-self:flex-end;background:#2563eb;color:#fff;border-bottom-right-radius:5px;}
+.chat-msg.vendedor{align-self:flex-start;background:#fff;color:#111827;border:1px solid #e2e8f0;border-bottom-left-radius:5px;}
+.chat-hora{display:block;margin-top:5px;font-size:10px;opacity:.65;text-align:right;}
+.chat-digitando{min-height:18px;padding:0 16px;color:#64748b;font-size:11px;background:#fff;}
+.chat-form{display:flex;gap:9px;padding:12px;border-top:1px solid #e2e8f0;background:#fff;}
+.chat-input{flex:1;min-height:46px;max-height:110px;resize:none;margin:0;padding:12px 13px;border:1px solid #cbd5e1;border-radius:14px;outline:none;font-size:14px;}
+.chat-input:focus{border-color:#2563eb;box-shadow:0 0 0 3px #2563eb15;}
+.chat-enviar{width:50px;height:46px;flex-shrink:0;border-radius:14px;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;font-size:19px;}
+.chat-status{padding:8px 14px;text-align:center;font-size:11px;background:#fff;color:#64748b;border-top:1px solid #f1f5f9;}
+@media(max-width:600px){
+    .chat-modal{padding:0;align-items:stretch;}
+    .chat-card{width:100%;height:100%;max-height:none;border-radius:0;}
+}
+
+
+
+/* LIMITE DE ARQUIVOS */
+.limite-arquivos{margin:20px 0;padding:18px 20px;background:#fffbeb;border:1px solid #fde68a;border-radius:17px;color:#78350f;line-height:1.6;}
+.limite-arquivos strong{display:block;margin-bottom:5px;color:#92400e;}
+.limite-arquivos span{font-weight:800;}
+
+
+/* =========================================================
+   PACOTE PARA DOWNLOAD
+   ========================================================= */
+.pacote-section{margin-top:25px;}
+.pacote-card{display:flex;align-items:center;gap:16px;padding:20px;background:linear-gradient(135deg,#eff6ff,#f5f3ff);border:1px solid #c7d2fe;border-radius:20px;box-shadow:0 8px 25px rgba(37,99,235,.08);}
+.pacote-icon{width:62px;height:62px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#fff;border-radius:16px;font-size:30px;box-shadow:0 5px 15px rgba(0,0,0,.08);}
+.pacote-dados{flex:1;min-width:0;}
+.pacote-dados strong{display:block;font-size:17px;margin-bottom:6px;}
+.pacote-dados small{display:block;color:#64748b;line-height:1.5;}
+.btn-pacote{width:auto;min-width:230px;margin:0;background:linear-gradient(135deg,#2563eb,#4f46e5);color:#fff;}
+.btn-pacote.liberado{background:linear-gradient(135deg,#16a34a,#15803d);}
+@media(max-width:600px){.pacote-card{flex-direction:column;align-items:stretch}.btn-pacote{width:100%;}}
+
+</style>
+
+<style id="bloqueio-produto-vendedor-css">
+
+/* =========================================================
+   BLOQUEIO DO CLIENTE — ADMINISTRADOR
+   ========================================================= */
+#avisoBloqueioClienteProduto{
+    position:fixed;
+    inset:0;
+    z-index:20000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(2,6,23,.78);
+    backdrop-filter:blur(9px);
+}
+#avisoBloqueioClienteProduto.visivel{
+    display:flex;
+}
+.bloqueio-cliente-card{
+    width:min(560px,100%);
+    padding:30px;
+    border-radius:24px;
+    background:#fff;
+    border:1px solid #fecaca;
+    box-shadow:0 25px 80px rgba(0,0,0,.35);
+    text-align:center;
+}
+.bloqueio-cliente-icone{
+    width:72px;
+    height:72px;
+    margin:0 auto 16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#fee2e2;
+    font-size:34px;
+}
+.bloqueio-cliente-card h2{
+    margin-bottom:10px;
+    color:#991b1b;
+    font-size:25px;
+}
+.bloqueio-cliente-card p{
+    color:#475569;
+    line-height:1.65;
+    margin:8px 0;
+}
+#motivoBloqueioClienteProduto{
+    margin:16px 0;
+    padding:15px;
+    border-radius:14px;
+    background:#fff7ed;
+    border:1px solid #fed7aa;
+    color:#9a3412;
+    font-weight:800;
+    line-height:1.55;
+    text-align:left;
+    word-break:break-word;
+}
+#validadeBloqueioClienteProduto{
+    color:#64748b;
+    font-size:13px;
+}
+#btnVoltarLojaBloqueioCliente{
+    width:100%;
+    margin-top:14px;
+    padding:14px 18px;
+    border-radius:13px;
+    background:linear-gradient(135deg,#dc2626,#b91c1c);
+    color:#fff;
+    font-weight:800;
+    font-size:15px;
+}
+#btnVoltarLojaBloqueioCliente:hover{
+    background:linear-gradient(135deg,#ef4444,#dc2626);
+}
+body.produto-cliente-bloqueado{
+    overflow:hidden;
+}
+body.produto-cliente-bloqueado > *:not(#avisoBloqueioClienteProduto){
+    pointer-events:none;
+    user-select:none;
+}
+
+#avisoBloqueioVendedorProduto{display:none;width:min(1150px,calc(100% - 30px));margin:25px auto 0;padding:24px;border:2px solid #fecaca;border-radius:20px;background:linear-gradient(135deg,#fff1f2,#fff7ed);color:#7f1d1d;box-shadow:0 10px 30px #7f1d1d12}
+#avisoBloqueioVendedorProduto.visivel{display:block}
+#avisoBloqueioVendedorProduto h2{font-size:22px;margin-bottom:10px}
+#avisoBloqueioVendedorProduto p{line-height:1.7;margin:7px 0;white-space:pre-wrap;word-break:break-word}
+#motivoBloqueioProduto{margin-top:12px;padding:13px;border-radius:12px;background:#fff;border:1px solid #fed7aa;color:#9a3412;font-weight:700}
+#btnVoltarLojaBloqueio{margin-top:15px;width:100%;padding:13px 16px;border-radius:12px;background:#991b1b;color:#fff;font-weight:800;cursor:pointer}
+body.produto-vendedor-bloqueado .acoes-compra,
+body.produto-vendedor-bloqueado .acoes-secundarias,
+body.produto-vendedor-bloqueado .acoes-reembolso,
+body.produto-vendedor-bloqueado .apk-section{pointer-events:none;opacity:.35}
+
+/* Quando o administrador pune/bloqueia o vendedor, os botões ficam
+   visualmente riscados e deixam claro que a ação está indisponível. */
+body.produto-vendedor-bloqueado .btn:disabled,
+body.produto-vendedor-bloqueado #btnDownloadApk:disabled{
+    text-decoration:line-through;
+    text-decoration-thickness:2px;
+    filter:grayscale(1);
+    cursor:not-allowed;
+    opacity:.55;
+}
+
+body.produto-vendedor-bloqueado #btnDownload,
+body.produto-vendedor-bloqueado #btnDownloadApk{
+    background:#64748b!important;
+    color:#fff!important;
+}
+
+body.produto-vendedor-bloqueado #btnChatVendedor{
+    background:#64748b!important;
+    color:#fff!important;
+}
+</style>
+</head>
+
+<body>
+
+<div id="avisoBloqueioClienteProduto" role="alertdialog" aria-modal="true" aria-labelledby="tituloBloqueioClienteProduto">
+    <div class="bloqueio-cliente-card">
+        <div class="bloqueio-cliente-icone">🚫</div>
+        <h2 id="tituloBloqueioClienteProduto">Acesso bloqueado</h2>
+        <p>Seu acesso à loja foi bloqueado pelo administrador.</p>
+        <p><strong>Motivo do bloqueio:</strong></p>
+        <div id="motivoBloqueioClienteProduto">O administrador não informou o motivo.</div>
+        <div id="validadeBloqueioClienteProduto"></div>
+        <button id="btnVoltarLojaBloqueioCliente" type="button">🏪 Voltar para a loja</button>
+    </div>
+</div>
+
+<div id="avisoBloqueioVendedorProduto" role="alert" aria-live="assertive">
+  <h2>🚫 Produto indisponível</h2>
+  <p>Este produto foi bloqueado porque o vendedor responsável foi bloqueado pelo administrador.</p>
+  <p><strong>Motivo do bloqueio:</strong></p>
+  <div id="motivoBloqueioProduto">O administrador não informou o motivo.</div>
+  <button id="btnVoltarLojaBloqueio" type="button">🏪 Voltar para a loja</button>
+</div>
+
+
+<header>
+    <div class="header-inner">
+
+        <div class="logo">
+            <div class="logo-icon">📱</div>
+            <span>Minha Loja de Aplicativos</span>
+        </div>
+
+        <div class="header-actions">
+            <button
+                class="header-btn"
+                type="button"
+                id="btnVoltar"
+            >
+                ⬅️ Voltar para a loja
+            </button>
+
+                    <button
+                        class="btn btn-avaliar"
+                        id="btnAvaliar"
+                        type="button"
+                    >
+                        ⭐ Avaliar produto
+                    </button>
+
+            <button
+                class="btn-avaliacoes"
+                id="btnAvaliacoes"
+                type="button"
+            >
+                💬 Ver avaliações
+            </button>
+
+            <button
+                class="btn-aplicativos-salvos"
+                id="btnAplicativosSalvos"
+                type="button"
+                title="Ver aplicativos salvos"
+            >
+                💾 Aplicativos salvos
+            </button>
+        </div>
+
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="produto-card">
+
+        <div class="produto">
+
+            <div class="imagem-box">
+
+                <span class="badge-app">
+                    📱 APLICATIVO
+                </span>
+
+                <img
+                    id="imagem"
+                    class="imagem"
+                    src="app.jpg"
+                    alt="Aplicativo"
+                    loading="eager"
+                >
+
+            </div>
+
+            <div class="info">
+
+                <span
+                    class="categoria"
+                    id="categoria"
+                >
+                    Aplicativo
+                </span>
+
+                <h1 id="nome">
+                    Carregando...
+                </h1>
+
+                <div class="preco-box">
+
+                    <span class="preco-label">
+                        Preço do aplicativo
+                    </span>
+
+                    <div class="preco">
+                        R$ <span id="preco">0,00</span>
+                    </div>
+
+                </div>
+
+                <div class="acoes-compra">
+
+                    <button
+                        class="btn btn-salvar"
+                        id="btnSalvar"
+                        type="button"
+                    >
+                        💾 Salvar aplicativo
+                    </button>
+
+                    <button
+                        class="btn btn-comprar"
+                        id="btnComprar"
+                        type="button"
+                    >
+                        💳 Comprar agora
+                    </button>
+
+                </div>
+
+                <button
+                    class="btn btn-download"
+                    id="btnDownload"
+                    type="button"
+                    disabled
+                    title="Compre este aplicativo para liberar o download"
+                >
+                    🔒 Download bloqueado — compre para liberar
+                </button>
+
+                <div class="acoes-secundarias">
+
+                    <button
+                        class="btn btn-compartilhar"
+                        id="btnCompartilhar"
+                        type="button"
+                    >
+                        📤 Compartilhar
+                    </button>
+
+                    
+
+                    <button
+                        class="btn btn-chat"
+                        id="btnChatVendedor"
+                        type="button"
+                        aria-label="Falar com o vendedor sobre este produto"
+                        disabled
+                    >
+                        💬 Falar com o vendedor
+                    </button>
+
+                </div>
+
+                <div class="acoes-reembolso">
+
+                    <button
+                        class="btn btn-reembolso"
+                        id="btnReembolso"
+                        type="button"
+                        disabled
+                    >
+                        ↩️ Solicitar reembolso
+                    </button>
+
+                    <div
+                        class="status-reembolso"
+                        id="statusReembolso"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="descricao-section">
+
+        <h2 class="section-title">
+            📄 Descrição do produto
+        </h2>
+
+        <p
+            class="descricao-texto"
+            id="descricao"
+        >
+            Carregando descrição...
+        </p>
+
+
+
+        <section class="video-section">
+
+            <div class="section-header">
+
+                <span class="section-kicker">
+                    DEMONSTRAÇÃO
+                </span>
+
+                <h2>
+                    🎥 Vídeo de demonstração
+                </h2>
+
+                <p>
+                    Veja como o aplicativo funciona antes de comprar.
+                </p>
+
+            </div>
+
+            <div
+                class="video-container"
+                id="videoContainer"
+            >
+
+                <video
+                    id="videoProduto"
+                    controls
+                    playsinline
+                    preload="metadata"
+                >
+                    <source
+                        id="videoSource"
+                        src=""
+                        type="video/mp4"
+                    >
+                    Seu navegador não suporta vídeos.
+                </video>
+
+                <div
+                    class="video-placeholder"
+                    id="videoPlaceholder"
+                >
+
+                    <div class="video-icon">
+                        ▶
+                    </div>
+
+                    <h3>
+                        Vídeo de demonstração
+                    </h3>
+
+                    <p>
+                        O vendedor ainda não adicionou
+                        um vídeo para este aplicativo.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="video-info">
+
+                <div class="video-info-item">
+
+                    <span>🎬</span>
+
+                    <div>
+                        <strong>Conheça o aplicativo</strong>
+
+                        <small>
+                            Assista à demonstração completa.
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="video-info-item">
+
+                    <span>📱</span>
+
+                    <div>
+                        <strong>Veja os recursos</strong>
+
+                        <small>
+                            Confira as principais funções.
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="video-info-item">
+
+                    <span>🔒</span>
+
+                    <div>
+                        <strong>Compra segura</strong>
+
+                        <small>
+                            Tire suas dúvidas antes de comprar.
+                        </small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Seções duplicadas de APK e pacote removidas.
+             Elementos ocultos preservam compatibilidade com o JavaScript existente.
+             O botão principal de download continua disponível no cartão do produto. -->
+        <div style="display:none!important" aria-hidden="true">
+            <section id="apkSection" style="display:none!important">
+                <span id="apkNome"></span><span id="apkTamanho"></span>
+                <button id="btnDownloadApk" type="button" disabled></button>
+            </section>
+            <section id="pacoteSection" style="display:none!important">
+                <span id="pacoteNome"></span><span id="pacoteTamanho"></span>
+                <button id="btnDownloadPacote" type="button" disabled></button>
+            </section>
+        </div>
+
+        <section class="avaliacoes-section">
+
+            <h2 class="section-title">
+                ⭐ Avaliações dos clientes
+            </h2>
+
+            <div class="resumo-avaliacoes">
+
+                <div
+                    class="nota-grande"
+                    id="notaMedia"
+                >
+                    0,0
+                </div>
+
+                <div>
+
+                    <div
+                        class="estrelas-media"
+                        id="estrelasMedia"
+                    >
+                        ☆☆☆☆☆
+                    </div>
+
+                    <div
+                        class="total-avaliacoes"
+                        id="totalAvaliacoes"
+                    >
+                        0 avaliações
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="listaAvaliacoes">
+
+                <div class="loading">
+
+                    <div class="spinner"></div>
+
+                    Carregando avaliações...
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </section>
+
+</main>
+
+<!-- =========================================================
+     MODAL REEMBOLSO
+     ========================================================= -->
+
+<div
+    class="modal"
+    id="modalReembolso"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="tituloReembolso"
+>
+
+    <div class="modal-card">
+
+        <div class="modal-header">
+
+            <div>
+                <h2 id="tituloReembolso">
+                    💰 Solicitar reembolso
+                </h2>
+            </div>
+
+            <button
+                class="btn-fechar"
+                type="button"
+                id="btnFecharReembolso"
+                aria-label="Fechar"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <p class="modal-description">
+            Sua compra será verificada antes do envio
+            da solicitação de reembolso.
+        </p>
+
+        <div class="reembolso-resumo">
+
+            <div class="reembolso-resumo-item">
+                <span>Aplicativo</span>
+                <strong id="reembolsoProduto">-</strong>
+            </div>
+
+            <div class="reembolso-resumo-item">
+                <span>Valor</span>
+                <strong id="reembolsoValor">R$ 0,00</strong>
+            </div>
+
+            <div class="reembolso-resumo-item">
+                <span>Pedido</span>
+                <strong id="reembolsoPedido">-</strong>
+            </div>
+
+        </div>
+
+        <label
+            class="campo-label"
+            for="motivoReembolso"
+        >
+            Motivo do reembolso
+        </label>
+
+        <select
+            id="motivoReembolso"
+            class="select-reembolso"
+        >
+
+            <option value="">
+                Selecione um motivo
+            </option>
+
+            <option value="Comprei por engano">
+                Comprei por engano
+            </option>
+
+            <option value="O aplicativo não funciona">
+                O aplicativo não funciona
+            </option>
+
+            <option value="O aplicativo não corresponde à descrição">
+                O aplicativo não corresponde à descrição
+            </option>
+
+            <option value="Problema com o download">
+                Problema com o download
+            </option>
+
+            <option value="Problema com o pagamento">
+                Problema com o pagamento
+            </option>
+
+            <option value="Outro">
+                Outro
+            </option>
+
+        </select>
+
+        <label class="campo-label" for="detalhesReembolso">
+            Aplicação / motivo escrito pelo cliente
+        </label>
+        <textarea id="detalhesReembolso" class="campo-reembolso" maxlength="2000" rows="5" placeholder="Escreva aqui o motivo do reembolso e explique o problema com a aplicação..." required></textarea>
+
+        <div class="botoes-modal">
+
+            <button
+                class="btn btn-cancelar"
+                type="button"
+                id="btnCancelarReembolso"
+            >
+                Cancelar
+            </button>
+
+            <button
+                class="btn btn-confirmar-reembolso"
+                id="btnConfirmarReembolso"
+                type="button"
+            >
+                💰 Solicitar reembolso
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     CHAT COM O VENDEDOR
+     ========================================================= -->
+<div class="chat-modal" id="chatModal" role="dialog" aria-modal="true" aria-labelledby="chatTitulo">
+    <div class="chat-card">
+        <div class="chat-header">
+            <div class="chat-vendedor">
+                <div class="chat-avatar">👤</div>
+                <div class="chat-vendedor-info">
+                    <strong id="chatTitulo">Vendedor</strong>
+                    <small id="chatProduto">Sobre este aplicativo</small>
+                </div>
+            </div>
+            <button class="chat-close" id="btnFecharChat" type="button" aria-label="Fechar chat">×</button>
+        </div>
+        <div class="chat-status" id="chatStatus">🟢 Conversa privada com o vendedor</div>
+        <div class="chat-mensagens" id="chatMensagens">
+            <div class="chat-vazio">Carregando conversa...</div>
+        </div>
+        <div class="chat-digitando" id="chatAviso"></div>
+        <form class="chat-form" id="chatForm">
+            <textarea class="chat-input" id="chatInput" maxlength="2000" rows="1" placeholder="Digite sua mensagem..."></textarea>
+            <button class="chat-enviar" id="btnEnviarChat" type="submit" aria-label="Enviar mensagem">➤</button>
+        </form>
+    </div>
+</div>
+
+<!-- =========================================================
+     MODAL DENUNCIAR COMENTÁRIO
+     ========================================================= -->
+<div class="modal" id="modalDenunciaComentario" role="dialog" aria-modal="true" aria-labelledby="tituloDenunciaComentario">
+    <div class="modal-card">
+        <div class="modal-header">
+            <div>
+                <h2 id="tituloDenunciaComentario">🚨 Denunciar comentário</h2>
+            </div>
+            <button class="btn-fechar" type="button" id="btnFecharDenunciaComentario" aria-label="Fechar">×</button>
+        </div>
+        <p class="modal-description">Ajude a manter a Pre Store segura. Selecione o motivo que melhor descreve o problema.</p>
+        <div class="denuncia-resumo">
+            <strong id="denunciaUsuarioComentario">👤 Cliente</strong>
+            <p id="denunciaTextoComentario">Comentário selecionado.</p>
+        </div>
+        <label class="campo-label" for="motivoDenunciaComentario">Motivo da denúncia</label>
+        <select id="motivoDenunciaComentario" class="campo-denuncia">
+            <option value="">Selecione um motivo</option>
+            <option value="Spam ou propaganda">Spam ou propaganda</option>
+            <option value="Conteúdo ofensivo ou abusivo">Conteúdo ofensivo ou abusivo</option>
+            <option value="Conteúdo impróprio">Conteúdo impróprio</option>
+            <option value="Informação falsa ou enganosa">Informação falsa ou enganosa</option>
+            <option value="Golpe ou fraude">Golpe ou fraude</option>
+            <option value="Outro">Outro</option>
+        </select>
+        <label class="campo-label" for="detalhesDenunciaComentario">Aplicação</label>
+        <textarea id="detalhesDenunciaComentario" class="campo-denuncia" maxlength="2000" rows="4" placeholder="Explique o motivo da denúncia..."></textarea>
+        <div class="botoes-modal">
+            <button class="btn btn-cancelar" type="button" id="btnCancelarDenunciaComentario">Cancelar</button>
+            <button class="btn btn-enviar" type="button" id="btnEnviarDenunciaComentario">🚨 Enviar denúncia</button>
+        </div>
+    </div>
+</div>
+
+<div
+    class="toast"
+    id="toast"
+    role="status"
+    aria-live="polite"
+></div>
+
+<script type="module">
+
+/* =========================================================
+   LÓGICA DA PÁGINA
+   ---------------------------------------------------------
+   Firebase, estado, funções, eventos e inicialização.
+   ========================================================= */
+
+/* =========================================================
+   FIREBASE
+   ========================================================= */
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    onValue,
+    push,
+    set,
+    get,
+    update,
+    increment,
+    remove
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAMG8workhkRJapQm1AHSMOSIPOnSWltpw",
+    authDomain: "minha-loja-5477a.firebaseapp.com",
+    databaseURL: "https://minha-loja-5477a-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "minha-loja-5477a"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const auth = getAuth(app);
+
+/* =========================================================
+   ESTADO
+   ========================================================= */
+
+const parametros =
+    new URLSearchParams(window.location.search);
+
+const idInformado =
+    String(parametros.get("id") || "").trim();
+
+// A loja pode informar a origem junto do ID (ex.: aplicativos:abc).
+// Também aceita links antigos que usam somente o ID.
+let origemProduto = "produtos";
+let id = idInformado;
+
+if(idInformado.includes(":")){
+    const partesId = idInformado.split(":");
+    const origemInformada = partesId.shift();
+    const idReal = partesId.join(":");
+    if(origemInformada === "aplicativos" || origemInformada === "produtos"){
+        origemProduto = origemInformada;
+        id = idReal;
+    }
+}
+
+var produtoAtual = null;
+let pedidoEncontrado = null;
+let clienteAtual = null;
+let toastTimer = null;
+let produtoListenerAtivo = false;
+let avaliacaoListenerAtivo = false;
+let chatListenerAtivo = false;
+let chatConversaId = null;
+let pararMonitoramentoBloqueioVendedor = null;
+let vendedorAtual = null;
+let comentarioDenunciaAtual = null;
+let usuarioAutenticado = null;
+
+/* =========================================================
+   ELEMENTOS
+   ========================================================= */
+
+const nomeEl =
+    document.getElementById("nome");
+
+const precoEl =
+    document.getElementById("preco");
+
+const imagemEl =
+    document.getElementById("imagem");
+
+const descricaoEl =
+    document.getElementById("descricao");
+
+const categoriaEl =
+    document.getElementById("categoria");
+
+const videoEl =
+    document.getElementById("videoProduto");
+
+const videoSourceEl =
+    document.getElementById("videoSource");
+
+const videoPlaceholder =
+    document.getElementById("videoPlaceholder");
+
+const btnReembolso = document.getElementById("btnReembolso");
+
+const statusReembolso =
+    document.getElementById("statusReembolso");
+
+const btnSalvar =
+    document.getElementById("btnSalvar");
+
+const btnComprar =
+    document.getElementById("btnComprar");
+
+const btnDownload =
+    document.getElementById("btnDownload");
+
+const apkSection =
+    document.getElementById("apkSection");
+
+const apkNome =
+    document.getElementById("apkNome");
+
+const apkTamanho =
+    document.getElementById("apkTamanho");
+
+const btnDownloadApk =
+    document.getElementById("btnDownloadApk");
+
+const btnCompartilhar =
+    document.getElementById("btnCompartilhar");
+
+const btnAvaliar =
+    document.getElementById("btnAvaliar");
+
+const btnAvaliacoes =
+    document.getElementById("btnAvaliacoes");
+
+const btnAplicativosSalvos =
+    document.getElementById("btnAplicativosSalvos");
+
+const btnChatVendedor =
+    document.getElementById("btnChatVendedor");
+
+const chatModal =
+    document.getElementById("chatModal");
+
+const chatMensagens =
+    document.getElementById("chatMensagens");
+
+const chatForm =
+    document.getElementById("chatForm");
+
+const chatInput =
+    document.getElementById("chatInput");
+
+const btnEnviarChat =
+    document.getElementById("btnEnviarChat");
+
+const chatTitulo =
+    document.getElementById("chatTitulo");
+
+const chatProduto =
+    document.getElementById("chatProduto");
+
+const chatStatus =
+    document.getElementById("chatStatus");
+
+const chatAviso =
+    document.getElementById("chatAviso");
+
+const btnFecharChat =
+    document.getElementById("btnFecharChat");
+
+/* =========================================================
+   UTILITÁRIOS
+   ========================================================= */
+
+function escaparHTML(valor){
+
+    if(
+        valor === null ||
+        valor === undefined
+    ){
+        return "";
+    }
+
+    return String(valor)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+function numeroSeguro(valor){
+
+    if(
+        valor === null ||
+        valor === undefined ||
+        valor === ""
+    ){
+        return 0;
+    }
+
+    if(
+        typeof valor === "number" &&
+        Number.isFinite(valor)
+    ){
+        return valor;
+    }
+
+    let texto =
+        String(valor)
+            .trim()
+            .replace(/[^\d,.-]/g,"");
+
+    if(
+        texto.includes(",") &&
+        texto.includes(".")
+    ){
+
+        texto =
+            texto
+                .replace(/\./g,"")
+                .replace(",", ".");
+
+    }else if(
+        texto.includes(",")
+    ){
+
+        texto =
+            texto.replace(",", ".");
+    }
+
+    const numero =
+        Number(texto);
+
+    return Number.isFinite(numero)
+        ? numero
+        : 0;
+}
+
+function formatarPreco(valor){
+
+    return numeroSeguro(valor)
+        .toLocaleString(
+            "pt-BR",
+            {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            }
+        );
+}
+
+function obterDataTimestamp(dados){
+
+    const valor =
+        Number(
+            dados?.criadoEm ??
+            dados?.createdAt ??
+            dados?.data ??
+            dados?.timestamp ??
+            0
+        );
+
+    return Number.isFinite(valor)
+        ? valor
+        : 0;
+}
+
+function mostrarToast(mensagem){
+
+    if(!toast){
+        return;
+    }
+
+    toast.textContent =
+        mensagem;
+
+    toast.classList.add("mostrar");
+
+    clearTimeout(toastTimer);
+
+    toastTimer =
+        setTimeout(
+            ()=>{
+                toast.classList.remove("mostrar");
+            },
+            4000
+        );
+}
+
+const toast =
+    document.getElementById("toast");
+
+/* =========================================================
+   CLIENTE
+   ========================================================= */
+
+function obterClienteId(){
+
+    const chaves = [
+        "clienteId",
+        "usuarioId",
+        "userId",
+        "uid"
+    ];
+
+    for(const chave of chaves){
+
+        const valor =
+            localStorage.getItem(chave);
+
+        if(
+            valor &&
+            valor.trim()
+        ){
+            return valor.trim();
+        }
+    }
+
+    return null;
+}
+
+async function carregarCliente(){
+
+    const clienteId =
+        obterClienteId();
+
+    if(!clienteId){
+        return null;
+    }
+
+    const caminhos = [
+        "clientes/" + clienteId,
+        "usuarios/" + clienteId
+    ];
+
+    for(const caminho of caminhos){
+
+        try{
+
+            const snapshot =
+                await get(
+                    ref(db,caminho)
+                );
+
+            if(snapshot.exists()){
+
+                clienteAtual =
+                    snapshot.val() || {};
+
+                return clienteAtual;
+            }
+
+        }catch(erro){
+
+            console.warn(
+                "Erro ao carregar cliente:",
+                erro
+            );
+        }
+    }
+
+    return null;
+}
+
+function obterNomeCliente(){
+
+    return (
+        clienteAtual?.nome ||
+        clienteAtual?.nomeUsuario ||
+        clienteAtual?.displayName ||
+        localStorage.getItem("nomeCliente") ||
+        localStorage.getItem("nomeUsuario") ||
+        "Cliente"
+    );
+}
+
+function obterEmailCliente(){
+
+    return (
+        clienteAtual?.email ||
+        localStorage.getItem("emailCliente") ||
+        localStorage.getItem("emailUsuario") ||
+        ""
+    );
+}
+
+/* =========================================================
+   PRODUTO
+   ========================================================= */
+
+function definirProdutoIndisponivel(mensagem){
+
+    nomeEl.textContent =
+        "Produto não encontrado";
+
+    descricaoEl.textContent =
+        mensagem;
+
+    precoEl.textContent =
+        "0,00";
+
+    btnSalvar.disabled =
+        true;
+
+    btnComprar.disabled =
+        true;
+
+    btnAvaliar.disabled =
+        true;
+
+    btnAvaliacoes.disabled =
+        true;
+
+    btnReembolso.disabled =
+        true;
+
+    videoEl.style.display =
+        "none";
+
+    videoPlaceholder.classList.remove(
+        "hidden"
+    );
+}
+
+function carregarVideoProduto(produto){
+
+    function obterUrlMidia(valor){
+        if(!valor) return "";
+        if(typeof valor === "string") return valor.trim();
+        if(typeof valor === "object") return String(
+            valor.url ??
+            valor.dataUrl ??
+            valor.dataURL ??
+            valor.downloadURL ??
+            valor.downloadUrl ??
+            valor.src ??
+            ""
+        ).trim();
+        return "";
+    }
+
+    const urlVideo =
+        obterUrlMidia(produto?.video) ||
+        obterUrlMidia(produto?.videoUrl) ||
+        obterUrlMidia(produto?.demoVideo) ||
+        obterUrlMidia(produto?.videoDemonstracao) ||
+        obterUrlMidia(produto?.videoDemo);
+
+    videoEl.pause();
+
+    videoEl.removeAttribute("src");
+    videoSourceEl.removeAttribute("src");
+
+    if(!urlVideo){
+
+        videoEl.style.display =
+            "none";
+
+        videoPlaceholder.classList.remove(
+            "hidden"
+        );
+
+        return;
+    }
+
+    videoSourceEl.src =
+        urlVideo;
+
+    const urlSemQuery =
+        urlVideo
+            .split("?")[0]
+            .toLowerCase();
+
+    if(urlSemQuery.startsWith("data:video/webm")){
+        videoSourceEl.type = "video/webm";
+    }else if(urlSemQuery.startsWith("data:video/ogg") || urlSemQuery.startsWith("data:video/ogv")){
+        videoSourceEl.type = "video/ogg";
+    }else if(urlSemQuery.startsWith("data:video/mp4")){
+        videoSourceEl.type = "video/mp4";
+    }else if(urlSemQuery.endsWith(".webm")){
+
+        videoSourceEl.type =
+            "video/webm";
+
+    }else if(
+        urlSemQuery.endsWith(".ogv") ||
+        urlSemQuery.endsWith(".ogg")
+    ){
+
+        videoSourceEl.type =
+            "video/ogg";
+
+    }else{
+
+        videoSourceEl.type =
+            "video/mp4";
+    }
+
+    videoEl.style.display =
+        "block";
+
+    videoPlaceholder.classList.add(
+        "hidden"
+    );
+
+    videoEl.load();
+}
+
+function carregarProduto(){
+
+    if(!id){
+
+        definirProdutoIndisponivel(
+            "Nenhum ID de produto foi informado na URL."
+        );
+
+        return;
+    }
+
+    if(produtoListenerAtivo){
+        return;
+    }
+
+    produtoListenerAtivo = true;
+
+    const caminhosProduto = origemProduto === "aplicativos"
+        ? ["aplicativos/" + id, "produtos/" + id]
+        : ["produtos/" + id, "aplicativos/" + id];
+
+    const carregarSnapshotProduto = async ()=>{
+        for(const caminho of caminhosProduto){
+            try{
+                const snapshot = await get(ref(db,caminho));
+                if(snapshot.exists()) return snapshot;
+            }catch(erro){
+                console.warn("Erro ao consultar produto:",erro);
+            }
+        }
+        return null;
+    };
+
+    carregarSnapshotProduto().then(snapshot=>{
+
+            if(!snapshot.exists()){
+
+                definirProdutoIndisponivel(
+                    "Este aplicativo não existe ou foi removido."
+                );
+
+                return;
+            }
+
+            produtoAtual =
+                snapshot.val() || {};
+
+            window.produtoAtual = produtoAtual;
+
+            nomeEl.textContent =
+                produtoAtual.nome ??
+                produtoAtual.nomeApp ??
+                "Aplicativo";
+
+            precoEl.textContent =
+                formatarPreco(
+                    produtoAtual.preco ??
+                    produtoAtual.precoApp ??
+                    0
+                );
+
+            const obterUrlImagem = (valor)=>{
+    if(!valor) return "";
+    if(typeof valor === "string") return valor.trim();
+    if(typeof valor === "object") return String(valor.url ?? valor.downloadURL ?? valor.downloadUrl ?? valor.src ?? valor.dataUrl ?? valor.dataURL ?? "").trim();
+    return "";
+};
+
+            const urlImagem =
+                obterUrlImagem(produtoAtual.imagem) ||
+                obterUrlImagem(produtoAtual.imagemUrl) ||
+                obterUrlImagem(produtoAtual.logo) ||
+                "app.jpg";
+
+            imagemEl.src = urlImagem;
+
+            imagemEl.alt =
+                produtoAtual.nome ??
+                "Aplicativo";
+
+            imagemEl.onerror =
+                ()=>{
+                    if(
+                        imagemEl.src.endsWith(
+                            "app.jpg"
+                        )
+                    ){
+                        return;
+                    }
+
+                    imagemEl.src =
+                        "app.jpg";
+                };
+
+            descricaoEl.textContent =
+                produtoAtual.descricao ??
+                produtoAtual.descricaoApp ??
+                "Sem descrição disponível.";
+
+            categoriaEl.textContent =
+                produtoAtual.categoria ??
+                produtoAtual.categoriaApp ??
+                "Aplicativo";
+
+            btnChatVendedor.disabled = false;
+            carregarVendedorDoProduto();
+
+            carregarVideoProduto(
+                produtoAtual
+            );
+
+            carregarArquivoApk(
+                produtoAtual
+            );
+
+            btnSalvar.disabled = false;
+            btnComprar.disabled = false;
+            btnAvaliar.disabled = false;
+            btnAvaliacoes.disabled = false;
+
+            verificarSituacaoReembolso();
+            prepararPacoteProduto();
+    verificarAcessoDownload();
+        },
+
+        erro=>{
+
+            console.error(
+                "Erro ao carregar produto:",
+                erro
+            );
+
+            definirProdutoIndisponivel(
+                "Não foi possível carregar o aplicativo."
+            );
+
+            mostrarToast(
+                "❌ Erro ao carregar o produto."
+            );
+        }
+    );
+}
+
+
+/* =========================================================
+   CHAT COM O VENDEDOR
+   ========================================================= */
+
+function garantirClienteParaChat(){
+    let clienteId = obterClienteId();
+
+    if(!clienteId){
+        clienteId =
+            "cliente_" + Date.now() + "_" +
+            Math.random().toString(36).slice(2,8);
+        localStorage.setItem("clienteId",clienteId);
+    }
+
+    return clienteId;
+}
+
+async function carregarVendedorDoProduto(){
+    const vendedorId = String(produtoAtual?.vendedorId ?? "").trim();
+
+    if(!vendedorId){
+        vendedorAtual = null;
+        btnChatVendedor.disabled = true;
+        btnChatVendedor.title = "Este aplicativo não possui vendedor vinculado.";
+        return;
+    }
+
+    try{
+        const snapshot = await get(ref(db,"vendedores/" + vendedorId));
+        vendedorAtual = snapshot.exists() ? (snapshot.val() || {}) : {};
+
+        const nome =
+            vendedorAtual.nome ||
+            vendedorAtual.nomeVendedor ||
+            vendedorAtual.displayName ||
+            produtoAtual.vendedorNome ||
+            "Vendedor";
+
+        chatTitulo.textContent = nome;
+
+        const vendedorBloqueado =
+            vendedorAtual.bloqueado === true ||
+            vendedorAtual.banido === true ||
+            String(vendedorAtual.status || "").toLowerCase() === "bloqueado";
+
+        if(vendedorBloqueado){
+            btnChatVendedor.disabled = true;
+            btnChatVendedor.title = "Este vendedor está bloqueado.";
+            btnChatVendedor.textContent = "🚫 Vendedor bloqueado";
+
+            mostrarToast("🚫 Este vendedor foi bloqueado. Voltando para a loja...");
+            chatStatus.textContent = "🔒 Vendedor bloqueado pelo administrador";
+
+            // Retorna automaticamente para a loja.
+            setTimeout(() => {
+                voltar();
+            }, 1800);
+            return;
+        }else{
+            btnChatVendedor.disabled = false;
+            btnChatVendedor.title = "Conversar com o vendedor";
+            btnChatVendedor.textContent = "💬 Chat com vendedor";
+        }
+    }catch(erro){
+        console.warn("Erro carregando vendedor do chat:",erro);
+        vendedorAtual = {};
+        btnChatVendedor.disabled = false;
+    }
+}
+
+function criarIdConversa(clienteId,vendedorId,produtoId){
+    const partes = [String(clienteId),String(vendedorId),String(produtoId)].sort();
+    return btoa(unescape(encodeURIComponent(partes.join("__"))))
+        .replace(/[^a-zA-Z0-9_-]/g, "")
+        .slice(0,180);
+}
+
+function formatarHoraChat(timestamp){
+    const data = new Date(Number(timestamp) || Date.now());
+    return data.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+}
+
+function renderizarMensagemChat(mensagem){
+    const div = document.createElement("div");
+    const remetente = String(mensagem.remetenteTipo || mensagem.tipo || "cliente");
+    div.className = "chat-msg " + (remetente === "vendedor" ? "vendedor" : "cliente");
+
+    const texto = document.createElement("span");
+    texto.textContent = String(mensagem.texto || mensagem.mensagem || "");
+    div.appendChild(texto);
+
+    const hora = document.createElement("small");
+    hora.className = "chat-hora";
+    hora.textContent = formatarHoraChat(mensagem.criadoEm || mensagem.timestamp);
+    div.appendChild(hora);
+
+    return div;
+}
+
+function ouvirMensagensChat(){
+    if(chatListenerAtivo || !chatConversaId){
+        return;
+    }
+
+    chatListenerAtivo = true;
+
+    onValue(
+        ref(db,"chats/" + chatConversaId + "/mensagens"),
+        snapshot=>{
+            chatMensagens.innerHTML = "";
+
+            if(!snapshot.exists()){
+                chatMensagens.innerHTML = `
+                    <div class="chat-vazio">
+                        👋 Comece a conversa!<br>
+                        Tire suas dúvidas sobre o aplicativo antes de comprar.
+                    </div>
+                `;
+                return;
+            }
+
+            const lista = [];
+            snapshot.forEach(item=>{
+                lista.push({id:item.key,...(item.val() || {})});
+            });
+
+            lista.sort((a,b)=>(Number(a.criadoEm || a.timestamp || 0) - Number(b.criadoEm || b.timestamp || 0)));
+
+            lista.forEach(mensagem=>{
+                chatMensagens.appendChild(renderizarMensagemChat(mensagem));
+            });
+
+            const updates = {};
+            lista.forEach(mensagem=>{
+                const tipo = String(mensagem.remetenteTipo || mensagem.remetente || "");
+                if(tipo === "vendedor" && mensagem.lida !== true){
+                    updates["chats/" + chatConversaId + "/mensagens/" + mensagem.id + "/lida"] = true;
+                }
+            });
+            if(Object.keys(updates).length){
+                update(ref(db), updates).catch(err=>console.warn("Leitura do vendedor:",err));
+                update(ref(db,"chats/" + chatConversaId),{naoLidasCliente:0}).catch(err=>console.warn("Contador de leitura:",err));
+            }
+
+            requestAnimationFrame(()=>{
+                chatMensagens.scrollTop = chatMensagens.scrollHeight;
+            });
+        },
+        erro=>{
+            console.error("Erro no chat:",erro);
+            chatMensagens.innerHTML = `
+                <div class="chat-vazio">❌ Não foi possível carregar as mensagens.</div>
+            `;
+            chatStatus.textContent = "🔴 Erro ao conectar ao chat";
+        }
+    );
+}
+
+
+function monitorarBloqueioDoVendedor(vendedorId){
+    if(typeof pararMonitoramentoBloqueioVendedor === "function"){
+        pararMonitoramentoBloqueioVendedor();
+        pararMonitoramentoBloqueioVendedor = null;
+    }
+
+    const caminhos = [
+        "vendedores/" + vendedorId,
+        "usuarios/" + vendedorId,
+        "lojas/" + vendedorId,
+        "chatVendedores/" + vendedorId + "/perfil"
+    ];
+
+    let listeners = [];
+    let bloqueioConfirmado = false;
+
+    const atualizarEstado = async () => {
+        try{
+            const snapshots = await Promise.all(
+                caminhos.map(caminho => get(ref(db, caminho)))
+            );
+
+            const bloqueado = snapshots.some(snapshot => {
+                const dados = snapshot.exists() ? (snapshot.val() || {}) : {};
+                const status = String(
+                    dados.status || dados.estado || dados.situacao || ""
+                ).toLowerCase();
+
+                return dados.bloqueado === true ||
+                    dados.banido === true ||
+                    dados.banido === "true" ||
+                    dados.bloqueado === "true" ||
+                    ["bloqueado","banido","banido","banned","blocked"].includes(status);
+            });
+
+            if(bloqueado){
+                if(!bloqueioConfirmado) mostrarToast("🚫 A pessoa foi banida/bloqueada. O chat foi travado.");
+                bloqueioConfirmado = true;
+                chatInput.disabled = true;
+                btnEnviarChat.disabled = true;
+                chatStatus.textContent = "🔒 Chat travado: pessoa bloqueada pelo administrador";
+                if(chatMensagens){
+                    chatMensagens.innerHTML = `
+                        <div class="chat-vazio">
+                            🚫 Esta pessoa foi bloqueada pelo administrador.<br>
+                            O chat está travado e não é possível enviar mensagens.
+                        </div>`;
+                }
+            }else if(!bloqueioConfirmado && chatModal.classList.contains("aberto")){
+                chatInput.disabled = false;
+                btnEnviarChat.disabled = false;
+                chatStatus.textContent = "🟢 Conversa privada com o vendedor";
+            }
+        }catch(erro){
+            console.error("Erro verificando bloqueio em tempo real:", erro);
+        }
+    };
+
+    caminhos.forEach(caminho => {
+        const listener = onValue(ref(db, caminho), () => {
+            atualizarEstado();
+        }, erro => console.error("Erro monitorando " + caminho, erro));
+        listeners.push(listener);
+    });
+
+    atualizarEstado();
+
+    pararMonitoramentoBloqueioVendedor = () => {
+        listeners.forEach(unsubscribe => {
+            if(typeof unsubscribe === "function") unsubscribe();
+        });
+        listeners = [];
+    };
+}
+
+async function abrirChatVendedor(){
+    if(clienteBloqueadoNaPagina){
+        mostrarToast("🚫 Acesso bloqueado. Motivo: " + (document.getElementById("motivoBloqueioClienteProduto")?.textContent || "Conta bloqueada."));
+        return;
+    }
+
+    if(!produtoAtual){
+        mostrarToast("⏳ Produto ainda carregando.");
+        return;
+    }
+
+    const vendedorId = String(produtoAtual.vendedorId ?? "").trim();
+    if(!vendedorId){
+        mostrarToast("❌ Este aplicativo não possui vendedor vinculado.");
+        return;
+    }
+
+    // Impede o chat quando o administrador bloqueou o vendedor.
+    try{
+        const vendedorSnapshot = await get(ref(db,"vendedores/" + vendedorId));
+        const dadosVendedor = vendedorSnapshot.exists() ? (vendedorSnapshot.val() || {}) : {};
+        const vendedorBloqueado =
+            dadosVendedor.bloqueado === true ||
+            dadosVendedor.banido === true ||
+            String(dadosVendedor.status || "").toLowerCase() === "bloqueado";
+
+        if(vendedorBloqueado){
+            mostrarToast("🚫 Este vendedor está bloqueado. Voltando para a loja...");
+            chatStatus.textContent = "🔒 Chat bloqueado pelo administrador";
+
+            // Fecha o chat e retorna para a loja.
+            fecharChatVendedor();
+            setTimeout(() => {
+                voltar();
+            }, 800);
+            return;
+        }
+    }catch(erro){
+        console.warn("Não foi possível verificar o bloqueio do vendedor:",erro);
+        mostrarToast("❌ Não foi possível verificar o status do vendedor.");
+        return;
+    }
+
+    const clienteId = garantirClienteParaChat();
+    chatConversaId = criarIdConversa(clienteId,vendedorId,id);
+    chatListenerAtivo = false;
+
+    chatTitulo.textContent =
+        vendedorAtual?.nome ||
+        vendedorAtual?.nomeVendedor ||
+        produtoAtual.vendedorNome ||
+        "Vendedor";
+
+    chatProduto.textContent =
+        "Sobre: " + (produtoAtual.nome || produtoAtual.nomeApp || "Aplicativo");
+
+    chatStatus.textContent = "🟢 Conversa privada com o vendedor";
+    chatModal.classList.add("aberto");
+    document.body.style.overflow = "hidden";
+    monitorarBloqueioDoVendedor(vendedorId);
+    chatMensagens.innerHTML = `<div class="chat-vazio">Carregando conversa...</div>`;
+
+    try{
+        const conversaRef = ref(db,"chats/" + chatConversaId);
+        const snapshot = await get(conversaRef);
+        const agora = Date.now();
+
+        if(!snapshot.exists()){
+            await set(conversaRef,{
+                id:chatConversaId,
+                clienteId,
+                clienteNome:obterNomeCliente(),
+                clienteEmail:obterEmailCliente(),
+                vendedorId,
+                vendedorNome:chatTitulo.textContent,
+                produtoId:id,
+                produtoNome:produtoAtual.nome || produtoAtual.nomeApp || "Aplicativo",
+                criadoEm:agora,
+                atualizadoEm:agora,
+                ultimaMensagem:"",
+                ultimaMensagemEm:0,
+                ultimaMensagemPor:"",
+                naoLidasCliente:0,
+                naoLidasVendedor:0
+            });
+        }
+
+        onValue(ref(db,"chats/" + chatConversaId + "/digitando/vendedor"),snap=>{
+            if(chatAviso){
+                chatAviso.textContent = snap.val() === true ? "Vendedor está digitando..." : "";
+            }
+        });
+        ouvirMensagensChat();
+        setTimeout(()=>chatInput.focus(),100);
+    }catch(erro){
+        console.error("Erro abrindo chat:", erro);
+
+        const codigoErro = String(erro?.code || "").toLowerCase();
+        const mensagemErro = String(erro?.message || "").toLowerCase();
+
+        if(codigoErro.includes("permission-denied") || mensagemErro.includes("permission")){
+            mostrarToast("🔒 O Firebase bloqueou o acesso ao chat. Verifique as regras do Realtime Database.");
+            chatStatus.textContent = "🔴 Acesso ao chat bloqueado pelo Firebase";
+        }else if(codigoErro.includes("network") || mensagemErro.includes("network")){
+            mostrarToast("📡 Sem conexão com o Firebase. Verifique sua internet.");
+            chatStatus.textContent = "🔴 Falha de conexão com o Firebase";
+        }else{
+            mostrarToast("❌ Erro ao abrir o chat: " + (erro?.message || "erro desconhecido"));
+            chatStatus.textContent = "🔴 Não foi possível conectar";
+        }
+
+        chatMensagens.innerHTML = `
+            <div class="chat-vazio">
+                ❌ Não foi possível abrir a conversa.<br>
+                <small>Abra o console do navegador (F12) para ver o erro detalhado.</small>
+            </div>
+        `;
+    }
+}
+
+async function enviarMensagemChat(evento){
+    if(clienteBloqueadoNaPagina){
+        mostrarToast("🚫 Acesso bloqueado. Motivo: " + (document.getElementById("motivoBloqueioClienteProduto")?.textContent || "Conta bloqueada."));
+        return;
+    }
+
+    evento.preventDefault();
+
+    const texto = chatInput.value.trim();
+    if(!texto || !chatConversaId || !produtoAtual){
+        return;
+    }
+
+    const vendedorId = String(produtoAtual.vendedorId ?? "").trim();
+    const clienteId = garantirClienteParaChat();
+    if(!vendedorId){
+        mostrarToast("❌ Vendedor não encontrado.");
+        return;
+    }
+
+    // Verifica novamente se o administrador bloqueou o vendedor.
+    // Isso também trava o envio caso o bloqueio aconteça com o chat já aberto.
+    try{
+        const vendedorSnapshot = await get(ref(db,"vendedores/" + vendedorId));
+        const dadosVendedor = vendedorSnapshot.exists() ? (vendedorSnapshot.val() || {}) : {};
+        const vendedorBloqueado =
+            dadosVendedor.bloqueado === true ||
+            dadosVendedor.banido === true ||
+            String(dadosVendedor.status || "").toLowerCase() === "bloqueado";
+
+        if(vendedorBloqueado){
+            chatInput.disabled = true;
+            btnEnviarChat.disabled = true;
+            chatStatus.textContent = "🔒 Chat bloqueado pelo administrador";
+            mostrarToast("🚫 Este vendedor está bloqueado. O chat foi travado.");
+            return;
+        }
+    }catch(erro){
+        console.error("Erro verificando bloqueio do vendedor:",erro);
+        mostrarToast("❌ Não foi possível verificar o vendedor.");
+        return;
+    }
+
+    try{
+        btnEnviarChat.disabled = true;
+        chatInput.disabled = true;
+
+        const mensagensRef = ref(db,"chats/" + chatConversaId + "/mensagens");
+        const novaMensagem = push(mensagensRef);
+        const agora = Date.now();
+
+        await set(novaMensagem,{
+            id:novaMensagem.key,
+            conversaId:chatConversaId,
+            clienteId,
+            vendedorId,
+            produtoId:id,
+            remetenteId:clienteId,
+            remetenteTipo:"cliente",
+            remetenteNome:obterNomeCliente(),
+            texto,
+            criadoEm:agora,
+            lida:false
+        });
+
+        await set(ref(db,"chats/" + chatConversaId + "/atualizadoEm"),agora);
+        await set(ref(db,"chats/" + chatConversaId + "/ultimaMensagem"),texto.slice(0,200));
+        await set(ref(db,"chats/" + chatConversaId + "/ultimaMensagemEm"),agora);
+        await set(ref(db,"chats/" + chatConversaId + "/ultimaMensagemPor"),"cliente");
+        await update(ref(db,"chats/" + chatConversaId),{
+            naoLidasVendedor: increment(1)
+        });
+
+        chatInput.value = "";
+        chatInput.style.height = "auto";
+    }catch(erro){
+        console.error("Erro enviando mensagem:",erro);
+        mostrarToast("❌ Não foi possível enviar a mensagem.");
+    }finally{
+        // Só libera novamente se o vendedor continuar desbloqueado.
+        try{
+            const atualizacao = await get(ref(db,"vendedores/" + vendedorId));
+            const dadosAtuais = atualizacao.exists() ? (atualizacao.val() || {}) : {};
+            const bloqueadoAgora = dadosAtuais.bloqueado === true || dadosAtuais.banido === true || String(dadosAtuais.status || "").toLowerCase() === "bloqueado";
+            btnEnviarChat.disabled = bloqueadoAgora;
+            chatInput.disabled = bloqueadoAgora;
+            if(bloqueadoAgora){
+                chatStatus.textContent = "🔒 Chat bloqueado pelo administrador";
+            }else{
+                chatInput.focus();
+            }
+        }catch(_erro){
+            // Não libera o chat automaticamente se não for possível confirmar o status.
+            // Mantém o bloqueio até uma nova verificação.
+            btnEnviarChat.disabled = true;
+            chatInput.disabled = true;
+        }
+    }
+}
+
+function fecharChatVendedor(){
+    chatModal.classList.remove("aberto");
+    document.body.style.overflow = "";
+}
+
+/* =========================================================
+   PEDIDOS
+   ========================================================= */
+
+function normalizarTexto(valor){
+
+    return String(valor ?? "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g,"")
+        .trim();
+}
+
+function pedidoPago(pedido){
+
+    if(!pedido){
+        return false;
+    }
+
+    if(
+        pedido.pago === true ||
+        pedido.pagamentoAprovado === true ||
+        pedido.aprovado === true ||
+        pedido.compraPaga === true
+    ){
+        return true;
+    }
+
+    const statusPagamento =
+        normalizarTexto(
+            pedido.statusPagamento ??
+            pedido.pagamentoStatus ??
+            pedido.pagamento?.status ??
+            pedido.pagamento?.situacao ??
+            pedido.transacao?.status ??
+            pedido.paymentStatus
+        );
+
+    const statusPedido =
+        normalizarTexto(
+            pedido.status ??
+            pedido.estado ??
+            pedido.situacao ??
+            pedido.statusPedido
+        );
+
+    const statusValidos = new Set([
+        "pago",
+        "paid",
+        "aprovado",
+        "approved",
+        "concluido",
+        "completed",
+        "finalizado",
+        "finalizada",
+        "entregue",
+        "confirmado",
+        "confirmed"
+    ]);
+
+    return (
+        statusValidos.has(statusPagamento) ||
+        statusValidos.has(statusPedido)
+    );
+}
+
+function itemPertenceAoProduto(
+    item,
+    produtoId
+){
+
+    if(
+        !item ||
+        !produtoId
+    ){
+        return false;
+    }
+
+    const ids = [
+        item.id,
+        item.produtoId,
+        item.appId,
+        item.aplicativoId,
+        item.productId,
+        item.produto?.id,
+        item.aplicativo?.id
+    ];
+
+    return ids.some(
+        valor =>
+            String(valor ?? "") ===
+            String(produtoId)
+    );
+}
+
+function pedidoContemProduto(
+    pedido,
+    produtoId
+){
+
+    if(!pedido){
+        return false;
+    }
+
+    if(
+        itemPertenceAoProduto(
+            pedido,
+            produtoId
+        )
+    ){
+        return true;
+    }
+
+    const colecoes = [
+        pedido.itens,
+        pedido.produtos,
+        pedido.items,
+        pedido.carrinho,
+        pedido.aplicativos
+    ];
+
+    for(const colecao of colecoes){
+
+        if(!colecao){
+            continue;
+        }
+
+        const itens =
+            Array.isArray(colecao)
+                ? colecao
+                : Object.entries(colecao)
+                    .map(
+                        ([chave,valor])=>({
+                            __chave:chave,
+                            ...(valor || {})
+                        })
+                    );
+
+        for(const item of itens){
+
+            if(
+                itemPertenceAoProduto(
+                    item,
+                    produtoId
+                )
+            ){
+                return true;
+            }
+
+            if(
+                String(item.__chave ?? "") ===
+                String(produtoId)
+            ){
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+function pedidoPertenceAoCliente(
+    pedido,
+    clienteId
+){
+
+    if(
+        !pedido ||
+        !clienteId
+    ){
+        return false;
+    }
+
+    const ids = [
+        pedido.clienteId,
+        pedido.usuarioId,
+        pedido.userId,
+        pedido.customerId,
+        pedido.uid,
+        pedido.cliente?.id,
+        pedido.usuario?.id,
+        pedido.user?.id,
+        pedido.customer?.id
+    ];
+
+    return ids.some(
+        valor =>
+            String(valor ?? "") ===
+            String(clienteId)
+    );
+}
+
+async function encontrarCompra(){
+
+    const clienteId =
+        obterClienteId();
+
+    if(
+        !clienteId ||
+        !id
+    ){
+        return null;
+    }
+
+    const caminhos = [
+        "pedidos",
+        "compras",
+        "vendas"
+    ];
+
+    for(const caminho of caminhos){
+
+        try{
+
+            const snapshot =
+                await get(
+                    ref(db,caminho)
+                );
+
+            if(!snapshot.exists()){
+                continue;
+            }
+
+            let encontrada = null;
+
+            snapshot.forEach(
+                itemSnapshot=>{
+
+                    if(encontrada){
+                        return;
+                    }
+
+                    const pedido =
+                        itemSnapshot.val() || {};
+
+                    if(
+                        !pedidoPertenceAoCliente(
+                            pedido,
+                            clienteId
+                        )
+                    ){
+                        return;
+                    }
+
+                    if(
+                        !pedidoContemProduto(
+                            pedido,
+                            id
+                        )
+                    ){
+                        return;
+                    }
+
+                    if(
+                        !pedidoPago(pedido)
+                    ){
+                        return;
+                    }
+
+                    encontrada = {
+                        id:itemSnapshot.key,
+                        dados:pedido,
+                        caminho:caminho
+                    };
+                }
+            );
+
+            if(encontrada){
+                return encontrada;
+            }
+
+        }catch(erro){
+
+            console.warn(
+                `Erro pesquisando ${caminho}:`,
+                erro
+            );
+        }
+    }
+
+    return null;
+}
+
+/* =========================================================
+   REEMBOLSO
+   ========================================================= */
+
+async function encontrarReembolsoExistente(
+    clienteId,
+    pedidoId
+){
+
+    if(
+        !clienteId ||
+        !pedidoId ||
+        !id
+    ){
+        return null;
+    }
+
+    try{
+
+        const snapshot =
+            await get(
+                ref(
+                    db,
+                    "reembolsos"
+                )
+            );
+
+        if(!snapshot.exists()){
+            return null;
+        }
+
+        let encontrado = null;
+
+        snapshot.forEach(
+            itemSnapshot=>{
+
+                if(encontrado){
+                    return;
+                }
+
+                const dados =
+                    itemSnapshot.val() || {};
+
+                const mesmoCliente =
+                    String(
+                        dados.clienteId ?? ""
+                    ) ===
+                    String(clienteId);
+
+                const mesmoPedido =
+                    String(
+                        dados.pedidoId ?? ""
+                    ) ===
+                    String(pedidoId);
+
+                const mesmoProduto =
+                    String(
+                        dados.produtoId ?? ""
+                    ) ===
+                    String(id);
+
+                if(
+                    mesmoCliente &&
+                    mesmoPedido &&
+                    mesmoProduto
+                ){
+
+                    encontrado = {
+                        id:itemSnapshot.key,
+                        dados:dados
+                    };
+                }
+            }
+        );
+
+        return encontrado;
+
+    }catch(erro){
+
+        console.error(
+            "Erro procurando reembolso:",
+            erro
+        );
+
+        throw erro;
+    }
+}
+
+function normalizarStatusReembolso(status){
+
+    return normalizarTexto(
+        status || "pendente"
+    );
+}
+
+function mostrarStatusReembolso(status){
+
+    const normalizado =
+        normalizarStatusReembolso(
+            status
+        );
+
+    statusReembolso.className =
+        "status-reembolso mostrar";
+
+    if(
+        normalizado === "aprovado" ||
+        normalizado === "approved"
+    ){
+
+        statusReembolso.classList.add(
+            "aprovado"
+        );
+
+        statusReembolso.textContent =
+            "✅ Sua solicitação de reembolso foi aprovada.";
+
+        btnReembolso.disabled =
+            true;
+
+        return;
+    }
+
+    if(
+        normalizado === "recusado" ||
+        normalizado === "rejeitado" ||
+        normalizado === "rejected"
+    ){
+
+        statusReembolso.classList.add(
+            "recusado"
+        );
+
+        statusReembolso.textContent =
+            "❌ Sua solicitação de reembolso foi recusada.";
+
+        btnReembolso.disabled =
+            false;
+
+        return;
+    }
+
+    statusReembolso.classList.add(
+        "pendente"
+    );
+
+    statusReembolso.textContent =
+        "⏳ Você já possui uma solicitação de reembolso pendente.";
+
+    btnReembolso.disabled =
+        true;
+}
+
+function obterCompraDaSessaoPagamento(){
+    try{
+        const bruto = sessionStorage.getItem("ultimaCompraPix");
+        if(!bruto) return null;
+        const dados = JSON.parse(bruto);
+        if(!dados || !dados.uid) return null;
+        if(auth.currentUser && String(dados.uid) !== String(auth.currentUser.uid)) return null;
+        if(String(dados.produtoId || "") !== String(id || "")) return null;
+        if(!dados.pedidoId && !dados.pagamentoId) return null;
+        return {
+            id: dados.pedidoId || null,
+            pagamentoId: dados.pagamentoId || null,
+            produtoId: dados.produtoId || id
+        };
+    }catch{
+        return null;
+    }
+}
+
+async function verificarSituacaoReembolsoServidor(compra){
+    if(!id || !auth.currentUser) return null;
+    try{
+        const token = await auth.currentUser.getIdToken();
+        const params = new URLSearchParams();
+        if(compra?.id) params.set("pedidoId", compra.id);
+        if(compra?.pagamentoId) params.set("pagamentoId", compra.pagamentoId);
+        params.set("produtoId", id);
+        const resposta = await fetch(
+            `/api/reembolso/situacao?${params.toString()}`,
+            { headers:{ Authorization:`Bearer ${token}` } }
+        );
+        const data = await resposta.json().catch(()=>({}));
+        if(!resposta.ok) return null;
+        if(data?.pedido && !compra?.id){
+            data.compraEncontrada = {
+                id: data.pedidoId,
+                dados: data.pedido,
+                caminho: "pedidos"
+            };
+        }
+        return data;
+    }catch(erro){
+        console.error("Erro consultando janela de reembolso:", erro);
+        return null;
+    }
+}
+
+function iniciarContadorReembolso(retencaoAte){
+    if(window.__contadorReembolso) clearInterval(window.__contadorReembolso);
+    const atualizar=()=>{
+        const restante=Math.max(0, Number(retencaoAte||0)-Date.now());
+        if(restante<=0){
+            btnReembolso.disabled=true;
+            btnReembolso.textContent="⏱️ Prazo de reembolso encerrado";
+            if(window.__contadorReembolso) clearInterval(window.__contadorReembolso);
+            return;
+        }
+        const segundos=Math.ceil(restante/1000);
+        const min=Math.floor(segundos/60);
+        const seg=segundos%60;
+        btnReembolso.disabled=false;
+        btnReembolso.textContent=`↩️ Reembolso (${min}:${String(seg).padStart(2,"0")})`;
+    };
+    atualizar();
+    window.__contadorReembolso=setInterval(atualizar,1000);
+}
+
+async function verificarSituacaoReembolso(){
+
+    if(!id){
+        return;
+    }
+
+    const clienteId =
+        obterClienteId();
+
+    if(!clienteId){
+
+        atualizarAcoesPosCompra(false);
+        return;
+    }
+
+    try{
+
+        let situacaoServidor = await verificarSituacaoReembolsoServidor(null);
+        let compra = situacaoServidor?.compraEncontrada || obterCompraDaSessaoPagamento();
+        if(!compra){
+            compra = await encontrarCompra();
+            if(compra){
+                situacaoServidor = await verificarSituacaoReembolsoServidor(compra);
+            }
+        }
+
+        if(!compra){
+            pedidoEncontrado = null;
+            if(!compraConfirmadaNoServidor){
+                atualizarAcoesPosCompra(false);
+            }
+            return;
+        }
+
+        pedidoEncontrado = compra;
+        atualizarAcoesPosCompra(true);
+
+        if(situacaoServidor?.reembolso){
+            atualizarAcoesPosCompra(true);
+            mostrarStatusReembolso(situacaoServidor.reembolso.status);
+            return;
+        }
+
+        if(situacaoServidor?.podeSolicitar && situacaoServidor.retencaoAte){
+            iniciarContadorReembolso(situacaoServidor.retencaoAte);
+        }
+
+        if(situacaoServidor && situacaoServidor.podeSolicitar === false){
+            btnReembolso.disabled = true;
+            btnReembolso.textContent = "⏱️ Prazo de reembolso encerrado";
+            statusReembolso.className = "status-reembolso mostrar recusado";
+            statusReembolso.textContent = "⏱️ O prazo de 2 minutos para solicitar reembolso terminou.";
+            return;
+        }
+
+        const reembolso =
+            await encontrarReembolsoExistente(
+                clienteId,
+                compra.id
+            );
+
+        if(!reembolso){
+
+            atualizarAcoesPosCompra(true);
+            btnReembolso.disabled = false;
+
+            return;
+        }
+
+        mostrarStatusReembolso(
+            reembolso.dados?.status
+        );
+
+    }catch(erro){
+
+        console.error(
+            "Erro verificando reembolso:",
+            erro
+        );
+
+        if(!compraConfirmadaNoServidor){
+            atualizarAcoesPosCompra(false);
+        }
+    }
+}
+
+function obterValorProdutoNoPedido(
+    pedido
+){
+
+    const precoProduto =
+        numeroSeguro(
+            produtoAtual?.preco ??
+            produtoAtual?.precoApp ??
+            0
+        );
+
+    if(!pedido){
+        return precoProduto;
+    }
+
+    const colecoes = [
+        pedido.itens,
+        pedido.produtos,
+        pedido.items,
+        pedido.carrinho,
+        pedido.aplicativos
+    ];
+
+    for(const colecao of colecoes){
+
+        if(!colecao){
+            continue;
+        }
+
+        const itens =
+            Array.isArray(colecao)
+                ? colecao
+                : Object.values(colecao);
+
+        for(const item of itens){
+
+            if(
+                itemPertenceAoProduto(
+                    item,
+                    id
+                )
+            ){
+
+                const valor =
+                    numeroSeguro(
+                        item.preco ??
+                        item.valor ??
+                        item.price ??
+                        item.valorPago
+                    );
+
+                if(valor > 0){
+                    return valor;
+                }
+            }
+        }
+    }
+
+    return precoProduto;
+}
+
+/* =========================================================
+   MODAL REEMBOLSO
+   ========================================================= */
+
+async function abrirModalReembolso(){
+
+    if(!produtoAtual){
+
+        mostrarToast(
+            "⏳ Aguarde o produto carregar."
+        );
+
+        return;
+    }
+
+    const clienteId =
+        obterClienteId();
+
+    if(!clienteId){
+
+        mostrarToast(
+            "❌ Faça login antes de solicitar um reembolso."
+        );
+
+        return;
+    }
+
+    const modal =
+        document.getElementById(
+            "modalReembolso"
+        );
+
+    const botao =
+        document.getElementById(
+            "btnConfirmarReembolso"
+        );
+
+    modal.classList.add("aberto");
+
+    botao.disabled = true;
+
+    botao.textContent =
+        "🔎 Verificando compra...";
+
+    try{
+
+        let situacaoServidor = await verificarSituacaoReembolsoServidor(null);
+        let compra = situacaoServidor?.compraEncontrada || obterCompraDaSessaoPagamento();
+        if(!compra){
+            compra = await encontrarCompra();
+            if(compra){
+                situacaoServidor = await verificarSituacaoReembolsoServidor(compra);
+            }
+        }
+
+        if(!compra){
+            fecharModalReembolso();
+            mostrarToast("❌ Não encontramos uma compra paga deste aplicativo.");
+            return;
+        }
+
+        pedidoEncontrado = compra;
+
+        const existente =
+            await encontrarReembolsoExistente(
+                clienteId,
+                compra.id
+            );
+
+        if(existente){
+
+            fecharModalReembolso();
+
+            mostrarStatusReembolso(
+                existente.dados?.status
+            );
+
+            mostrarToast(
+                "⚠️ Já existe uma solicitação."
+            );
+
+            return;
+        }
+
+        situacaoServidor = await verificarSituacaoReembolsoServidor(compra);
+        if(situacaoServidor?.podeSolicitar && situacaoServidor.retencaoAte){
+            iniciarContadorReembolso(situacaoServidor.retencaoAte);
+        }
+        if(situacaoServidor?.reembolso){
+            fecharModalReembolso();
+            mostrarStatusReembolso(situacaoServidor.reembolso.status);
+            return;
+        }
+        if(situacaoServidor && situacaoServidor.podeSolicitar === false){
+            fecharModalReembolso();
+            btnReembolso.disabled = true;
+            btnReembolso.textContent = "⏱️ Prazo de reembolso encerrado";
+            mostrarToast("⏱️ O prazo de 2 minutos para solicitar reembolso terminou.");
+            return;
+        }
+
+        const valor =
+            obterValorProdutoNoPedido(
+                compra.dados
+            );
+
+        document.getElementById(
+            "reembolsoProduto"
+        ).textContent =
+            produtoAtual.nome ||
+            produtoAtual.nomeApp ||
+            "Aplicativo";
+
+        document.getElementById(
+            "reembolsoValor"
+        ).textContent =
+            "R$ " +
+            formatarPreco(valor);
+
+        document.getElementById(
+            "reembolsoPedido"
+        ).textContent =
+            compra.id;
+
+        document.getElementById(
+            "motivoReembolso"
+        ).value = "";
+
+        const campoAplicacao = document.getElementById("detalhesReembolso");
+        if(campoAplicacao) campoAplicacao.value = "";
+
+        botao.disabled = false;
+
+        botao.textContent =
+            "💰 Solicitar reembolso";
+
+    }catch(erro){
+
+        console.error(
+            "Erro abrindo reembolso:",
+            erro
+        );
+
+        fecharModalReembolso();
+
+        mostrarToast(
+            "❌ Não foi possível verificar sua compra."
+        );
+    }
+}
+
+function fecharModalReembolso(){
+
+    document
+        .getElementById("modalReembolso")
+        .classList.remove("aberto");
+
+    const botao =
+        document.getElementById(
+            "btnConfirmarReembolso"
+        );
+
+    botao.disabled = false;
+
+    botao.textContent =
+        "💰 Solicitar reembolso";
+}
+
+async function solicitarReembolso(){
+
+    const botao =
+        document.getElementById(
+            "btnConfirmarReembolso"
+        );
+
+    const clienteId =
+        obterClienteId();
+
+    if(
+        !clienteId ||
+        !id ||
+        !produtoAtual
+    ){
+
+        mostrarToast(
+            "❌ Não foi possível identificar sua compra."
+        );
+
+        return;
+    }
+
+    const motivo =
+        document
+            .getElementById(
+                "motivoReembolso"
+            )
+            .value
+            .trim();
+
+    const campoDetalhes = document.getElementById("detalhesReembolso");
+    const detalhes = campoDetalhes ? campoDetalhes.value.trim() : "";
+
+    if(!motivo){
+
+        mostrarToast(
+            "⚠️ Selecione o motivo."
+        );
+
+        return;
+    }
+
+    if(!detalhes){
+        mostrarToast(
+            "⚠️ Escreva o motivo do reembolso no campo Aplicação."
+        );
+        if(campoDetalhes) campoDetalhes.focus();
+        return;
+    }
+
+    try{
+
+        botao.disabled = true;
+
+        botao.textContent =
+            "⏳ Verificando...";
+
+        const compraSessao = obterCompraDaSessaoPagamento();
+        const situacaoInicial = await verificarSituacaoReembolsoServidor(compraSessao);
+        const compra = situacaoInicial?.compraEncontrada || compraSessao || await encontrarCompra();
+
+        if(!compra){
+
+            throw new Error(
+                "COMPRA_NAO_ENCONTRADA"
+            );
+        }
+
+        const existente =
+            await encontrarReembolsoExistente(
+                clienteId,
+                compra.id
+            );
+
+        if(existente){
+
+            throw new Error(
+                "REEMBOLSO_EXISTENTE"
+            );
+        }
+
+        const valor =
+            obterValorProdutoNoPedido(
+                compra.dados
+            );
+
+        const token = await auth.currentUser.getIdToken();
+
+        const resposta = await fetch("/api/reembolsos", {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":`Bearer ${token}`
+            },
+            body:JSON.stringify({
+                pedidoId:compra.id,
+                pagamentoId:compra.pagamentoId || compra.dados?.pagamentoId || "",
+                produtoId:id,
+                motivo,
+                detalhes
+            })
+        });
+
+        const resultado = await resposta.json().catch(()=>({}));
+
+        if(!resposta.ok){
+            const erro = new Error(resultado.erro || "Não foi possível solicitar o reembolso.");
+            erro.codigo = resultado.codigo;
+            throw erro;
+        }
+
+        fecharModalReembolso();
+
+        mostrarStatusReembolso(
+            "pendente"
+        );
+
+        mostrarToast(
+            "✅ Reembolso solicitado com sucesso!"
+        );
+
+    }catch(erro){
+
+        console.error(
+            "Erro solicitando reembolso:",
+            erro
+        );
+
+        if(
+            erro.message ===
+            "COMPRA_NAO_ENCONTRADA"
+        ){
+
+            mostrarToast(
+                "❌ Compra não encontrada."
+            );
+
+        }else if(
+            erro.codigo ===
+            "REEMBOLSO_EXISTENTE" ||
+            erro.message ===
+            "REEMBOLSO_EXISTENTE"
+        ){
+
+            mostrarToast(
+                "⚠️ Já existe uma solicitação."
+            );
+
+        }else if(
+            erro.codigo ===
+            "JANELA_REEMBOLSO_ENCERRADA"
+        ){
+
+            btnReembolso.disabled = true;
+            btnReembolso.textContent = "⏱️ Prazo de reembolso encerrado";
+            mostrarToast(
+                "⏱️ O prazo de 2 minutos para solicitar reembolso terminou."
+            );
+
+        }else{
+
+            mostrarToast(
+                "❌ " + (erro.message || "Erro ao solicitar reembolso.")
+            );
+        }
+
+        botao.disabled = false;
+
+        botao.textContent =
+            "💰 Solicitar reembolso";
+    }
+}
+
+/* =========================================================
+   AVALIAÇÕES
+   ========================================================= */
+
+function carregarAvaliacoes(){
+
+    if(
+        !id ||
+        avaliacaoListenerAtivo
+    ){
+        return;
+    }
+
+    avaliacaoListenerAtivo = true;
+
+    onValue(
+
+        ref(
+            db,
+            "avaliacoes/" + id
+        ),
+
+        snapshot=>{
+
+            const lista =
+                document.getElementById(
+                    "listaAvaliacoes"
+                );
+
+            if(!lista){
+                return;
+            }
+
+            lista.innerHTML = "";
+
+            if(!snapshot.exists()){
+
+                atualizarResumo([]);
+
+                lista.innerHTML = `
+                    <div class="loading">
+                        Nenhuma avaliação ainda.
+                    </div>
+                `;
+
+                return;
+            }
+
+            const avaliacoes = [];
+
+            snapshot.forEach(
+                item=>{
+
+                    const valor =
+                        item.val() || {};
+
+                    avaliacoes.push({
+                        id:item.key,
+                        ...valor
+                    });
+                }
+            );
+
+
+            /* =====================================================
+               ORDEM DOS COMENTÁRIOS
+               -----------------------------------------------------
+               O comentário mais recente sempre aparece primeiro.
+               Se dois comentários tiverem o mesmo horário, usamos
+               o ID do Firebase como critério de desempate.
+               ===================================================== */
+            avaliacoes.sort(
+                (a,b)=>{
+                    const dataA = obterDataTimestamp(a);
+                    const dataB = obterDataTimestamp(b);
+
+                    if(dataA !== dataB){
+                        return dataB - dataA;
+                    }
+
+                    return String(b.id || '').localeCompare(
+                        String(a.id || '')
+                    );
+                }
+            );
+
+            atualizarResumo(
+                avaliacoes
+            );
+
+            /* =========================================================
+               COMENTÁRIO RECENTE NA PÁGINA DO PRODUTO
+               ---------------------------------------------------------
+               Nesta página mostramos somente o comentário mais recente.
+               A página "Ver avaliações" continua responsável por mostrar
+               a lista completa de comentários.
+               ========================================================= */
+            /* Mostra no máximo 5 comentários, sempre do mais novo para o mais antigo. */
+window.__avaliacoesRenderizadas = avaliacoes.slice(0, 5);
+window.__avaliacoesRenderizadas.forEach((dados)=>{
+    criarAvaliacao(dados, lista);
+});
+configurarMenuComentarios();
+        },
+
+        erro=>{
+
+            console.error(
+                "Erro ao carregar avaliações:",
+                erro
+            );
+
+            const lista =
+                document.getElementById(
+                    "listaAvaliacoes"
+                );
+
+            if(lista){
+
+                lista.innerHTML = `
+                    <div class="loading">
+                        ❌ Não foi possível carregar
+                        as avaliações.
+                    </div>
+                `;
+            }
+        }
+    );
+}
+
+function atualizarResumo(
+    avaliacoes
+){
+
+    const total =
+        avaliacoes.length;
+
+    let soma = 0;
+
+    for(
+        const item of avaliacoes
+    ){
+
+        const nota =
+            Math.max(
+                0,
+                Math.min(
+                    5,
+                    Number(
+                        numeroSeguro(
+                            item.nota
+                        )
+                    )
+                )
+            );
+
+        soma += nota;
+    }
+
+    const media =
+        total > 0
+            ? soma / total
+            : 0;
+
+    const notaMedia =
+        document.getElementById(
+            "notaMedia"
+        );
+
+    notaMedia.textContent =
+        media.toLocaleString(
+            "pt-BR",
+            {
+                minimumFractionDigits:1,
+                maximumFractionDigits:1
+            }
+        );
+
+    const estrelasMedia =
+        document.getElementById(
+            "estrelasMedia"
+        );
+
+    const estrelas =
+        Math.max(
+            0,
+            Math.min(
+                5,
+                Math.round(media)
+            )
+        );
+
+    estrelasMedia.textContent =
+        "★".repeat(estrelas) +
+        "☆".repeat(5 - estrelas);
+
+    const totalAvaliacoes =
+        document.getElementById(
+            "totalAvaliacoes"
+        );
+
+    totalAvaliacoes.textContent =
+        total +
+        (
+            total === 1
+                ? " avaliação"
+                : " avaliações"
+        );
+
+    // Sincroniza a média e a quantidade no cadastro do produto.
+    // Assim a loja consegue mostrar os dados em tempo real.
+    if(id && origemProduto){
+        update(ref(db, origemProduto + "/" + id), {
+            avaliacao: Number(media.toFixed(2)),
+            totalAvaliacoes: total
+        }).catch(erro=>{
+            console.warn("Não foi possível sincronizar o resumo da avaliação:", erro);
+        });
+    }
+}
+
+function criarAvaliacao(
+    dados,
+    lista
+){
+
+    const div =
+        document.createElement("div");
+
+    div.className =
+        "avaliacao";
+    div.dataset.comentarioId = String(dados?.id || "");
+    div.dataset.usuarioId = String(dados?.usuarioId || "");
+
+    const nota =
+        Math.max(
+            0,
+            Math.min(
+                5,
+                Math.round(
+                    numeroSeguro(
+                        dados.nota
+                    )
+                )
+            )
+        );
+
+    const estrelas =
+        "★".repeat(nota) +
+        "☆".repeat(5 - nota);
+
+    const usuario =
+        escaparHTML(
+            dados.nome ??
+            dados.usuario ??
+            dados.nomeUsuario ??
+            "Cliente"
+        );
+
+    const comentario =
+        escaparHTML(
+            dados.comentario ??
+            dados.texto ??
+            "Sem comentário."
+        );
+
+    const timestamp =
+        obterDataTimestamp(dados);
+
+    let dataTexto = "";
+
+    if(timestamp){
+
+        const data =
+            new Date(timestamp);
+
+        if(
+            !Number.isNaN(
+                data.getTime()
+            )
+        ){
+
+            dataTexto =
+                data.toLocaleDateString(
+                    "pt-BR"
+                );
+        }
+    }
+
+    div.innerHTML = `
+
+        <div class="avaliacao-usuario">
+            👤 ${usuario}
+        </div>
+        <div class="avaliacao-acoes">
+            <button class="btn-menu-comentario" type="button" title="Mais opções" aria-label="Mais opções do comentário">⋮</button>
+            <div class="menu-comentario">
+                ${String(dados?.usuarioId || "") === String(usuarioAutenticado?.uid || "")
+                    ? '<button type="button" class="btn-excluir-comentario">🗑️ Excluir comentário</button>'
+                    : ""}
+                <button type="button" class="btn-denunciar-comentario">🚨 Denunciar comentário</button>
+            </div>
+        </div>
+
+        <h3>
+            ${estrelas}
+        </h3>
+
+        <p>
+            ${comentario}
+        </p>
+
+        ${
+            dataTexto
+                ? `
+                    <div class="avaliacao-data">
+                        📅 ${dataTexto}
+                    </div>
+                `
+                : ""
+        }
+
+    `;
+
+    lista.appendChild(div);
+}
+
+/* =========================================================
+   DENÚNCIA DE COMENTÁRIO
+   ========================================================= */
+function abrirDenunciaComentario(dados){
+    comentarioDenunciaAtual = dados || null;
+    document.getElementById("denunciaUsuarioComentario").textContent =
+        "👤 " + (dados?.nome ?? dados?.usuario ?? dados?.nomeUsuario ?? "Cliente");
+    document.getElementById("denunciaTextoComentario").textContent =
+        dados?.comentario ?? dados?.texto ?? "Sem comentário.";
+    document.getElementById("motivoDenunciaComentario").value = "";
+    document.getElementById("detalhesDenunciaComentario").value = "";
+    document.getElementById("modalDenunciaComentario").classList.add("aberto");
+}
+
+function fecharDenunciaComentario(){
+    document.getElementById("modalDenunciaComentario").classList.remove("aberto");
+    comentarioDenunciaAtual = null;
+}
+
+async function enviarDenunciaComentario(){
+    if(!comentarioDenunciaAtual || !produtoAtual){
+        mostrarToast("❌ Não foi possível identificar o comentário.");
+        return;
+    }
+    const motivo = document.getElementById("motivoDenunciaComentario").value.trim();
+    const detalhes = document.getElementById("detalhesDenunciaComentario").value.trim();
+    if(!motivo){
+        mostrarToast("⚠️ Selecione o motivo da denúncia.");
+        return;
+    }
+    const clienteId = obterClienteId() || "visitante";
+    const denuncia = {
+        tipo: "comentario_aplicativo",
+        status: "pendente",
+        motivo,
+        detalhes,
+        produtoId: id,
+        aplicativoId: id,
+        aplicativoNome: produtoAtual.nome ?? produtoAtual.nomeApp ?? "Aplicativo",
+        vendedorId: produtoAtual.vendedorId ?? "",
+        comentarioId: comentarioDenunciaAtual.id ?? "",
+        comentario: comentarioDenunciaAtual.comentario ?? comentarioDenunciaAtual.texto ?? "",
+        denunciadoNome: comentarioDenunciaAtual.nome ?? comentarioDenunciaAtual.usuario ?? comentarioDenunciaAtual.nomeUsuario ?? "Cliente",
+        denuncianteId: clienteId,
+        denuncianteNome: obterNomeCliente(),
+        denuncianteEmail: obterEmailCliente(),
+        criadoEm: Date.now()
+    };
+    try{
+        const novaDenuncia = push(ref(db,"denunciasAplicativos"));
+        await set(novaDenuncia,denuncia);
+        fecharDenunciaComentario();
+        mostrarToast("✅ Denúncia enviada para análise.");
+    }catch(erro){
+        console.error("Erro ao denunciar comentário:",erro);
+        mostrarToast("❌ Não foi possível enviar a denúncia.");
+    }
+}
+
+function configurarMenuComentarios(){
+    document.querySelectorAll(".avaliacao").forEach(card=>{
+        const menuBtn = card.querySelector(".btn-menu-comentario");
+        const menu = card.querySelector(".menu-comentario");
+        const denunciarBtn = card.querySelector(".btn-denunciar-comentario");
+        const excluirBtn = card.querySelector(".btn-excluir-comentario");
+        if(!menuBtn || !menu) return;
+
+        // O botão de excluir só é renderizado para o dono do comentário.
+        // A função excluirComentario() também verifica o UID antes de remover.
+
+        menuBtn.addEventListener("click",evento=>{
+            evento.stopPropagation();
+            document.querySelectorAll(".menu-comentario.aberto").forEach(outro=>{if(outro!==menu) outro.classList.remove("aberto");});
+            menu.classList.toggle("aberto");
+        });
+
+        if(denunciarBtn){
+            denunciarBtn.addEventListener("click",evento=>{
+                evento.stopPropagation();
+                const index = [...document.querySelectorAll(".avaliacao")].indexOf(card);
+                const dados = window.__avaliacoesRenderizadas?.[index];
+                menu.classList.remove("aberto");
+                if(dados) abrirDenunciaComentario(dados);
+            });
+        }
+
+        if(excluirBtn){
+            excluirBtn.addEventListener("click",evento=>{
+                evento.stopPropagation();
+                const index = [...document.querySelectorAll(".avaliacao")].indexOf(card);
+                const dados = window.__avaliacoesRenderizadas?.[index];
+                menu.classList.remove("aberto");
+                if(dados) excluirComentario(dados);
+            });
+        }
+    });
+}
+
+async function excluirComentario(dados){
+    const uid = usuarioAutenticado?.uid || "";
+    const comentarioId = String(dados?.id || "").trim();
+    const donoId = String(dados?.usuarioId || "").trim();
+
+    if(!uid){
+        mostrarToast("🔒 Faça login para excluir seu comentário.");
+        return;
+    }
+
+    if(!comentarioId || !id || !donoId || donoId !== uid){
+        mostrarToast("❌ Você só pode excluir seu próprio comentário.");
+        return;
+    }
+
+    if(!window.confirm("Tem certeza que deseja excluir seu comentário? Esta ação não pode ser desfeita.")){
+        return;
+    }
+
+    try{
+        await remove(ref(db,"avaliacoes/" + id + "/" + comentarioId));
+        mostrarToast("✅ Seu comentário foi excluído com sucesso!");
+    }catch(erro){
+        console.error("Erro ao excluir comentário:",erro);
+        mostrarToast("❌ O Firebase recusou a exclusão. Verifique se usuarioId do comentário é o mesmo auth.uid.");
+    }
+}
+
+/* =========================================================
+   SALVAR APLICATIVO
+   ========================================================= */
+
+function obterChaveCliente(){
+    return String(localStorage.getItem("clienteId") || "visitante");
+}
+
+async function salvarAplicativo(){
+    if(clienteBloqueadoNaPagina){
+        mostrarToast("🚫 Acesso bloqueado. Motivo: " + (document.getElementById("motivoBloqueioClienteProduto")?.textContent || "Conta bloqueada."));
+        return;
+    }
+
+    if(!produtoAtual){
+        mostrarToast("⏳ Produto ainda carregando.");
+        return;
+    }
+
+    if(!id){
+        mostrarToast("❌ Produto inválido.");
+        return;
+    }
+
+    // Usa o mesmo Firebase Authentication do cadastro da loja.
+    // O cadastro cria a conta e o Firebase mantém a sessão automaticamente.
+    const usuario = usuarioAutenticado || auth.currentUser;
+
+    if(!usuario){
+        mostrarToast("🔒 Faça login/cadastro para salvar o aplicativo na sua conta.");
+        btnSalvar.textContent = "🔒 Entrar para salvar";
+        return;
+    }
+
+    const bloqueio = await verificarBloqueioAntesDaCompra();
+    if(bloqueio){
+        const validade = bloqueio.expira
+            ? " O bloqueio possui prazo de expiração."
+            : " O bloqueio é permanente.";
+        mostrarToast("🚫 Salvar aplicativo bloqueado. Motivo: " + bloqueio.motivo + validade);
+        btnSalvar.textContent = "🚫 Salvamento bloqueado";
+        return;
+    }
+
+    const produtoId = String(
+        produtoAtual.produtoId ??
+        produtoAtual.productId ??
+        produtoAtual.appId ??
+        produtoAtual.id ??
+        id
+    ).trim();
+
+    if(!produtoId){
+        mostrarToast("❌ Não foi possível identificar o aplicativo.");
+        return;
+    }
+
+    const imagem = String(
+        produtoAtual.imagem ??
+        produtoAtual.imagemUrl ??
+        produtoAtual.imagemURL ??
+        produtoAtual.logo ??
+        imagemEl?.src ??
+        ""
+    ).trim();
+
+    const item = {
+        id: produtoId,
+        produtoId: produtoId,
+        nome: produtoAtual.nome ?? produtoAtual.nomeApp ?? "Aplicativo",
+        preco: numeroSeguro(
+            produtoAtual.preco ?? produtoAtual.precoApp ?? 0
+        ),
+        moeda: "BRL",
+        imagem: imagem,
+        descricao: produtoAtual.descricao ??
+                   produtoAtual.descricaoApp ??
+                   "",
+        categoria: produtoAtual.categoria ??
+                   produtoAtual.categoriaApp ??
+                   "Aplicativo",
+        vendedorId: produtoAtual.vendedorId ?? "",
+        vendedorNome: produtoAtual.vendedorNome ??
+                      produtoAtual.nomeVendedor ??
+                      "",
+        salvoEm: Date.now()
+    };
+
+    try{
+        btnSalvar.disabled = true;
+        btnSalvar.textContent = "⏳ Salvando...";
+
+        // Salva na conta do usuário que foi criada pelo cadastro da loja.
+        await set(
+            ref(db, "aplicativosSalvos/" + usuario.uid + "/" + produtoId),
+            item
+        );
+
+        // Backup local para manter compatibilidade com páginas antigas.
+        try{
+            const lista = JSON.parse(
+                localStorage.getItem("aplicativosSalvos") || "{}"
+            );
+            const chave = String(usuario.uid);
+            lista[chave] = lista[chave] || {};
+            lista[chave][produtoId] = item;
+            localStorage.setItem("aplicativosSalvos", JSON.stringify(lista));
+        }catch(localErro){
+            console.warn("Backup local não realizado:", localErro);
+        }
+
+        mostrarToast("✅ Aplicativo salvo com sucesso!");
+        btnSalvar.textContent = "💾 Aplicativo salvo";
+    }catch(erro){
+        console.error("Erro salvando aplicativo no Firebase:", erro);
+
+        if(String(erro?.code || "").includes("permission") ||
+           String(erro?.message || "").toLowerCase().includes("permission")){
+            mostrarToast("❌ Firebase bloqueou o salvamento. Verifique as regras de aplicativosSalvos.");
+        }else{
+            mostrarToast("❌ Não foi possível salvar o aplicativo.");
+        }
+
+        btnSalvar.textContent = "💾 Salvar aplicativo";
+    }finally{
+        btnSalvar.disabled = false;
+    }
+}
+
+/* =========================================================
+   VERIFICAR BLOQUEIO DO CLIENTE
+   ========================================================= */
+async function verificarBloqueioAntesDaCompra(){
+    const usuario = usuarioAutenticado || auth.currentUser;
+
+    if(!usuario) return null;
+
+    try{
+        const snapshot = await get(ref(db, "usuarios/" + usuario.uid));
+
+        if(!snapshot.exists()) return null;
+
+        const dados = snapshot.val() || {};
+
+        if(dados.banido === true){
+            return {
+                motivo: String(dados.motivoBanimento || "Conta bloqueada pelo administrador."),
+                expira: dados.banimentoExpiraEm || null
+            };
+        }
+    }catch(erro){
+        console.error("Erro verificando bloqueio do cliente:", erro);
+        // Se não foi possível consultar o status, não inventa um bloqueio.
+    }
+
+    return null;
+}
+
+/* =========================================================
+   COMPRAR
+   ========================================================= */
+
+async function comprar(){
+    if(clienteBloqueadoNaPagina){
+        mostrarToast("🚫 Acesso bloqueado. Motivo: " + (document.getElementById("motivoBloqueioClienteProduto")?.textContent || "Conta bloqueada."));
+        return;
+    }
+
+
+    if(!produtoAtual){
+
+        mostrarToast(
+            "⏳ Produto ainda carregando."
+        );
+
+        return;
+    }
+
+    if(!id){
+
+        mostrarToast(
+            "❌ Produto inválido."
+        );
+
+        return;
+    }
+
+    const bloqueio = await verificarBloqueioAntesDaCompra();
+
+    if(bloqueio){
+        const validade = bloqueio.expira
+            ? " O bloqueio possui prazo de expiração."
+            : " O bloqueio é permanente.";
+
+        mostrarToast(
+            "🚫 Compra bloqueada. Motivo: " + bloqueio.motivo + validade
+        );
+        return;
+    }
+
+    window.location.href =
+        "pagamento.html?id=" +
+        encodeURIComponent(id);
+}
+
+/* =========================================================
+   DOWNLOAD — SOMENTE PARA QUEM COMPROU
+   ========================================================= */
+
+function obterUrlDownloadProduto(){
+    const obterUrl = (valor)=>{
+        if(!valor) return "";
+        if(typeof valor === "string"){
+            return valor.trim();
+        }
+        if(typeof valor === "object"){
+            return String(
+                valor.url ??
+                valor.downloadURL ??
+                valor.downloadUrl ??
+                valor.link ??
+                valor.src ??
+                ""
+            ).trim();
+        }
+        return "";
+    };
+
+    return (
+        obterUrl(produtoAtual?.apkUrl) ||
+        obterUrl(produtoAtual?.apk) ||
+        obterUrl(produtoAtual?.arquivoApk) ||
+        obterUrl(produtoAtual?.arquivo) ||
+        obterUrl(produtoAtual?.arquivoUrl) ||
+        obterUrl(produtoAtual?.downloadUrl) ||
+        obterUrl(produtoAtual?.urlDownload) ||
+        obterUrl(produtoAtual?.linkDownload) ||
+        obterUrl(produtoAtual?.download)
+    );
+}
+
+function carregarArquivoApk(produto){
+    const url = obterUrlDownloadProduto();
+
+    if(!url){
+        apkSection.style.display = "none";
+        return;
+    }
+
+    apkSection.style.display = "block";
+
+    const arquivo =
+        produto?.apk?.nomeOriginal ||
+        produto?.apk?.nome ||
+        produto?.apkNome ||
+        produto?.arquivoApk?.nomeOriginal ||
+        produto?.arquivoApk?.nome ||
+        produto?.arquivoNome ||
+        "APK do aplicativo";
+
+    const tamanho =
+        Number(
+            produto?.apk?.tamanho ??
+            produto?.apkTamanho ??
+            produto?.arquivoApk?.tamanho ??
+            produto?.arquivoTamanho ??
+            0
+        );
+
+    apkNome.textContent = arquivo;
+    apkTamanho.textContent = tamanho > 0
+        ? `Arquivo APK • ${(tamanho / (1024 * 1024)).toFixed(2)} MB`
+        : "Arquivo APK pronto para download";
+
+    // O botão usa a mesma autorização de compra do download principal.
+    btnDownloadApk.disabled = btnDownload.disabled;
+    btnDownloadApk.classList.toggle("liberado", !btnDownload.disabled);
+    btnDownloadApk.textContent = btnDownload.disabled
+        ? "🔒 Comprar para baixar"
+        : "⬇️ Baixar APK";
+}
+
+function sincronizarBotoesDownload(){
+    const liberado = !btnDownload.disabled;
+
+    if(apkSection.style.display !== "none"){
+        btnDownloadApk.disabled = !liberado;
+        btnDownloadApk.classList.toggle("liberado", liberado);
+        btnDownloadApk.textContent = liberado
+            ? "⬇️ Baixar APK"
+            : "🔒 Comprar para baixar";
+    }
+}
+
+function sincronizarPacoteDownload(){
+    if(!btnDownloadPacote) return;
+    const liberado = !btnDownload.disabled;
+    btnDownloadPacote.disabled = !liberado;
+    btnDownloadPacote.classList.toggle("liberado", liberado);
+    btnDownloadPacote.textContent = liberado ? "⬇️ Baixar pacote completo" : "🔒 Comprar para baixar";
+}
+
+function prepararPacoteProduto(){
+    if(!pacoteSection) return;
+    const url = obterUrlDownloadProduto();
+    if(!url){
+        pacoteSection.style.display = "none";
+        return;
+    }
+    pacoteSection.style.display = "block";
+    const nome = produtoAtual?.apk?.nomeOriginal || produtoAtual?.apk?.nome || produtoAtual?.apkNome || produtoAtual?.arquivoApk?.nomeOriginal || produtoAtual?.arquivoNome || "Pacote do aplicativo";
+    const tamanho = Number(produtoAtual?.apk?.tamanho ?? produtoAtual?.apkTamanho ?? produtoAtual?.arquivoApk?.tamanho ?? produtoAtual?.arquivoTamanho ?? 0);
+    pacoteNome.textContent = nome;
+    pacoteTamanho.textContent = tamanho > 0 ? `Pacote do aplicativo • ${(tamanho / (1024 * 1024)).toFixed(2)} MB` : "Pacote completo pronto para download";
+    sincronizarPacoteDownload();
+}
+
+function bloquearDownload(){
+
+    btnDownload.disabled = true;
+    btnDownload.classList.remove("liberado");
+    btnDownload.textContent =
+        "🔒 Download bloqueado — compre para liberar";
+    btnDownload.title =
+        "Apenas clientes com compra paga podem baixar este aplicativo.";
+    sincronizarBotoesDownload();
+    sincronizarPacoteDownload();
+}
+
+function liberarDownload(){
+
+    const url = obterUrlDownloadProduto();
+
+    if(!url){
+        btnDownload.disabled = true;
+        btnDownload.classList.remove("liberado");
+        btnDownload.textContent =
+            "⚠️ Download indisponível";
+        btnDownload.title =
+            "O vendedor ainda não cadastrou o arquivo para download.";
+        return;
+    }
+
+    btnDownload.disabled = false;
+    btnDownload.classList.add("liberado");
+    btnDownload.textContent =
+        "⬇️ Baixar APK — desbloqueado";
+    btnDownload.title =
+        "Download liberado para sua compra.";
+    sincronizarBotoesDownload();
+    sincronizarPacoteDownload();
+}
+
+if(btnDownloadPacote){
+    btnDownloadPacote.addEventListener("click", baixarAplicativo);
+}
+
+let compraConfirmadaNoServidor = false;
+
+function atualizarAcoesPosCompra(comprou){
+    const avaliar = document.getElementById("btnAvaliar");
+    const reembolso = document.getElementById("btnReembolso");
+    if(!avaliar || !reembolso) return;
+    const liberado = comprou === true;
+    compraConfirmadaNoServidor = liberado;
+    avaliar.classList.toggle("compra-confirmada", liberado);
+    reembolso.classList.toggle("compra-confirmada", liberado);
+    if(!liberado){
+        avaliar.disabled = true;
+        reembolso.disabled = true;
+        reembolso.textContent = "↩️ Solicitar reembolso";
+    }else{
+        avaliar.disabled = false;
+    }
+}
+
+async function verificarAcessoDownload(){
+    if(!produtoAtual || !id || !auth.currentUser){
+        bloquearDownload();
+        atualizarAcoesPosCompra(false);
+        return;
+    }
+    try {
+        const token = await auth.currentUser.getIdToken();
+        const resposta = await fetch(`/api/produtos/${encodeURIComponent(id)}/download/status`, {
+            headers: { Authorization: `Bearer ${token}` }, cache: "no-store"
+        });
+        const dados = await resposta.json().catch(()=>({}));
+        const compraConfirmada = resposta.ok && dados.liberado === true;
+        if(compraConfirmada){
+            liberarDownload();
+            atualizarAcoesPosCompra(true);
+        }else{
+            bloquearDownload();
+            atualizarAcoesPosCompra(false);
+        }
+    } catch(erro) {
+        console.error("Erro verificando pagamento:", erro);
+        bloquearDownload();
+        atualizarAcoesPosCompra(false);
+    }
+}
+
+async function baixarAplicativo(){
+    if(clienteBloqueadoNaPagina){
+        mostrarToast("🚫 Acesso bloqueado. Motivo: " + (document.getElementById("motivoBloqueioClienteProduto")?.textContent || "Conta bloqueada."));
+        return;
+    }
+
+    if(btnDownload.disabled || !auth.currentUser){
+        mostrarToast("🔒 Aguarde a aprovação do pagamento e entre na sua conta."); return;
+    }
+    try {
+        const token = await auth.currentUser.getIdToken();
+        const resposta = await fetch(`/api/produtos/${encodeURIComponent(id)}/download`, {
+            headers: { Authorization: `Bearer ${token}` }, cache: "no-store"
+        });
+        if(!resposta.ok){
+            const dados = await resposta.json().catch(()=>({}));
+            bloquearDownload(); mostrarToast(dados.erro || "Download não autorizado."); return;
+        }
+        const blob = await resposta.blob();
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url; link.download = `${String(id).replace(/[^a-zA-Z0-9_-]/g, "_")}.apk`;
+        document.body.appendChild(link); link.click(); link.remove();
+        setTimeout(()=>URL.revokeObjectURL(url),60000);
+    } catch(erro){ console.error(erro); mostrarToast("Não foi possível baixar o APK."); }
+}
+
+/* =========================================================
+   AVALIAR
+   ========================================================= */
+
+async function avaliarProduto(){
+    if(clienteBloqueadoNaPagina){
+        mostrarToast("🚫 Acesso bloqueado. Motivo: " + (document.getElementById("motivoBloqueioClienteProduto")?.textContent || "Conta bloqueada."));
+        return;
+    }
+
+
+    if(!id){
+
+        mostrarToast(
+            "❌ Produto inválido."
+        );
+
+        return;
+    }
+
+    const usuario = usuarioAutenticado || auth.currentUser;
+    if(!usuario){
+        mostrarToast("🔒 Faça login/cadastro para avaliar e comentar este aplicativo.");
+        return;
+    }
+
+    const bloqueio = await verificarBloqueioAntesDaCompra();
+    if(bloqueio){
+        const validade = bloqueio.expira
+            ? " O bloqueio possui prazo de expiração."
+            : " O bloqueio é permanente.";
+        mostrarToast("🚫 Avaliação e comentário bloqueados. Motivo: " + bloqueio.motivo + validade);
+        return;
+    }
+
+    window.location.href =
+        "avaliaçao do pruduto.html?id=" +
+        encodeURIComponent(id);
+}
+
+/* =========================================================
+   VER AVALIAÇÕES
+   ========================================================= */
+
+function verAvaliacoesProduto(){
+
+    if(!id){
+
+        mostrarToast(
+            "❌ Produto inválido."
+        );
+
+        return;
+    }
+
+    window.location.href =
+        "avaliacoes.html?id=" +
+        encodeURIComponent(id);
+}
+
+/* =========================================================
+   APLICATIVOS SALVOS
+   ========================================================= */
+
+function abrirAplicativosSalvos(){
+    window.location.href = "aplicativos salvos.html";
+}
+
+/* =========================================================
+   COMPARTILHAR
+   ========================================================= */
+
+async function compartilharProduto(){
+
+    const titulo =
+        nomeEl.textContent ||
+        "Aplicativo";
+
+    const link =
+        window.location.href;
+
+    try{
+
+        if(
+            typeof navigator.share ===
+            "function"
+        ){
+
+            await navigator.share({
+
+                title:
+                    titulo,
+
+                text:
+                    "Confira este aplicativo na Minha Loja de Aplicativos!",
+
+                url:
+                    link
+            });
+
+            return;
+        }
+
+        if(
+            navigator.clipboard &&
+            window.isSecureContext
+        ){
+
+            await navigator.clipboard.writeText(
+                link
+            );
+
+            mostrarToast(
+                "✅ Link copiado!"
+            );
+
+            return;
+        }
+
+        const area =
+            document.createElement("textarea");
+
+        area.value =
+            link;
+
+        area.style.position =
+            "fixed";
+
+        area.style.left =
+            "-9999px";
+
+        document.body.appendChild(
+            area
+        );
+
+        area.select();
+
+        document.execCommand(
+            "copy"
+        );
+
+        area.remove();
+
+        mostrarToast(
+            "✅ Link copiado!"
+        );
+
+    }catch(erro){
+
+        console.warn(
+            "Compartilhamento:",
+            erro
+        );
+
+        mostrarToast(
+            "ℹ️ Copie o endereço desta página."
+        );
+    }
+}
+
+/* =========================================================
+   VOLTAR
+   ========================================================= */
+
+function voltar(){
+
+    if(
+        window.history.length > 1
+    ){
+
+        window.history.back();
+
+    }else{
+
+        window.location.href =
+            "index.html";
+    }
+}
+
+/* =========================================================
+   EVENTOS
+   ========================================================= */
+
+btnSalvar.addEventListener(
+    "click",
+    salvarAplicativo
+);
+
+btnComprar.addEventListener(
+    "click",
+    comprar
+);
+
+btnDownload.addEventListener(
+    "click",
+    baixarAplicativo
+);
+
+btnDownloadApk.addEventListener(
+    "click",
+    baixarAplicativo
+);
+
+btnCompartilhar.addEventListener(
+    "click",
+    compartilharProduto
+);
+
+btnAvaliar.addEventListener(
+    "click",
+    avaliarProduto
+);
+
+btnAvaliacoes.addEventListener(
+    "click",
+    verAvaliacoesProduto
+);
+
+btnAplicativosSalvos.addEventListener(
+    "click",
+    abrirAplicativosSalvos
+);
+
+btnChatVendedor.addEventListener(
+    "click",
+    abrirChatVendedor
+);
+
+chatForm.addEventListener(
+    "submit",
+    enviarMensagemChat
+);
+
+btnFecharChat.addEventListener(
+    "click",
+    fecharChatVendedor
+);
+
+chatModal.addEventListener(
+    "click",
+    evento=>{
+        if(evento.target.id === "chatModal"){
+            fecharChatVendedor();
+        }
+    }
+);
+
+chatInput.addEventListener(
+    "input",
+    ()=>{
+        chatInput.style.height = "auto";
+        chatInput.style.height = Math.min(chatInput.scrollHeight,110) + "px";
+        if(chatConversaId){
+            set(ref(db,"chats/" + chatConversaId + "/digitando/cliente"),chatInput.value.trim().length > 0);
+        }
+    }
+);
+
+chatInput.addEventListener("blur",()=>{
+    if(chatConversaId) set(ref(db,"chats/" + chatConversaId + "/digitando/cliente"),false);
+});
+
+document.getElementById("btnFecharDenunciaComentario").addEventListener("click",fecharDenunciaComentario);
+document.getElementById("btnCancelarDenunciaComentario").addEventListener("click",fecharDenunciaComentario);
+document.getElementById("btnEnviarDenunciaComentario").addEventListener("click",enviarDenunciaComentario);
+document.getElementById("modalDenunciaComentario").addEventListener("click",evento=>{
+    if(evento.target.id === "modalDenunciaComentario") fecharDenunciaComentario();
+});
+document.addEventListener("click",()=>{
+    document.querySelectorAll(".menu-comentario.aberto").forEach(menu=>menu.classList.remove("aberto"));
+});
+
+btnReembolso.addEventListener(
+    "click",
+    abrirModalReembolso
+);
+
+document
+    .getElementById(
+        "btnVoltar"
+    )
+    .addEventListener(
+        "click",
+        voltar
+);
+
+
+
+
+document
+    .getElementById(
+        "btnFecharReembolso"
+    )
+    .addEventListener(
+        "click",
+        fecharModalReembolso
+);
+
+document
+    .getElementById(
+        "btnCancelarReembolso"
+    )
+    .addEventListener(
+        "click",
+        fecharModalReembolso
+);
+
+document
+    .getElementById(
+        "btnConfirmarReembolso"
+    )
+    .addEventListener(
+        "click",
+        solicitarReembolso
+);
+
+
+/* =========================================================
+   FECHAR MODAIS AO CLICAR FORA
+   ========================================================= */
+
+
+document
+    .getElementById(
+        "modalReembolso"
+    )
+    .addEventListener(
+        "click",
+        evento=>{
+
+            if(
+                evento.target.id ===
+                "modalReembolso"
+            ){
+
+                fecharModalReembolso();
+            }
+        }
+    );
+
+/* =========================================================
+   ESC
+   ========================================================= */
+
+document.addEventListener(
+    "keydown",
+    evento=>{
+
+        if(
+            evento.key ===
+            "Escape"
+        ){
+
+            fecharModalReembolso();
+
+            fecharDenunciaComentario();
+
+            fecharChatVendedor();
+
+        }
+    }
+);
+
+/* =========================================================
+   INICIALIZAÇÃO
+   ========================================================= */
+
+// Atualiza o desbloqueio quando o webhook confirmar a compra.
+// A API do servidor é a única fonte de autorização.
+let verificacaoDownloadEmAndamento = false;
+async function atualizarDownloadAutomaticamente(){
+    if(verificacaoDownloadEmAndamento || document.hidden || !produtoAtual || !auth.currentUser) return;
+    verificacaoDownloadEmAndamento = true;
+    try { await verificarAcessoDownload(); }
+    finally { verificacaoDownloadEmAndamento = false; }
+}
+setInterval(atualizarDownloadAutomaticamente, 8000);
+window.addEventListener("focus", atualizarDownloadAutomaticamente);
+document.addEventListener("visibilitychange", () => {
+    if(!document.hidden) atualizarDownloadAutomaticamente();
+});
+onAuthStateChanged(auth,usuario=>{
+    usuarioAutenticado = usuario || null;
+
+    monitorarBloqueioCliente(
+        usuarioAutenticado?.uid || ""
+    );
+
+    atualizarAcoesPosCompra(false);
+
+    if(typeof produtoAtual !== "undefined" && produtoAtual){
+        verificarAcessoDownload();
+    }
+
+    // Atualiza somente os menus já renderizados, sem mostrar o botão
+    // de excluir para comentários de outras pessoas.
+    document.querySelectorAll(".avaliacao").forEach(card=>{
+        const autorId = String(card.dataset.usuarioId || "");
+        const meuId = String(usuarioAutenticado?.uid || "");
+        const excluir = card.querySelector(".btn-excluir-comentario");
+        const denunciar = card.querySelector(".btn-denunciar-comentario");
+        if(excluir) excluir.style.display = autorId && autorId === meuId ? "block" : "none";
+        if(denunciar) denunciar.style.display = autorId && autorId === meuId ? "none" : "block";
+    });
+});
+
+async function iniciar(){
+
+    if(!id){
+
+        definirProdutoIndisponivel(
+            "Nenhum ID de produto foi informado."
+        );
+
+        return;
+    }
+
+    carregarProduto();
+
+    carregarAvaliacoes();
+
+    try{
+
+        await carregarCliente();
+
+    }catch(erro){
+
+        console.warn(
+            "Não foi possível carregar cliente:",
+            erro
+        );
+    }
+
+    try{
+
+        await verificarAcessoDownload();
+
+    }catch(erro){
+
+        console.warn(
+            "Não foi possível verificar a compra:",
+            erro
+        );
+
+    }
+
+    try{
+
+        await verificarSituacaoReembolso();
+
+    }catch(erro){
+
+        console.warn(
+            "Não foi possível verificar reembolso:",
+            erro
+        );
+    }
+}
+
+iniciar();
+
+
+/* =========================================================
+   BLOQUEIO DO CLIENTE — ADMINISTRADOR
+   Lê usuarios/{uid} em tempo real.
+   O administrador grava:
+   banido: true
+   motivoBanimento: "..."
+   banimentoExpiraEm: timestamp ou null
+   ========================================================= */
+let pararMonitoramentoBloqueioCliente = null;
+let clienteBloqueadoNaPagina = false;
+
+function bloqueioClienteAtivo(dados){
+    if(!dados || typeof dados !== "object") return false;
+
+    const banido =
+        dados.banido === true ||
+        dados.banido === "true" ||
+        dados.bloqueado === true ||
+        dados.bloqueado === "true";
+
+    if(!banido) return false;
+
+    const expira = Number(dados.banimentoExpiraEm || 0);
+
+    // null/0 = permanente. Timestamp futuro = bloqueio ativo.
+    if(expira > 0 && expira <= Date.now()){
+        return false;
+    }
+
+    return true;
+}
+
+function formatarValidadeBloqueioCliente(timestamp){
+    const expira = Number(timestamp || 0);
+
+    if(!expira){
+        return "Bloqueio permanente.";
+    }
+
+    const data = new Date(expira);
+
+    if(Number.isNaN(data.getTime())){
+        return "Bloqueio com prazo definido pelo administrador.";
+    }
+
+    return "Bloqueio válido até " +
+        data.toLocaleString("pt-BR", {
+            dateStyle:"short",
+            timeStyle:"short"
+        }) + ".";
+}
+
+function mostrarBloqueioCliente(dados){
+    const aviso = document.getElementById("avisoBloqueioClienteProduto");
+    const motivo = document.getElementById("motivoBloqueioClienteProduto");
+    const validade = document.getElementById("validadeBloqueioClienteProduto");
+
+    if(!aviso || !motivo || !validade) return;
+
+    motivo.textContent = String(
+        dados?.motivoBanimento ||
+        dados?.motivoBloqueio ||
+        dados?.motivo ||
+        "O administrador não informou o motivo."
+    ).trim() || "O administrador não informou o motivo.";
+
+    validade.textContent = formatarValidadeBloqueioCliente(
+        dados?.banimentoExpiraEm
+    );
+
+    aviso.classList.add("visivel");
+    document.body.classList.add("produto-cliente-bloqueado");
+    clienteBloqueadoNaPagina = true;
+
+    // Garante que nenhuma ação da página continue disponível.
+    [
+        "btnSalvar",
+        "btnComprar",
+        "btnDownload",
+        "btnDownloadApk",
+        "btnCompartilhar",
+        "btnAvaliar",
+        "btnAvaliacoes",
+        "btnAplicativosSalvos",
+        "btnChatVendedor",
+        "btnReembolso"
+    ].forEach(idBotao => {
+        const botao = document.getElementById(idBotao);
+        if(botao){
+            botao.disabled = true;
+            botao.setAttribute("aria-disabled","true");
+        }
+    });
+
+    if(chatModal){
+        chatModal.classList.remove("aberto");
+    }
+}
+
+function ocultarBloqueioCliente(){
+    const aviso = document.getElementById("avisoBloqueioClienteProduto");
+    if(aviso) aviso.classList.remove("visivel");
+
+    document.body.classList.remove("produto-cliente-bloqueado");
+    clienteBloqueadoNaPagina = false;
+}
+
+function monitorarBloqueioCliente(uid){
+    if(typeof pararMonitoramentoBloqueioCliente === "function"){
+        pararMonitoramentoBloqueioCliente();
+        pararMonitoramentoBloqueioCliente = null;
+    }
+
+    if(!uid) {
+        ocultarBloqueioCliente();
+        return;
+    }
+
+    const caminho = "usuarios/" + uid;
+
+    const cancelar = onValue(
+        ref(db, caminho),
+        snapshot => {
+            const dados = snapshot.exists()
+                ? (snapshot.val() || {})
+                : {};
+
+            if(bloqueioClienteAtivo(dados)){
+                mostrarBloqueioCliente(dados);
+            }else{
+                ocultarBloqueioCliente();
+            }
+        },
+        erro => {
+            console.error("Erro monitorando bloqueio do cliente:", erro);
+        }
+    );
+
+    pararMonitoramentoBloqueioCliente = () => {
+        if(typeof cancelar === "function"){
+            cancelar();
+        }
+    };
+}
+
+async function verificarBloqueioClienteAgora(usuario){
+    if(!usuario){
+        ocultarBloqueioCliente();
+        return false;
+    }
+
+    try{
+        const snapshot = await get(
+            ref(db, "usuarios/" + usuario.uid)
+        );
+
+        const dados = snapshot.exists()
+            ? (snapshot.val() || {})
+            : {};
+
+        if(bloqueioClienteAtivo(dados)){
+            mostrarBloqueioCliente(dados);
+            return true;
+        }
+
+        ocultarBloqueioCliente();
+        return false;
+    }catch(erro){
+        console.error("Erro verificando bloqueio do cliente:", erro);
+        return false;
+    }
+}
+
+
+document.getElementById("btnVoltarLojaBloqueioCliente")?.addEventListener(
+    "click",
+    () => {
+        if(typeof voltar === "function"){
+            voltar();
+        }else{
+            window.location.href = "index.html";
+        }
+    }
+);
+
+</script>
+
+
+<script id="bloqueio-produto-vendedor-js">
+(function(){
+  "use strict";
+  let bloqueioProdutoAtivo=false;
+  let listenersBloqueioProduto=[];
+  let ultimoVendedorBloqueio="";
+
+  function mostrarBloqueioProduto(dados){
+    const aviso=document.getElementById("avisoBloqueioVendedorProduto");
+    const motivo=document.getElementById("motivoBloqueioProduto");
+    if(!aviso||!motivo)return;
+    const texto=String(
+      dados.motivoBloqueio ||
+      dados.motivoBanimento ||
+      dados.motivoBloqueioVendedor ||
+      dados.motivo ||
+      "O administrador não informou o motivo."
+    ).trim();
+    motivo.textContent=texto||"O administrador não informou o motivo.";
+    aviso.classList.add("visivel");
+    document.body.classList.add("produto-vendedor-bloqueado");
+    bloqueioProdutoAtivo=true;
+    const ids=["btnComprar","btnSalvar","btnChatVendedor","btnDownload","btnDownloadApk","btnCompartilhar","btnAvaliar"];
+    ids.forEach(id=>{
+      const el=document.getElementById(id);
+      if(el){
+        el.disabled=true;
+        el.setAttribute("aria-disabled","true");
+        el.dataset.bloqueioVendedor="true";
+      }
+    });
+
+    if(btnDownload){
+      btnDownload.textContent="🚫 Download bloqueado — vendedor punido";
+      btnDownload.title="O vendedor responsável por este aplicativo foi bloqueado pelo administrador.";
+    }
+    if(btnDownloadApk){
+      btnDownloadApk.textContent="🚫 Baixar pacote — vendedor punido";
+      btnDownloadApk.title="O download do pacote está bloqueado porque o vendedor foi punido pelo administrador.";
+    }
+    if(btnChatVendedor){
+      btnChatVendedor.textContent="🚫 Chat bloqueado — vendedor punido";
+      btnChatVendedor.title="Não é possível falar com um vendedor bloqueado.";
+    }
+    const chat=document.getElementById("chatModal");
+    if(chat)chat.classList.remove("aberto");
+  }
+
+  function ocultarBloqueioProduto(){
+    const aviso=document.getElementById("avisoBloqueioVendedorProduto");
+    if(aviso)aviso.classList.remove("visivel");
+    document.body.classList.remove("produto-vendedor-bloqueado");
+    bloqueioProdutoAtivo=false;
+  }
+
+  function eBloqueado(dados){
+    if(!dados||typeof dados!=="object")return false;
+    const status=String(dados.status||dados.estado||dados.situacao||"").toLowerCase().trim();
+    return dados.bloqueado===true||dados.bloqueado==="true"||
+      dados.banido===true||dados.banido==="true"||
+      ["bloqueado","banido","banned","blocked"].includes(status);
+  }
+
+  async function verificarBloqueioProduto(vendedorId){
+    if(!vendedorId)return;
+    ultimoVendedorBloqueio=vendedorId;
+    try{
+      const caminhos=[
+        "vendedores/"+vendedorId,
+        "usuarios/"+vendedorId,
+        "lojas/"+vendedorId,
+        "chatVendedores/"+vendedorId+"/perfil"
+      ];
+      const snaps=await Promise.all(caminhos.map(c=>get(ref(db,c))));
+      let bloqueado=null;
+      for(const snap of snaps){
+        if(snap.exists()){
+          const dados=snap.val()||{};
+          if(eBloqueado(dados)){bloqueado=dados;break;}
+        }
+      }
+      if(bloqueado)mostrarBloqueioProduto(bloqueado);
+      else ocultarBloqueioProduto();
+    }catch(err){console.error("Erro verificando bloqueio do produto:",err);}
+  }
+
+  function iniciarMonitoramentoProduto(){
+    if(typeof db==="undefined"||typeof ref==="undefined"||typeof get==="undefined"||typeof onValue==="undefined")return;
+    const iniciar=()=>{
+      const vendedorId=String(window.produtoAtual?.vendedorId ?? window.produtoAtual?.vendedor ?? "").trim();
+      if(!vendedorId)return;
+      const caminhos=["vendedores/"+vendedorId,"usuarios/"+vendedorId,"lojas/"+vendedorId,"chatVendedores/"+vendedorId+"/perfil"];
+      listenersBloqueioProduto.forEach(fn=>{if(typeof fn==="function")fn();});
+      listenersBloqueioProduto=[];
+      caminhos.forEach(caminho=>{
+        const cancelar=onValue(ref(db,caminho),snap=>{
+          const dados=snap.exists()?snap.val()||{}:{};
+          if(eBloqueado(dados))mostrarBloqueioProduto(dados);
+          else verificarBloqueioProduto(vendedorId);
+        },err=>console.warn("Monitoramento:",err));
+        listenersBloqueioProduto.push(cancelar);
+      });
+      verificarBloqueioProduto(vendedorId);
+    };
+    const timer=setInterval(()=>{
+      if(window.produtoAtual?.vendedorId){clearInterval(timer);iniciar();}
+    },500);
+    setTimeout(()=>clearInterval(timer),30000);
+  }
+
+  document.addEventListener("DOMContentLoaded",()=>{
+    const aviso=document.getElementById("avisoBloqueioVendedorProduto");
+    if(aviso){
+      const botao=document.getElementById("btnVoltarLojaBloqueio");
+      if(botao)botao.addEventListener("click",()=>{
+        if(typeof voltar==="function")voltar();
+        else window.location.href="loja.html";
+      });
+    }
+    iniciarMonitoramentoProduto();
+  });
+})();
+</script>
+</body>
+</html>

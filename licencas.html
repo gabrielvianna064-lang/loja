@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Central de Licenças</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:#0b1020;color:#eef2ff}main{max-width:1100px;margin:0 auto;padding:34px 20px}.hero{padding:28px;border:1px solid #27304a;border-radius:20px;background:#11182b}.hero h1{margin:0 0 8px}.hero p{color:#aab4cc}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:18px 0}.card{padding:20px;border:1px solid #27304a;border-radius:16px;background:#11182b}.number{font-size:30px;font-weight:800}.muted{color:#9ba7c0}.ok{color:#67e8a5}.warn{color:#ffd166}.bad{color:#ff7b8a}.table{overflow:auto}.row{display:grid;grid-template-columns:180px 1fr 160px 170px;gap:12px;padding:14px;border-bottom:1px solid #252d44;min-width:760px}.head{font-weight:700;color:#aeb8cf}.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#183a2c;color:#7af0ac;font-size:12px}.rule{margin-top:18px;padding:16px;border-left:4px solid #7c5cff;background:#151d34;border-radius:10px}.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+</style>
+</head>
+<body>
+<main>
+<section class="hero"><h1>🔐 Central de Licenças</h1><p>Sistema automático de licenciamento por compra. O vendedor não cria chaves manualmente.</p></section>
+<section class="grid">
+<div class="card"><div class="muted">Modelo</div><div class="number">Por compra</div></div>
+<div class="card"><div class="muted">Ativações</div><div class="number">1 dispositivo</div></div>
+<div class="card"><div class="muted">Transferência</div><div class="number">Nova compra</div></div>
+<div class="card"><div class="muted">Webhook</div><div class="number" id="webhook">...</div></div>
+</section>
+<section class="card"><h2>Como funciona</h2><div class="rule">💳 Pagamento aprovado → 🔑 licença gerada automaticamente → 📱 primeira ativação vinculada ao dispositivo → 🚫 cópia/repasse não transfere a licença → 🛒 novo usuário precisa comprar.</div></section>
+<section class="card" style="margin-top:18px"><h2>Regra de segurança</h2><p class="muted">A chave não é exibida no cadastro do vendedor. O servidor gera uma chave criptograficamente aleatória após a confirmação do pagamento e armazena somente o hash e uma cópia criptografada para recuperação controlada.</p><p class="muted">A validação deve ser feita pelo aplicativo através de <span class="mono">POST /api/licencas/validar</span>.</p></section>
+</main>
+<script>
+fetch('/status').then(r=>r.json()).then(s=>{document.getElementById('webhook').textContent=s.webhookSeguro?'Protegido':'Configure o segredo'}).catch(()=>{document.getElementById('webhook').textContent='Offline'});
+</script>
+</body>
+</html>

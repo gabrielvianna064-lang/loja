@@ -1,0 +1,3252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<meta
+    name="theme-color"
+    content="#2563eb"
+>
+
+<meta
+    name="description"
+    content="APP STORE - compre, venda e descubra aplicativos."
+>
+
+<title>APP STORE | Marketplace de Aplicativos</title>
+
+
+<!-- =====================================================
+     FONTES
+===================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+>
+
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    min-height:100vh;
+
+    font-family:
+        Inter,
+        Arial,
+        sans-serif;
+
+    color:#0f172a;
+
+    background:#f8fafc;
+
+    transition:
+        background .25s,
+        color .25s;
+}
+
+button,
+input,
+select{
+
+    font:inherit;
+
+}
+
+button{
+
+    cursor:pointer;
+
+}
+
+a{
+
+    color:inherit;
+
+    text-decoration:none;
+
+}
+
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#f1f5f9;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#cbd5e1;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#94a3b8;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    min-height:76px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    padding:12px 28px;
+
+    background:
+        rgba(255,255,255,.95);
+
+    backdrop-filter:
+        blur(20px);
+
+    border-bottom:
+        1px solid #e2e8f0;
+
+    box-shadow:
+        0 8px 30px
+        rgba(15,23,42,.05);
+
+}
+
+
+/* =====================================================
+   MENU BUTTON
+===================================================== */
+
+.menu-btn{
+
+    width:46px;
+
+    height:46px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    color:white;
+
+    font-size:20px;
+
+    box-shadow:
+        0 8px 20px
+        rgba(37,99,235,.25);
+
+    transition:.25s;
+
+}
+
+.menu-btn:hover{
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:20px;
+
+    font-weight:900;
+
+    color:#1d4ed8;
+
+    white-space:nowrap;
+
+}
+
+.logo-icon{
+
+    width:38px;
+
+    height:38px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:12px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #7c3aed
+        );
+
+    box-shadow:
+        0 7px 18px
+        rgba(37,99,235,.22);
+
+}
+
+
+/* =====================================================
+   PESQUISA
+===================================================== */
+
+.search-area{
+
+    position:relative;
+
+    flex:1;
+
+    max-width:720px;
+
+    margin:auto;
+
+}
+
+.search-area input{
+
+    width:100%;
+
+    height:48px;
+
+    padding:
+        0 48px;
+
+    border:
+        1px solid #e2e8f0;
+
+    border-radius:15px;
+
+    outline:none;
+
+    background:#f8fafc;
+
+    color:#0f172a;
+
+    transition:.25s;
+
+}
+
+.search-area input::placeholder{
+
+    color:#94a3b8;
+
+}
+
+.search-area input:focus{
+
+    background:white;
+
+    border-color:#2563eb;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(37,99,235,.10);
+
+}
+
+.search-icon{
+
+    position:absolute;
+
+    left:17px;
+
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    color:#64748b;
+
+}
+
+.search-clear{
+
+    position:absolute;
+
+    right:10px;
+
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    width:32px;
+
+    height:32px;
+
+    border:none;
+
+    border-radius:9px;
+
+    background:transparent;
+
+    color:#64748b;
+
+    display:none;
+
+}
+
+.search-clear.visible{
+
+    display:block;
+
+}
+
+
+/* =====================================================
+   HEADER ACTIONS
+===================================================== */
+
+.header-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+.header-btn{
+
+    min-height:44px;
+
+    padding:
+        0 14px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:7px;
+
+    border:none;
+
+    border-radius:13px;
+
+    background:#f1f5f9;
+
+    color:#334155;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    transition:.25s;
+
+}
+
+.header-btn:hover{
+
+    background:#e2e8f0;
+
+    transform:
+        translateY(-2px);
+
+}
+
+.register-btn{
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #7c3aed
+        );
+
+    box-shadow:
+        0 7px 18px
+        rgba(37,99,235,.20);
+
+}
+
+.register-btn:hover{
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1d4ed8,
+            #6d28d9
+        );
+
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+#menu{
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    width:320px;
+
+    height:100vh;
+
+    z-index:3000;
+
+    display:flex;
+
+    flex-direction:column;
+
+    background:
+        linear-gradient(
+            180deg,
+            #0b1220,
+            #111827
+        );
+
+    color:white;
+
+    transform:
+        translateX(-105%);
+
+    transition:
+        transform .35s
+        cubic-bezier(.4,0,.2,1);
+
+    box-shadow:
+        20px 0 60px
+        rgba(0,0,0,.25);
+
+    overflow-y:auto;
+
+}
+
+#menu.ativo{
+
+    transform:
+        translateX(0);
+
+}
+
+
+/* =====================================================
+   MENU HEADER
+===================================================== */
+
+.menu-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:20px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.07);
+
+}
+
+.menu-brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+}
+
+.brand-icon{
+
+    width:45px;
+
+    height:45px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #7c3aed
+        );
+
+    font-size:20px;
+
+}
+
+.menu-brand strong{
+
+    display:block;
+
+    font-size:15px;
+
+}
+
+.menu-brand small{
+
+    display:block;
+
+    margin-top:3px;
+
+    color:#94a3b8;
+
+    font-size:10px;
+
+}
+
+#fechar{
+
+    width:40px;
+
+    height:40px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    color:#cbd5e1;
+
+    transition:.25s;
+
+}
+
+#fechar:hover{
+
+    background:#ef4444;
+
+    color:white;
+
+}
+
+
+/* =====================================================
+   MENU NAVIGATION
+===================================================== */
+
+.menu-navigation{
+
+    flex:1;
+
+    padding:
+        10px 14px 20px;
+
+}
+
+.menu-section-title{
+
+    padding:
+        13px 10px 7px;
+
+    color:#64748b;
+
+    font-size:9px;
+
+    font-weight:900;
+
+    letter-spacing:1.2px;
+
+}
+
+.menu-link{
+
+    position:relative;
+
+    min-height:48px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+    padding:
+        8px 10px;
+
+    margin:3px 0;
+
+    border-radius:13px;
+
+    color:#cbd5e1;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    transition:.22s;
+
+}
+
+.menu-link:hover{
+
+    background:
+        rgba(255,255,255,.07);
+
+    color:white;
+
+    transform:
+        translateX(3px);
+
+}
+
+.menu-link.active{
+
+    color:white;
+
+    background:
+        linear-gradient(
+            90deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    box-shadow:
+        0 8px 20px
+        rgba(37,99,235,.20);
+
+}
+
+.menu-icon{
+
+    width:34px;
+
+    height:34px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:10px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    font-size:16px;
+
+}
+
+.menu-text{
+
+    flex:1;
+
+}
+
+.menu-arrow{
+
+    color:#64748b;
+
+    font-size:19px;
+
+}
+
+.menu-link.active .menu-arrow{
+
+    color:#bfdbfe;
+
+}
+
+.menu-divider{
+
+    height:1px;
+
+    margin:
+        10px 7px;
+
+    background:
+        rgba(255,255,255,.07);
+
+}
+
+
+/* =====================================================
+   MENU FOOTER
+===================================================== */
+
+.menu-footer{
+
+    padding:
+        18px 20px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.07);
+
+}
+
+.security-status{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:#94a3b8;
+
+    font-size:10px;
+
+    margin-bottom:8px;
+
+}
+
+.security-dot{
+
+    width:7px;
+
+    height:7px;
+
+    flex-shrink:0;
+
+    border-radius:50%;
+
+    background:#22c55e;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(34,197,94,.10);
+
+}
+
+.menu-footer small{
+
+    color:#475569;
+
+    font-size:9px;
+
+}
+
+
+/* =====================================================
+   OVERLAY
+===================================================== */
+
+#overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:2500;
+
+    background:
+        rgba(2,6,23,.60);
+
+    backdrop-filter:
+        blur(5px);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.3s;
+
+}
+
+#overlay.ativo{
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+main{
+
+    max-width:1500px;
+
+    margin:auto;
+
+    padding:
+        30px 28px 70px;
+
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+
+    position:relative;
+
+    overflow:hidden;
+
+    min-height:310px;
+
+    display:flex;
+
+    align-items:center;
+
+    margin-bottom:32px;
+
+    padding:42px;
+
+    border-radius:28px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            120deg,
+            #1d4ed8,
+            #2563eb 45%,
+            #7c3aed
+        );
+
+    box-shadow:
+        0 20px 50px
+        rgba(37,99,235,.22);
+
+}
+
+.hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:350px;
+
+    height:350px;
+
+    right:-100px;
+
+    top:-150px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.10);
+
+}
+
+.hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:220px;
+
+    height:220px;
+
+    right:180px;
+
+    bottom:-150px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.08);
+
+}
+
+.hero-content{
+
+    position:relative;
+
+    z-index:2;
+
+    max-width:680px;
+
+}
+
+.hero-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    padding:
+        7px 11px;
+
+    margin-bottom:15px;
+
+    border-radius:50px;
+
+    background:
+        rgba(255,255,255,.15);
+
+    font-size:11px;
+
+    font-weight:800;
+
+}
+
+.hero h1{
+
+    font-size:
+        clamp(30px,4vw,48px);
+
+    line-height:1.05;
+
+    letter-spacing:-1.5px;
+
+}
+
+.hero p{
+
+    margin-top:15px;
+
+    max-width:600px;
+
+    color:#dbeafe;
+
+    font-size:15px;
+
+    line-height:1.7;
+
+}
+
+.hero-actions{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:23px;
+
+}
+
+.hero-btn{
+
+    min-height:45px;
+
+    padding:
+        0 17px;
+
+    border:none;
+
+    border-radius:12px;
+
+    font-size:13px;
+
+    font-weight:800;
+
+    transition:.2s;
+
+}
+
+.hero-btn:hover{
+
+    transform:
+        translateY(-2px);
+
+}
+
+.hero-btn.primary{
+
+    background:white;
+
+    color:#1d4ed8;
+
+}
+
+.hero-btn.secondary{
+
+    background:
+        rgba(255,255,255,.13);
+
+    color:white;
+
+    border:
+        1px solid
+        rgba(255,255,255,.20);
+
+}
+
+.hero-btn.secondary:hover{
+
+    background:
+        rgba(255,255,255,.20);
+
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:15px;
+
+    margin-bottom:34px;
+
+}
+
+.stat{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:13px;
+
+    padding:18px;
+
+    border:
+        1px solid #e2e8f0;
+
+    border-radius:18px;
+
+    background:white;
+
+    box-shadow:
+        0 7px 25px
+        rgba(15,23,42,.04);
+
+}
+
+.stat-icon{
+
+    width:44px;
+
+    height:44px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:13px;
+
+    background:#eff6ff;
+
+    font-size:19px;
+
+}
+
+.stat strong{
+
+    display:block;
+
+    font-size:18px;
+
+}
+
+.stat span{
+
+    display:block;
+
+    margin-top:3px;
+
+    color:#64748b;
+
+    font-size:10px;
+
+}
+
+
+/* =====================================================
+   SECTION
+===================================================== */
+
+.section-header{
+
+    display:flex;
+
+    align-items:flex-end;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-bottom:18px;
+
+}
+
+.section-title h2{
+
+    font-size:23px;
+
+    letter-spacing:-.6px;
+
+}
+
+.section-title p{
+
+    margin-top:5px;
+
+    color:#64748b;
+
+    font-size:12px;
+
+}
+
+
+/* =====================================================
+   CATEGORIAS
+===================================================== */
+
+.categories{
+
+    display:flex;
+
+    gap:10px;
+
+    overflow-x:auto;
+
+    padding-bottom:8px;
+
+    margin-bottom:32px;
+
+}
+
+.category{
+
+    flex-shrink:0;
+
+    min-height:40px;
+
+    padding:
+        0 15px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    border:
+        1px solid #e2e8f0;
+
+    border-radius:50px;
+
+    background:white;
+
+    color:#475569;
+
+    font-size:11px;
+
+    font-weight:700;
+
+    transition:.22s;
+
+}
+
+.category:hover,
+.category.active{
+
+    border-color:#2563eb;
+
+    background:#2563eb;
+
+    color:white;
+
+    box-shadow:
+        0 7px 17px
+        rgba(37,99,235,.18);
+
+}
+
+
+/* =====================================================
+   FILTRO
+===================================================== */
+
+#filtro{
+
+    outline:none;
+
+    cursor:pointer;
+
+}
+
+#filtro:focus{
+
+    border-color:#2563eb;
+
+}
+
+
+/* =====================================================
+   PRODUTOS
+===================================================== */
+
+.container{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(245px,1fr)
+        );
+
+    gap:21px;
+
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card{
+
+    overflow:hidden;
+
+    position:relative;
+
+    border:
+        1px solid #e2e8f0;
+
+    border-radius:20px;
+
+    background:white;
+
+    box-shadow:
+        0 8px 25px
+        rgba(15,23,42,.045);
+
+    transition:
+        transform .25s,
+        box-shadow .25s,
+        border-color .25s;
+
+    animation:
+        entrada .4s ease both;
+
+    cursor:pointer;
+
+}
+
+.card:hover{
+
+    transform:
+        translateY(-6px);
+
+    border-color:#bfdbfe;
+
+    box-shadow:
+        0 20px 45px
+        rgba(15,23,42,.11);
+
+}
+
+.card-image{
+
+    position:relative;
+
+    height:190px;
+
+    overflow:hidden;
+
+    background:#e2e8f0;
+
+}
+
+.card-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    transition:
+        transform .45s;
+
+}
+
+.card:hover
+.card-image img{
+
+    transform:
+        scale(1.06);
+
+}
+
+.badge{
+
+    position:absolute;
+
+    left:12px;
+
+    top:12px;
+
+    padding:
+        6px 9px;
+
+    border-radius:8px;
+
+    background:
+        rgba(37,99,235,.95);
+
+    color:white;
+
+    font-size:9px;
+
+    font-weight:900;
+
+}
+
+.favorite{
+
+    position:absolute;
+
+    right:12px;
+
+    top:12px;
+
+    width:37px;
+
+    height:37px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.94);
+
+    color:#64748b;
+
+    font-size:18px;
+
+    box-shadow:
+        0 5px 15px
+        rgba(0,0,0,.10);
+
+    transition:.22s;
+
+}
+
+.favorite:hover{
+
+    transform:
+        scale(1.08);
+
+    color:#ef4444;
+
+}
+
+.favorite.ativo{
+
+    color:#ef4444;
+
+}
+
+.card-content{
+
+    padding:17px;
+
+}
+
+.card h3{
+
+    margin-bottom:6px;
+
+    font-size:16px;
+
+    font-weight:800;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+.card-description{
+
+    height:39px;
+
+    overflow:hidden;
+
+    color:#64748b;
+
+    font-size:11px;
+
+    line-height:1.65;
+
+}
+
+.rating{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    margin-top:12px;
+
+    color:#64748b;
+
+    font-size:11px;
+
+}
+
+.stars{
+
+    color:#f59e0b;
+
+    letter-spacing:1px;
+
+    font-size:13px;
+
+}
+
+.card-bottom{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin-top:16px;
+
+}
+
+.preco{
+
+    color:#1d4ed8;
+
+    font-size:19px;
+
+    font-weight:900;
+
+}
+
+.buy-btn{
+
+    min-height:38px;
+
+    padding:
+        0 12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    font-size:10px;
+
+    font-weight:800;
+
+    transition:.2s;
+
+}
+
+.buy-btn:hover{
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 7px 16px
+        rgba(37,99,235,.22);
+
+}
+
+
+/* =====================================================
+   MENSAGEM
+===================================================== */
+
+.mensagem{
+
+    grid-column:
+        1 / -1;
+
+    min-height:300px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-direction:column;
+
+    text-align:center;
+
+}
+
+.loader{
+
+    width:45px;
+
+    height:45px;
+
+    margin-bottom:15px;
+
+    border:
+        4px solid #dbeafe;
+
+    border-top-color:
+        #2563eb;
+
+    border-radius:50%;
+
+    animation:
+        girar .8s linear infinite;
+
+}
+
+.mensagem h2{
+
+    margin-bottom:7px;
+
+    font-size:20px;
+
+}
+
+.mensagem p{
+
+    color:#64748b;
+
+    font-size:12px;
+
+}
+
+.empty-icon{
+
+    margin-bottom:14px;
+
+    font-size:50px;
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer{
+
+    margin-top:50px;
+
+    padding:
+        35px 28px;
+
+    color:#cbd5e1;
+
+    background:#0f172a;
+
+}
+
+.footer-inner{
+
+    max-width:1500px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        2fr 1fr 1fr;
+
+    gap:30px;
+
+}
+
+.footer-brand{
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:900;
+
+}
+
+.footer-description{
+
+    max-width:350px;
+
+    margin-top:10px;
+
+    color:#64748b;
+
+    font-size:11px;
+
+    line-height:1.7;
+
+}
+
+.footer-column h3{
+
+    margin-bottom:12px;
+
+    color:white;
+
+    font-size:12px;
+
+}
+
+.footer-column a{
+
+    display:block;
+
+    margin:8px 0;
+
+    color:#94a3b8;
+
+    font-size:11px;
+
+    transition:.2s;
+
+}
+
+.footer-column a:hover{
+
+    color:white;
+
+}
+
+.footer-bottom{
+
+    max-width:1500px;
+
+    margin:
+        30px auto 0;
+
+    padding-top:20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.08);
+
+    color:#64748b;
+
+    font-size:10px;
+
+}
+
+.footer-status{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:#94a3b8;
+
+}
+
+
+/* =====================================================
+   ANIMAÇÕES
+===================================================== */
+
+@keyframes entrada{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(15px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+@keyframes girar{
+
+    to{
+
+        transform:
+            rotate(360deg);
+
+    }
+
+}
+
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+body.dark-mode{
+
+    color:#e5e7eb;
+
+    background:#020617;
+
+}
+
+body.dark-mode .header{
+
+    background:
+        rgba(15,23,42,.95);
+
+    border-bottom-color:#1e293b;
+
+}
+
+body.dark-mode .logo{
+
+    color:#60a5fa;
+
+}
+
+body.dark-mode .search-area input{
+
+    background:#0f172a;
+
+    border-color:#334155;
+
+    color:#f8fafc;
+
+}
+
+body.dark-mode
+.search-area input:focus{
+
+    background:#111827;
+
+}
+
+body.dark-mode .header-btn{
+
+    background:#1e293b;
+
+    color:#e2e8f0;
+
+}
+
+body.dark-mode
+.register-btn{
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #7c3aed
+        );
+
+}
+
+body.dark-mode .stat{
+
+    background:#0f172a;
+
+    border-color:#1e293b;
+
+}
+
+body.dark-mode
+.stat strong{
+
+    color:#f8fafc;
+
+}
+
+body.dark-mode
+.stat span{
+
+    color:#94a3b8;
+
+}
+
+body.dark-mode
+.stat-icon{
+
+    background:#172554;
+
+}
+
+body.dark-mode
+.section-title h2{
+
+    color:#f8fafc;
+
+}
+
+body.dark-mode
+.section-title p{
+
+    color:#94a3b8;
+
+}
+
+body.dark-mode .category{
+
+    background:#0f172a;
+
+    border-color:#334155;
+
+    color:#cbd5e1;
+
+}
+
+body.dark-mode
+.category:hover,
+body.dark-mode
+.category.active{
+
+    background:#2563eb;
+
+    border-color:#2563eb;
+
+    color:white;
+
+}
+
+body.dark-mode #filtro{
+
+    background:#0f172a;
+
+    color:#e2e8f0;
+
+}
+
+body.dark-mode
+#filtro option{
+
+    background:#0f172a;
+
+    color:#f8fafc;
+
+}
+
+body.dark-mode .card{
+
+    background:#0f172a;
+
+    border-color:#1e293b;
+
+}
+
+body.dark-mode .card:hover{
+
+    border-color:#3b82f6;
+
+}
+
+body.dark-mode
+.card-image{
+
+    background:#1e293b;
+
+}
+
+body.dark-mode
+.card h3{
+
+    color:#f8fafc;
+
+}
+
+body.dark-mode
+.card-description{
+
+    color:#94a3b8;
+
+}
+
+body.dark-mode .rating{
+
+    color:#94a3b8;
+
+}
+
+body.dark-mode .preco{
+
+    color:#60a5fa;
+
+}
+
+body.dark-mode .favorite{
+
+    background:
+        rgba(15,23,42,.94);
+
+    color:#94a3b8;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:1100px){
+
+    .stats{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+    .footer-inner{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+}
+
+
+@media(max-width:760px){
+
+    .header{
+
+        flex-wrap:wrap;
+
+        padding:
+            10px 14px;
+
+    }
+
+    .logo{
+
+        font-size:17px;
+
+    }
+
+    .search-area{
+
+        order:5;
+
+        flex-basis:100%;
+
+        max-width:none;
+
+    }
+
+    main{
+
+        padding:
+            22px 15px 55px;
+
+    }
+
+    .hero{
+
+        padding:28px;
+
+        min-height:330px;
+
+    }
+
+    .hero h1{
+
+        font-size:32px;
+
+    }
+
+    .stats{
+
+        grid-template-columns:
+            1fr 1fr;
+
+    }
+
+}
+
+
+@media(max-width:520px){
+
+    #menu{
+
+        width:88vw;
+
+        max-width:320px;
+
+    }
+
+    .header{
+
+        gap:9px;
+
+    }
+
+    .logo{
+
+        font-size:15px;
+
+    }
+
+    .logo-icon{
+
+        width:34px;
+
+        height:34px;
+
+    }
+
+    .header-btn .btn-text{
+
+        display:none;
+
+    }
+
+    .header-btn{
+
+        width:44px;
+
+        padding:0;
+
+    }
+
+    .container{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .stats{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .hero{
+
+        padding:23px;
+
+    }
+
+    .hero h1{
+
+        font-size:28px;
+
+    }
+
+    .hero-actions{
+
+        flex-direction:column;
+
+    }
+
+    .hero-btn{
+
+        width:100%;
+
+    }
+
+    .footer-inner{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .footer-bottom{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+}
+
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+
+        animation-duration:.01ms !important;
+
+        animation-iteration-count:1 !important;
+
+        transition-duration:.01ms !important;
+
+    }
+
+}
+
+.review-count{color:#64748b;font-size:12px;margin-left:3px;}
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     OVERLAY
+===================================================== -->
+
+<div id="overlay"></div>
+
+
+<!-- =====================================================
+     MENU
+===================================================== -->
+
+<aside id="menu">
+
+
+    <div class="menu-header">
+
+        <div class="menu-brand">
+
+            <div class="brand-icon">
+                📱
+            </div>
+
+            <div>
+
+                <strong>
+                    APP STORE
+                </strong>
+
+                <small>
+                    Marketplace de aplicativos
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <button
+            id="fechar"
+            type="button"
+            aria-label="Fechar menu"
+        >
+            ✕
+        </button>
+
+    </div>
+
+
+    <nav class="menu-navigation">
+
+
+        <div class="menu-section-title">
+            PRINCIPAL
+        </div>
+
+
+        <a
+            href="loja.html"
+            class="menu-link active"
+        >
+
+            <span class="menu-icon">
+                🏠
+            </span>
+
+            <span class="menu-text">
+                Início
+            </span>
+
+            <span class="menu-arrow">
+                ›
+            </span>
+
+        </a>
+<div class="menu-divider"></div>
+
+
+        <div class="menu-section-title">
+            SUPORTE
+        </div>
+
+
+        <a
+            href="termos-de-uso.html"
+            class="menu-link"
+        >
+
+            <span class="menu-icon">
+                📄
+            </span>
+
+            <span class="menu-text">
+                Termos de uso
+            </span>
+
+            <span class="menu-arrow">
+                ›
+            </span>
+
+        </a>
+
+
+    
+
+        <div class="menu-divider"></div>
+
+        <button id="sairConta" type="button" class="menu-link" style="width:100%; border:none; background:transparent; text-align:left; cursor:pointer;">
+            <span class="menu-icon">🚪</span>
+            <span class="menu-text">Sair da conta</span>
+            <span class="menu-arrow">›</span>
+        </button>
+
+</nav>
+
+
+    <div class="menu-footer">
+
+        <div class="security-status">
+
+            <span class="security-dot"></span>
+
+            <span>
+                Ambiente seguro
+            </span>
+
+        </div>
+
+        <small>
+            © 2026 APP STORE
+        </small>
+
+    </div>
+
+</aside>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+
+    <button
+        class="menu-btn"
+        id="abrirMenu"
+        type="button"
+        aria-label="Abrir menu"
+    >
+        ☰
+    </button>
+
+
+    <a
+        href="loja.html"
+        class="logo"
+        aria-label="APP STORE"
+    >
+
+        <span class="logo-icon">
+            📱
+        </span>
+
+        <span>
+            APP STORE
+        </span>
+
+    </a>
+
+
+    <div class="search-area">
+
+        <span class="search-icon">
+            🔎
+        </span>
+
+        <input
+            id="pesquisa"
+            type="search"
+            placeholder="Pesquisar aplicativos, ferramentas, jogos..."
+            autocomplete="off"
+        >
+
+        <button
+            id="limparPesquisa"
+            class="search-clear"
+            type="button"
+            title="Limpar pesquisa"
+            aria-label="Limpar pesquisa"
+        >
+            ✕
+        </button>
+
+    </div>
+
+
+    <div class="header-actions">
+
+
+        <button
+            class="header-btn theme-btn"
+            id="themeToggle"
+            type="button"
+            title="Alterar tema"
+        >
+
+            🌙
+
+            <span class="btn-text">
+                Modo escuro
+            </span>
+
+        </button>
+
+
+        <a
+            href="aplicativos salvos.html"
+            class="header-btn"
+            title="Aplicativos salvos"
+        >
+            💾
+            <span class="btn-text">
+                Aplicativos salvos
+            </span>
+        </a>
+
+
+        <a
+            href="cadastro.html"
+            class="header-btn"
+            title="Cadastrar-se na loja"
+        >
+            👤
+            <span class="btn-text">
+                Cadastrar-se
+            </span>
+        </a>
+
+
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main>
+
+
+    <!-- =================================================
+         HERO
+    ================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+
+            <span class="hero-badge">
+
+                🚀
+
+                NOVA GERAÇÃO DE APLICATIVOS
+
+            </span>
+
+
+            <h1>
+
+                Encontre o aplicativo
+                perfeito para você.
+
+            </h1>
+
+
+            <p>
+
+                Descubra aplicativos incríveis,
+                ferramentas profissionais e soluções
+                para trabalho, estudos, produtividade,
+                negócios e entretenimento.
+
+            </p>
+
+
+            <div class="hero-actions">
+
+
+                <button
+                    class="hero-btn primary"
+                    id="explorarBtn"
+                    type="button"
+                >
+
+                    🔎
+
+                    Explorar aplicativos
+
+                </button>
+
+
+                <button
+                    class="hero-btn secondary"
+                    id="vendedorHeroBtn"
+                    type="button"
+                >
+
+                    🛍️
+
+                    Seja um vendedor
+
+                </button>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         ESTATÍSTICAS
+    ================================================== -->
+
+    <section class="stats">
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                📱
+            </div>
+
+            <div>
+
+                <strong id="totalApps">
+                    0
+                </strong>
+
+                <span>
+                    Aplicativos
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                ⭐
+            </div>
+
+            <div>
+
+                <strong id="mediaAvaliacao">
+                    0.0
+                </strong>
+
+                <span>
+                    Avaliação média
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                🛍️
+            </div>
+
+            <div>
+
+                <strong id="totalVendedores">
+                    0
+                </strong>
+
+                <span>
+                    Vendedores
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                🔒
+            </div>
+
+            <div>
+
+                <strong>
+                    Seguro
+                </strong>
+
+                <span>
+                    Ambiente protegido
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         CATEGORIAS
+    ================================================== -->
+
+    <section id="categorias">
+
+
+        <div class="section-header">
+
+            <div class="section-title">
+
+                <h2>
+                    Categorias
+                </h2>
+
+                <p>
+                    Encontre aplicativos por categoria
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="categories">
+
+
+            <button
+                class="category active"
+                data-categoria="todos"
+                type="button"
+            >
+                ✨ Todos
+            </button>
+
+
+            <button
+                class="category"
+                data-categoria="produtividade"
+                type="button"
+            >
+                ⚡ Produtividade
+            </button>
+
+
+            <button
+                class="category"
+                data-categoria="educacao"
+                type="button"
+            >
+                🎓 Educação
+            </button>
+
+
+            <button
+                class="category"
+                data-categoria="negocios"
+                type="button"
+            >
+                💼 Negócios
+            </button>
+
+
+            <button
+                class="category"
+                data-categoria="jogos"
+                type="button"
+            >
+                🎮 Jogos
+            </button>
+
+
+            <button
+                class="category"
+                data-categoria="design"
+                type="button"
+            >
+                🎨 Design
+            </button>
+
+
+            <button
+                class="category"
+                data-categoria="ferramentas"
+                type="button"
+            >
+                🛠️ Ferramentas
+            </button>
+
+
+            <button
+                class="category"
+                data-categoria="outros"
+                type="button"
+            >
+                📦 Outros
+            </button>
+
+
+        </div>
+
+    </section>
+
+
+ <!-- =================================================
+         PRODUTOS
+    ================================================== -->
+
+    <section>
+
+        <div class="section-header">
+
+            <div class="section-title">
+
+                <h2>
+                    Aplicativos disponíveis
+                </h2>
+
+                <p id="resultadoTexto">
+                    Carregando aplicativos...
+                </p>
+
+            </div>
+
+            <select
+                id="filtro"
+                class="category"
+            >
+
+                <option value="todos">
+                    Relevância
+                </option>
+
+                <option value="menor">
+                    Menor preço
+                </option>
+
+                <option value="maior">
+                    Maior preço
+                </option>
+
+                <option value="nome">
+                    Nome A-Z
+                </option>
+
+                <option value="avaliacao">
+                    Melhor avaliação
+                </option>
+
+            </select>
+
+        </div>
+
+        <section
+            class="container"
+            id="produtos"
+        >
+
+            <div class="mensagem">
+
+                <div class="loader"></div>
+
+                <p>
+                    Carregando aplicativos...
+                </p>
+
+            </div>
+
+        </section>
+
+    </section>
+
+</main>
+
+
+
+<script type="module">
+/* Carregamento dos aplicativos */
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  get
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAMG8workhkRJapQm1AHSMOSIPOnSWltpw",
+  authDomain: "minha-loja-5477a.firebaseapp.com",
+  databaseURL: "https://minha-loja-5477a-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "minha-loja-5477a",
+  storageBucket: "minha-loja-5477a.firebasestorage.app",
+  messagingSenderId: "680448342361",
+  appId: "1:680448342361:web:e35226b350ac4504d6f448",
+  measurementId: "G-0FBN3SDTNR"
+};
+
+let produtosAtuais = [];
+let categoriaAtual = "todos";
+
+const menu = document.getElementById("menu");
+const overlay = document.getElementById("overlay");
+const abrirMenuBtn = document.getElementById("abrirMenu");
+const fecharMenuBtn = document.getElementById("fechar");
+const sairContaBtn = document.getElementById("sairConta");
+const pesquisa = document.getElementById("pesquisa");
+const limparPesquisa = document.getElementById("limparPesquisa");
+const filtro = document.getElementById("filtro");
+const produtos = document.getElementById("produtos");
+const totalApps = document.getElementById("totalApps");
+const mediaAvaliacao = document.getElementById("mediaAvaliacao");
+const totalVendedores = document.getElementById("totalVendedores");
+const resultadoTexto = document.getElementById("resultadoTexto");
+const themeToggle = document.getElementById("themeToggle");
+const explorarBtn = document.getElementById("explorarBtn");
+const vendedorHeroBtn = document.getElementById("vendedorHeroBtn");
+const cadastroLojaBtn = document.querySelector('a[href="cadastro.html"]');
+let usuarioAtualFirebase = null;
+let cadastroLojaVerificado = false;
+let usuarioTemCadastroLoja = false;
+
+// O botão só é mostrado depois de verificar o usuário no Firebase.
+if(cadastroLojaBtn) cadastroLojaBtn.style.display = "none";
+
+function mostrarCadastroLoja(){
+  if(cadastroLojaBtn) cadastroLojaBtn.style.display = "";
+}
+
+function esconderCadastroLoja(){
+  if(cadastroLojaBtn) cadastroLojaBtn.style.display = "none";
+}
+
+async function verificarCadastroDaLoja(user, db){
+  usuarioAtualFirebase = user || null;
+  cadastroLojaVerificado = false;
+  usuarioTemCadastroLoja = false;
+
+  // Usuário não autenticado: pode iniciar o cadastro da loja.
+  if(!user){
+    cadastroLojaVerificado = true;
+    mostrarCadastroLoja();
+    return;
+  }
+
+  try{
+    // EXATAMENTE o caminho usado pelo cadastro.html:
+    // usuarios/UID
+    const snapshot = await get(ref(db, "usuarios/" + user.uid));
+
+    if(snapshot.exists()){
+      const dados = snapshot.val() || {};
+
+      // cadastro.html salva origem: "cadastro-loja".
+      if(dados.origem === "cadastro-loja"){
+        usuarioTemCadastroLoja = true;
+        cadastroLojaVerificado = true;
+        esconderCadastroLoja();
+        return;
+      }
+    }
+  }catch(erro){
+    console.error("Erro ao verificar cadastro da loja:", erro);
+  }
+
+  // Se não existe usuarios/UID com origem cadastro-loja, mostra o botão.
+  cadastroLojaVerificado = true;
+  usuarioTemCadastroLoja = false;
+  mostrarCadastroLoja();
+}
+
+function exigirCadastroDaLoja(continuar){
+  if(!cadastroLojaVerificado){
+    alert("Aguarde a verificação do seu cadastro.");
+    return false;
+  }
+
+  if(!usuarioAtualFirebase || !usuarioTemCadastroLoja){
+    alert("Para continuar, primeiro faça o cadastro da loja.");
+    window.location.href = "cadastro.html";
+    return false;
+  }
+
+  continuar();
+  return true;
+}
+
+function abrirMenu(){ menu?.classList.add("ativo"); overlay?.classList.add("ativo"); document.body.style.overflow="hidden"; }
+function fecharMenu(){ menu?.classList.remove("ativo"); overlay?.classList.remove("ativo"); document.body.style.overflow=""; }
+
+sairContaBtn?.addEventListener("click", async () => {
+  try {
+    const auth = getAuth();
+    if (!auth.currentUser) { fecharMenu(); return; }
+    if (!confirm("Deseja realmente sair da sua conta?")) return;
+    await signOut(auth);
+    fecharMenu();
+    window.location.reload();
+  } catch (erro) {
+    console.error("Erro ao sair da conta:", erro);
+    alert("Não foi possível sair da conta. Tente novamente.");
+  }
+});
+abrirMenuBtn?.addEventListener("click", abrirMenu);
+fecharMenuBtn?.addEventListener("click", fecharMenu);
+overlay?.addEventListener("click", fecharMenu);
+document.addEventListener("keydown", e => { if(e.key==="Escape") fecharMenu(); });
+document.querySelectorAll("#menu .menu-link").forEach(link => link.addEventListener("click", fecharMenu));
+
+function atualizarBotaoTema(){
+  if(!themeToggle) return;
+  const escuro=document.body.classList.contains("dark-mode");
+  themeToggle.innerHTML=escuro ? '☀️ <span class="btn-text">Modo claro</span>' : '🌙 <span class="btn-text">Modo escuro</span>';
+}
+function alternarModoEscuro(){
+  const ativo=document.body.classList.toggle("dark-mode");
+  localStorage.setItem("modoEscuro", ativo ? "true":"false");
+  atualizarBotaoTema();
+}
+themeToggle?.addEventListener("click", alternarModoEscuro);
+if(localStorage.getItem("modoEscuro")==="true") document.body.classList.add("dark-mode");
+atualizarBotaoTema();
+
+function normalizarCategoria(v){
+  return String(v||"outros").trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+}
+function converterPreco(v){
+  if(v==null || v==="") return 0;
+  if(typeof v==="number") return Number.isFinite(v)?Math.round(v*100)/100:0;
+  let t=String(v).trim().replace(/R\$/gi,"").replace(/\s/g,"");
+  if(t.includes(",")) t=t.replace(/\./g,"").replace(",",".");
+  const n=Number(t);
+  return Number.isFinite(n)?Math.round(n*100)/100:0;
+}
+function formatarPreco(v){
+  return converterPreco(v).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+}
+function escaparHTML(v){
+  return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+function gerarEstrelas(n){
+  const x=Math.max(0,Math.min(5,Math.round(Number(n)||0)));
+  return "★".repeat(x)+"☆".repeat(5-x);
+}
+
+function formatarAvaliacao(n){
+  const valor=Number(n);
+  return Number.isFinite(valor) ? Math.max(0,Math.min(5,valor)).toFixed(1) : "0.0";
+}
+
+/* Aceita os nomes mais comuns usados pelo painel administrativo. */
+function normalizarAplicativo(id, p){
+  p = p || {};
+  return {
+    id,
+    nome: p.nome ?? p.nomeAplicativo ?? p.titulo ?? p.name ?? "Sem nome",
+    descricao: p.descricao ?? p.descrição ?? p.description ?? p.resumo ?? "",
+    categoria: p.categoria ?? p.category ?? "outros",
+    preco: p.preco ?? p.preço ?? p.price ?? p.valor ?? 0,
+    avaliacao: (() => {
+      const direto = p.avaliacao ?? p.avaliação ?? p.rating ?? p.nota ??
+        p.mediaAvaliacao ?? p.notaMedia ?? p.ratingAverage ?? p.mediaNota;
+      if (direto != null && direto !== "") return Number(direto) || 0;
+
+      // Compatibilidade com avaliações salvas como lista/objeto no Firebase.
+      const dados = p.avaliacoes ?? p.avaliações ?? p.reviews ?? p.resenhas;
+      const notas = dados
+        ? Object.values(dados).map(v => Number(v?.nota ?? v?.rating ?? v))
+            .filter(n => Number.isFinite(n) && n > 0 && n <= 5)
+        : [];
+      return notas.length
+        ? notas.reduce((s, n) => s + n, 0) / notas.length
+        : 0;
+    })(),
+    totalAvaliacoes: Number(p.totalAvaliacoes ?? p.quantidadeAvaliacoes ?? p.reviewCount ?? 0) || 0,
+    imagem: (typeof (p.imagem ?? p.image ?? p.imagemUrl ?? p.imageUrl ?? p.foto ?? p.logo) === "object" ? ((p.imagem ?? p.image ?? p.imagemUrl ?? p.imageUrl ?? p.foto ?? p.logo).url ?? (p.imagem ?? p.image ?? p.imagemUrl ?? p.imageUrl ?? p.foto ?? p.logo).downloadURL ?? (p.imagem ?? p.image ?? p.imagemUrl ?? p.imageUrl ?? p.foto ?? p.logo).dataUrl ?? "") : (p.imagem ?? p.image ?? p.imagemUrl ?? p.imageUrl ?? p.foto ?? p.logo ?? "")),
+    vendedor: p.vendedor ?? p.nomeVendedor ?? p.seller ?? "",
+    vendedorId: p.vendedorId ?? p.sellerId ?? p.uidVendedor ?? "",
+    emailVendedor: p.emailVendedor ?? p.email ?? "",
+    downloads: p.downloads ?? p.instalacoes ?? p.vendas ?? 0,
+    versao: p.versao ?? p.version ?? "",
+    plataforma: p.plataforma ?? p.platform ?? "",
+    link: p.link ?? p.url ?? p.linkDownload ?? p.downloadUrl ?? "",
+    data: p.data ?? p.criadoEm ?? p.createdAt ?? "",
+    status: String(p.status ?? "publicado").toLowerCase()
+  };
+}
+
+function aplicativoPublicado(p){
+  return !["oculto","inativo","bloqueado","rascunho","rejeitado"].includes(p.status);
+}
+
+function aplicarFiltros(){
+  const busca=(pesquisa?.value||"").trim().toLowerCase();
+
+  let lista=produtosAtuais.filter(p=>{
+    const texto=`${p.nome} ${p.descricao} ${p.categoria} ${p.vendedor} ${p.versao} ${p.plataforma}`.toLowerCase();
+    const cat=categoriaAtual==="todos" || normalizarCategoria(p.categoria)===categoriaAtual;
+    return cat && (!busca || texto.includes(busca));
+  });
+
+  const ordem=filtro?.value;
+  if(ordem==="menor") lista.sort((a,b)=>converterPreco(a.preco)-converterPreco(b.preco));
+  if(ordem==="maior") lista.sort((a,b)=>converterPreco(b.preco)-converterPreco(a.preco));
+  if(ordem==="nome") lista.sort((a,b)=>a.nome.localeCompare(b.nome));
+  if(ordem==="avaliacao") lista.sort((a,b)=>Number(b.avaliacao||0)-Number(a.avaliacao||0));
+
+  renderizarProdutos(lista);
+}
+
+function renderizarProdutos(lista){
+  if(!produtos) return;
+
+  if(!lista.length){
+    produtos.innerHTML='<div class="mensagem"><div class="empty-icon">📦</div><h2>Nenhum aplicativo encontrado</h2><p>Os aplicativos publicados pelo administrador aparecerão aqui automaticamente.</p></div>';
+  } else {
+    produtos.innerHTML=lista.map(p=>{
+      const detalhes = [
+        p.versao ? `🔖 v${escaparHTML(p.versao)}` : "",
+        p.plataforma ? `💻 ${escaparHTML(p.plataforma)}` : "",
+        Number(p.downloads) > 0 ? `⬇️ ${escaparHTML(Number(p.downloads).toLocaleString("pt-BR"))}` : ""
+      ].filter(Boolean).join(" · ");
+
+      return `<article class="card" data-app-id="${escaparHTML(p.id)}">
+        <div class="card-image">
+          <img src="${escaparHTML(p.imagem || "imagem-padrao.png")}" alt="${escaparHTML(p.nome)}" onerror="this.onerror=null;this.src='imagem-padrao.png'">
+          <span class="badge">${escaparHTML(p.categoria || "Outros")}</span>
+          <button class="favorite" type="button" aria-label="Favoritar">♡</button>
+        </div>
+        <div class="card-content">
+          <h3>${escaparHTML(p.nome)}</h3>
+          <p class="card-description">${escaparHTML(p.descricao)}</p>
+          <div class="rating">
+            <span class="stars">${gerarEstrelas(p.avaliacao)}</span>
+            <span>${formatarAvaliacao(p.avaliacao)}</span>
+            <span class="review-count">(${Number(p.totalAvaliacoes || 0)} ${Number(p.totalAvaliacoes || 0) === 1 ? "avaliação" : "avaliações"})</span>
+          </div>
+          ${detalhes ? `<div style="margin-top:9px;color:#64748b;font-size:10px;line-height:1.5">${detalhes}</div>` : ""}
+          <div class="card-bottom">
+            <span class="preco">${formatarPreco(p.preco)}</span>
+          </div>
+        </div>
+      </article>`;
+    }).join("");
+
+    produtos.querySelectorAll(".favorite").forEach(btn=>{
+      btn.addEventListener("click", e=>{
+        e.stopPropagation();
+        btn.classList.toggle("ativo");
+        btn.textContent=btn.classList.contains("ativo")?"♥":"♡";
+      });
+    });
+
+    produtos.querySelectorAll(".card").forEach(card=>{
+      card.addEventListener("click", ()=>{
+        const app=produtosAtuais.find(x=>x.id===card.dataset.appId);
+        if(app){
+          exigirCadastroDaLoja(()=>{
+            window.location.href=`produto.html?id=${encodeURIComponent(app.id)}`;
+          });
+        }
+      });
+    });
+  }
+
+  if(resultadoTexto) resultadoTexto.textContent=`${lista.length} aplicativo(s) disponível(is)`;
+}
+
+function abrirDetalhes(p){
+  const detalhes = [
+    `Categoria: ${p.categoria || "Outros"}`,
+    p.versao ? `Versão: ${p.versao}` : "",
+    p.plataforma ? `Plataforma: ${p.plataforma}` : "",
+    `Avaliação: ${formatarAvaliacao(p.avaliacao)}/5`,
+    Number(p.downloads)>0 ? `Downloads/instalações: ${Number(p.downloads).toLocaleString("pt-BR")}` : "",
+    `Preço: ${formatarPreco(p.preco)}`
+  ].filter(Boolean).join("\n");
+
+  alert(`${p.nome}\n\n${p.descricao || "Sem descrição."}\n\n${detalhes}`);
+}
+
+function atualizarEstatisticas(){
+  if(totalApps) totalApps.textContent=produtosAtuais.length;
+
+  const vendedores=new Set(
+    produtosAtuais
+      .map(p=>p.vendedorId||p.vendedor||p.emailVendedor)
+      .filter(Boolean)
+  );
+  if(totalVendedores) totalVendedores.textContent=vendedores.size;
+
+  const notas=produtosAtuais.map(p=>Number(p.avaliacao)).filter(Number.isFinite).filter(n=>n>0);
+  if(mediaAvaliacao){
+    mediaAvaliacao.textContent=notas.length
+      ? (notas.reduce((a,b)=>a+b,0)/notas.length).toFixed(1)
+      : "0.0";
+  }
+}
+
+function receberAplicativos(snapshot){
+  const data=snapshot.val() || {};
+  let lista=[];
+
+  if(Array.isArray(data)){
+    data.forEach((item,i)=>{
+      if(item) lista.push(normalizarAplicativo(String(i),item));
+    });
+  }else{
+    Object.entries(data).forEach(([id,item])=>{
+      if(item && typeof item==="object") lista.push(normalizarAplicativo(id,item));
+    });
+  }
+
+  produtosAtuais=lista.filter(aplicativoPublicado);
+  atualizarEstatisticas();
+  aplicarFiltros();
+}
+
+/* Tenta primeiro "aplicativos" e também mantém compatibilidade
+   com projetos que usam "produtos" no Realtime Database. */
+async function conectarFirebase(){
+  try{
+    if(
+      firebaseConfig.apiKey.includes("COLOQUE_") ||
+      firebaseConfig.projectId === "SEU-PROJETO"
+    ){
+      throw new Error("CONFIG_FIREBASE_AUSENTE");
+    }
+
+    const app=initializeApp(firebaseConfig);
+    const db=getDatabase(app);
+    const auth=getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+      verificarCadastroDaLoja(user, db);
+    });
+
+    resultadoTexto.textContent="Carregando aplicativos...";
+
+    let dadosAplicativos = {};
+    let dadosProdutos = {};
+
+    function atualizarTudo(){
+      const mapa = new Map();
+      const adicionar = (dados, origem) => {
+        if(Array.isArray(dados)){
+          dados.forEach((item,i)=>{
+            if(item) {
+              const id=String(item.id || i);
+              mapa.set(`${origem}:${id}`, normalizarAplicativo(id,item));
+            }
+          });
+        }else{
+          Object.entries(dados || {}).forEach(([id,item])=>{
+            if(item && typeof item === "object") {
+              mapa.set(`${origem}:${id}`, normalizarAplicativo(String(id),item));
+            }
+          });
+        }
+      };
+
+      adicionar(dadosAplicativos, "aplicativos");
+      adicionar(dadosProdutos, "produtos");
+
+      produtosAtuais = Array.from(mapa.values()).filter(aplicativoPublicado);
+      atualizarEstatisticas();
+      aplicarFiltros();
+    }
+
+    onValue(ref(db,"aplicativos"), snap=>{
+      dadosAplicativos = snap.val() || {};
+      atualizarTudo();
+    }, err=>{
+      console.warn("Não foi possível ler /aplicativos:",err);
+      atualizarTudo();
+    });
+
+    onValue(ref(db,"produtos"), snap=>{
+      dadosProdutos = snap.val() || {};
+      atualizarTudo();
+    }, err=>{
+      console.warn("Não foi possível ler /produtos:",err);
+      atualizarTudo();
+    });
+
+  }catch(err){
+    console.error(err);
+    produtos.innerHTML='<div class="mensagem"><div class="empty-icon">⚙️</div><h2>Não foi possível carregar os aplicativos</h2><p>Verifique a conexão e tente novamente.</p></div>';
+    resultadoTexto.textContent="Aguardando carregamento dos aplicativos";
+  }
+}
+
+pesquisa?.addEventListener("input", aplicarFiltros);
+limparPesquisa?.addEventListener("click",()=>{
+  pesquisa.value="";
+  limparPesquisa.classList.remove("visible");
+  aplicarFiltros();
+  pesquisa.focus();
+});
+pesquisa?.addEventListener("input",()=>{
+  limparPesquisa?.classList.toggle("visible", !!pesquisa.value);
+});
+filtro?.addEventListener("change", aplicarFiltros);
+
+document.querySelectorAll(".category[data-categoria]").forEach(botao=>{
+  botao.addEventListener("click",()=>{
+    document.querySelectorAll(".category[data-categoria]").forEach(i=>i.classList.remove("active"));
+    botao.classList.add("active");
+    categoriaAtual=normalizarCategoria(botao.dataset.categoria);
+    aplicarFiltros();
+  });
+});
+
+explorarBtn?.addEventListener("click",()=>document.getElementById("produtos")?.scrollIntoView({behavior:"smooth"}));
+vendedorHeroBtn?.addEventListener("click",()=>{
+  exigirCadastroDaLoja(()=>{
+    window.location.href="cadastro-vendedor.html";
+  });
+});
+
+produtos.innerHTML='<div class="mensagem"><div class="loader"></div><p>Carregando todos os aplicativos...</p></div>';
+conectarFirebase();
+</script>
+
+</body>
+
+</html>

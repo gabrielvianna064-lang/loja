@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Criar conta | Minha Loja</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #3b82f6 0%,
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    #8b5cf6 0%,
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #0f172a,
+                    #111827
+                );
+        }
+
+        .card {
+            width: 100%;
+            max-width: 390px;
+
+            background: rgba(255, 255, 255, 0.98);
+
+            padding: 35px 30px;
+
+            border-radius: 24px;
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.35);
+
+            animation: aparecer 0.5s ease;
+        }
+
+        @keyframes aparecer {
+
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            border-radius: 20px;
+
+            font-size: 34px;
+
+            box-shadow:
+                0 10px 25px rgba(37, 99, 235, 0.35);
+        }
+
+        h1 {
+            margin: 0;
+
+            text-align: center;
+
+            color: #111827;
+
+            font-size: 26px;
+        }
+
+        .subtitulo {
+            margin: 8px 0 28px;
+
+            text-align: center;
+
+            color: #6b7280;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+        .campo {
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #374151;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+        .input-box {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border: 2px solid #e5e7eb;
+
+            border-radius: 12px;
+
+            outline: none;
+
+            font-size: 15px;
+
+            background: #f9fafb;
+
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: #3b82f6;
+
+            background: white;
+
+            box-shadow:
+                0 0 0 4px rgba(59, 130, 246, 0.12);
+        }
+
+        .senha-container input {
+            padding-right: 55px;
+        }
+
+        .mostrar-senha {
+            position: absolute;
+
+            right: 8px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 40px;
+            height: 40px;
+
+            padding: 0;
+            margin: 0;
+
+            border: none;
+
+            background: transparent;
+
+            color: #6b7280;
+
+            cursor: pointer;
+
+            font-size: 18px;
+        }
+
+        .mostrar-senha:hover {
+            background: transparent;
+
+            transform: translateY(-50%);
+        }
+
+        .requisitos {
+            margin-top: 8px;
+
+            color: #6b7280;
+
+            font-size: 12px;
+        }
+
+.botao-voltar-loja {
+            display: block;
+            width: 100%;
+            padding: 13px;
+            margin-top: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            background: white;
+            color: #374151;
+            text-align: center;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .botao-voltar-loja:hover {
+            background: #f9fafb;
+            transform: translateY(-1px);
+        }
+
+        .botao {
+            width: 100%;
+
+            padding: 15px;
+
+            margin-top: 8px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 20px rgba(37, 99, 235, 0.25);
+
+            transition: 0.2s;
+        }
+
+        .botao:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 14px 25px rgba(37, 99, 235, 0.35);
+        }
+
+        .botao:active {
+            transform: translateY(0);
+        }
+
+        .botao:disabled {
+            opacity: 0.6;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+        .mensagem {
+            display: none;
+
+            margin-top: 18px;
+
+            padding: 14px;
+
+            border-radius: 12px;
+
+            font-size: 13px;
+
+            text-align: center;
+
+            line-height: 1.5;
+
+            word-break: break-word;
+        }
+
+        .mensagem.erro {
+            display: block;
+
+            background: #fee2e2;
+
+            color: #991b1b;
+
+            border: 1px solid #fecaca;
+        }
+
+        .mensagem.sucesso {
+            display: block;
+
+            background: #dcfce7;
+
+            color: #166534;
+
+            border: 1px solid #bbf7d0;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            padding: 16px;
+        }
+
+        .codigo-erro {
+            margin-top: 8px;
+
+            font-family: monospace;
+
+            font-size: 11px;
+
+            opacity: 0.8;
+        }
+
+        .rodape {
+            margin-top: 24px;
+
+            text-align: center;
+
+            color: #9ca3af;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+        @media (max-width: 450px) {
+
+            .card {
+                padding: 30px 22px;
+
+                border-radius: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="logo">
+        🛒
+    </div>
+
+    <h1>
+        Criar sua conta
+    </h1>
+
+    <div class="subtitulo">
+        Cadastre-se para acessar sua loja
+    </div>
+
+    <!-- E-MAIL -->
+
+    <div class="campo">
+
+        <label for="email">
+            E-mail
+        </label>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Digite seu e-mail"
+            autocomplete="email"
+        >
+
+    </div>
+
+    <!-- SENHA -->
+
+    <div class="campo">
+
+        <label for="senha">
+            Senha
+        </label>
+
+        <div class="input-box senha-container">
+
+            <input
+                type="password"
+                id="senha"
+                placeholder="Digite sua senha"
+                autocomplete="new-password"
+            >
+
+            <button
+                type="button"
+                class="mostrar-senha"
+                id="botaoSenha"
+                onclick="mostrarSenha()"
+                aria-label="Mostrar senha"
+            >
+                👁️
+            </button>
+
+        </div>
+
+        <div class="requisitos">
+            A senha deve ter pelo menos 6 caracteres.
+        </div>
+
+    </div>
+
+    <!-- VOLTAR PARA A LOJA -->
+    <a href="loja.html" class="botao-voltar-loja">← Voltar para a loja</a>
+
+    <!-- BOTÃO -->
+
+    <button
+        class="botao"
+        id="botaoCadastrar"
+        onclick="cadastrar()"
+    >
+        Criar minha conta
+    </button>
+
+    <!-- MENSAGEM -->
+
+    <div
+        id="mensagem"
+        class="mensagem"
+    ></div>
+
+    <div class="rodape">
+        🔒 Sua senha é protegida com segurança.
+    </div>
+
+</div>
+
+
+<script type="module">
+
+    /* =========================================================
+       FIREBASE
+    ========================================================= */
+
+    import {
+        initializeApp
+    } from
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+    import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword
+    } from
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    import {
+        getDatabase,
+        ref,
+        set
+    } from
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+    /* =========================================================
+       CONFIGURAÇÃO FIREBASE
+    ========================================================= */
+
+    const firebaseConfig = {
+
+        apiKey:
+            "AIzaSyAMG8workhkRJapQm1AHSMOSIPOnSWltpw",
+
+        authDomain:
+            "minha-loja-5477a.firebaseapp.com",
+
+        databaseURL:
+            "https://minha-loja-5477a-default-rtdb.europe-west1.firebasedatabase.app",
+
+        projectId:
+            "minha-loja-5477a",
+
+        storageBucket:
+            "minha-loja-5477a.firebasestorage.app",
+
+        messagingSenderId:
+            "680448342361",
+
+        appId:
+            "1:680448342361:web:e35226b350ac4504d6f448",
+
+        measurementId:
+            "G-0FBN3SDTNR"
+
+    };
+
+
+    /* =========================================================
+       INICIALIZA FIREBASE
+    ========================================================= */
+
+    const app =
+        initializeApp(firebaseConfig);
+
+    const auth =
+        getAuth(app);
+
+    const database =
+        getDatabase(app);
+
+
+    console.log(
+        "Firebase inicializado:",
+        app.name
+    );
+
+
+    /* =========================================================
+       CADASTRAR
+    ========================================================= */
+
+    window.cadastrar = async function () {
+
+        const email =
+            document
+                .getElementById("email")
+                .value
+                .trim();
+
+        const senha =
+            document
+                .getElementById("senha")
+                .value;
+
+        const botao =
+            document
+                .getElementById("botaoCadastrar");
+
+        const mensagem =
+            document
+                .getElementById("mensagem");
+
+
+        /* =====================================================
+           LIMPA MENSAGEM
+        ===================================================== */
+
+        mensagem.className =
+            "mensagem";
+
+        mensagem.innerHTML =
+            "";
+
+
+        /* =====================================================
+           VALIDA E-MAIL
+        ===================================================== */
+
+        if (!email) {
+
+            mostrarErro(
+                "Digite seu e-mail."
+            );
+
+            return;
+        }
+
+
+        /* =====================================================
+           VALIDA SENHA
+        ===================================================== */
+
+        if (!senha) {
+
+            mostrarErro(
+                "Digite sua senha."
+            );
+
+            return;
+        }
+
+
+        if (senha.length < 6) {
+
+            mostrarErro(
+                "A senha precisa ter pelo menos 6 caracteres."
+            );
+
+            return;
+        }
+
+
+        /* =====================================================
+           INICIA CADASTRO
+        ===================================================== */
+
+        botao.disabled =
+            true;
+
+        botao.textContent =
+            "Criando conta...";
+
+
+        try {
+
+            /* =================================================
+               CRIA USUÁRIO NO FIREBASE AUTH
+            ================================================= */
+
+            const resultado =
+                await createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    senha
+                );
+
+
+            const usuario =
+                resultado.user;
+
+
+            console.log(
+                "Usuário criado:",
+                usuario.uid
+            );
+
+
+            /* =================================================
+               SALVA NO REALTIME DATABASE
+            ================================================= */
+
+            await set(
+
+                ref(
+                    database,
+                    "usuarios/" + usuario.uid
+                ),
+
+                {
+
+                    uid:
+                        usuario.uid,
+
+                    email:
+                        usuario.email || email,
+
+                    nome:
+                        "",
+
+                    tipo:
+                        "cliente",
+
+                    banido:
+                        false,
+
+                    criadoEm:
+                        Date.now(),
+
+                    origem:
+                        "cadastro-loja"
+
+                }
+
+            );
+
+
+            console.log(
+                "Usuário salvo no Realtime Database:",
+                usuario.uid
+            );
+
+
+            /* =================================================
+               SALVA UID E E-MAIL NO NAVEGADOR
+            ================================================= */
+
+            localStorage.setItem(
+
+                "usuarioLogado",
+
+                JSON.stringify({
+
+                    uid:
+                        usuario.uid,
+
+                    email:
+                        usuario.email || email
+
+                })
+
+            );
+
+            // Marca que este usuário já concluiu o cadastro da loja.
+            // A loja também confere o registro "usuarios/UID" no Firebase.
+            localStorage.setItem("cadastroLojaConcluido", "true");
+
+
+            /* =================================================
+               CADASTRO CONCLUÍDO
+               
+               MOSTRA SOMENTE:
+               "Cadastro concluído com sucesso!"
+            ================================================= */
+
+            mensagem.className =
+                "mensagem sucesso";
+
+            mensagem.innerHTML =
+                "✅ Cadastro concluído com sucesso!";
+
+
+            botao.disabled =
+                true;
+
+            botao.textContent =
+                "Cadastro concluído!";
+
+
+            /* =================================================
+               REDIRECIONA PARA LOJA
+            ================================================= */
+
+            setTimeout(
+
+                function () {
+
+                    window.location.href =
+                        "loja.html";
+
+                },
+
+                3000
+
+            );
+
+        }
+
+
+        catch (erro) {
+
+            console.error(
+                "ERRO FIREBASE:",
+                erro
+            );
+
+
+            botao.disabled =
+                false;
+
+            botao.textContent =
+                "Criar minha conta";
+
+
+            /* =================================================
+               E-MAIL JÁ CADASTRADO
+               
+               NÃO MOSTRA CÓDIGO OU DETALHES
+            ================================================= */
+
+            if (
+                erro.code ===
+                "auth/email-already-in-use"
+            ) {
+
+                /* O Firebase não permite duas contas Auth com o mesmo e-mail.
+                   Reutilizamos a conta existente com a senha informada. */
+                try {
+                    mensagem.className = "mensagem";
+                    mensagem.innerHTML = "🔄 Este e-mail já possui uma conta. Verificando a senha...";
+
+                    const login = await signInWithEmailAndPassword(auth, email, senha);
+                    const usuarioExistente = login.user;
+
+                    await set(ref(database, "usuarios/" + usuarioExistente.uid), {
+                        uid: usuarioExistente.uid,
+                        email: usuarioExistente.email || email,
+                        nome: "",
+                        tipo: "cliente",
+                        banido: false,
+                        criadoEm: Date.now(),
+                        origem: "cadastro-loja"
+                    });
+
+                    localStorage.setItem("usuarioLogado", JSON.stringify({
+                        uid: usuarioExistente.uid,
+                        email: usuarioExistente.email || email
+                    }));
+                    localStorage.setItem("cadastroLojaConcluido", "true");
+
+                    mensagem.className = "mensagem sucesso";
+                    mensagem.innerHTML = "✅ Cadastro da loja confirmado com sucesso!";
+                    botao.disabled = true;
+                    botao.textContent = "Cadastro concluído!";
+
+                    setTimeout(function () {
+                        window.location.href = "loja.html";
+                    }, 1500);
+                    return;
+
+                } catch (erroLogin) {
+                    console.error("ERRO AO REUTILIZAR CONTA:", erroLogin);
+                    botao.disabled = false;
+                    botao.textContent = "Criar minha conta";
+
+                    if (erroLogin.code === "auth/wrong-password" || erroLogin.code === "auth/invalid-credential") {
+                        mensagem.className = "mensagem erro";
+                        mensagem.innerHTML = "❌ Este e-mail já está cadastrado. Use a senha da conta anterior.";
+                        return;
+                    }
+
+                    mensagem.className = "mensagem erro";
+                    mensagem.innerHTML = "❌ Não foi possível confirmar a conta existente.";
+                    return;
+                }
+            }
+
+
+            /* =================================================
+               OUTROS ERROS
+            ================================================= */
+
+            let texto =
+                "Não foi possível criar a conta.";
+
+
+            switch (erro.code) {
+
+                case "auth/invalid-email":
+
+                    texto =
+                        "Digite um e-mail válido.";
+
+                    break;
+
+
+                case "auth/weak-password":
+
+                    texto =
+                        "A senha é muito fraca. Use pelo menos 6 caracteres.";
+
+                    break;
+
+
+                case "auth/operation-not-allowed":
+
+                    texto =
+                        "O cadastro por E-mail/Senha está desativado no Firebase.";
+
+                    break;
+
+
+                case "auth/network-request-failed":
+
+                    texto =
+                        "Erro de conexão com o Firebase.";
+
+                    break;
+
+
+                case "auth/invalid-api-key":
+
+                case "auth/api-key-not-valid":
+
+                case "auth/api-key-not-valid.-please-pass-a-valid-api-key.":
+
+                    texto =
+                        "A API Key do Firebase é inválida.";
+
+                    break;
+
+
+                case "auth/app-not-authorized":
+
+                    texto =
+                        "Este aplicativo não está autorizado no projeto Firebase.";
+
+                    break;
+
+
+                case "auth/too-many-requests":
+
+                    texto =
+                        "Muitas tentativas. Aguarde alguns minutos e tente novamente.";
+
+                    break;
+
+
+                case "auth/admin-restricted-operation":
+
+                    texto =
+                        "A criação de contas está sendo bloqueada pelo Firebase.";
+
+                    break;
+
+
+                case "auth/configuration-not-found":
+
+                    texto =
+                        "A configuração do Firebase Authentication não foi encontrada.";
+
+                    break;
+
+
+                default:
+
+                    texto =
+                        "Não foi possível criar a conta. Tente novamente.";
+
+                    break;
+
+            }
+
+
+            /* =================================================
+               MOSTRA ERRO
+            ================================================= */
+
+            mensagem.className =
+                "mensagem erro";
+
+
+            mensagem.innerHTML =
+                "❌ " + texto;
+
+        }
+
+    };
+
+
+    /* =========================================================
+       MOSTRAR / ESCONDER SENHA
+    ========================================================= */
+
+    window.mostrarSenha = function () {
+
+        const campo =
+            document.getElementById(
+                "senha"
+            );
+
+        const botao =
+            document.getElementById(
+                "botaoSenha"
+            );
+
+
+        if (
+            campo.type ===
+            "password"
+        ) {
+
+            campo.type =
+                "text";
+
+            botao.textContent =
+                "🙈";
+
+            botao.setAttribute(
+                "aria-label",
+                "Ocultar senha"
+            );
+
+        }
+
+        else {
+
+            campo.type =
+                "password";
+
+            botao.textContent =
+                "👁️";
+
+            botao.setAttribute(
+                "aria-label",
+                "Mostrar senha"
+            );
+
+        }
+
+    };
+
+
+    /* =========================================================
+       MOSTRAR ERRO
+    ========================================================= */
+
+    function mostrarErro(texto) {
+
+        const mensagem =
+            document.getElementById(
+                "mensagem"
+            );
+
+        mensagem.className =
+            "mensagem erro";
+
+        mensagem.innerHTML =
+            "❌ " + texto;
+
+    }
+
+
+    /* =========================================================
+       ENTER PARA CADASTRAR
+    ========================================================= */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                const elemento =
+                    document.activeElement;
+
+
+                if (
+                    elemento &&
+                    elemento.tagName ===
+                    "INPUT"
+                ) {
+
+                    event.preventDefault();
+
+                    cadastrar();
+
+                }
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>

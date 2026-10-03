@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2563eb">
+
+<title>Cadastro de Vendedor | APP STORE</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+
+    font-family:Arial, Helvetica, sans-serif;
+    color:#f8fafc;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            #2563eb 0%,
+            #172554 35%,
+            #020617 75%
+        );
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    width:320px;
+    height:320px;
+    top:-120px;
+    right:-100px;
+    border-radius:50%;
+    background:rgba(124,58,237,.18);
+    filter:blur(50px);
+    pointer-events:none;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:280px;
+    height:280px;
+    bottom:-120px;
+    left:-100px;
+    border-radius:50%;
+    background:rgba(37,99,235,.15);
+    filter:blur(50px);
+    pointer-events:none;
+}
+
+.container{
+    position:relative;
+    z-index:2;
+    width:100%;
+    max-width:560px;
+    padding:35px;
+
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:26px;
+
+    background:rgba(15,23,42,.96);
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.50);
+
+    animation:entrada .45s ease;
+}
+
+.logo{
+    width:70px;
+    height:70px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin:0 auto 18px;
+
+    border-radius:20px;
+
+    font-size:32px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #7c3aed
+        );
+
+    box-shadow:
+        0 12px 30px rgba(37,99,235,.30);
+}
+
+h1{
+    text-align:center;
+    font-size:28px;
+    font-weight:900;
+}
+
+.subtitulo{
+    margin-top:9px;
+    margin-bottom:28px;
+
+    color:#94a3b8;
+    text-align:center;
+
+    font-size:13px;
+    line-height:1.6;
+}
+
+.secao{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    margin:28px 0 18px;
+    padding-bottom:10px;
+
+    color:#60a5fa;
+
+    border-bottom:1px solid #334155;
+
+    font-size:16px;
+    font-weight:800;
+}
+
+.grupo{
+    margin-bottom:19px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+
+    color:#e2e8f0;
+
+    font-size:13px;
+    font-weight:800;
+}
+
+input{
+    width:100%;
+    height:50px;
+
+    padding:0 15px;
+
+    outline:none;
+
+    border:1px solid #334155;
+    border-radius:13px;
+
+    background:#020617;
+    color:white;
+
+    font-size:14px;
+
+    transition:
+        border-color .25s,
+        box-shadow .25s;
+}
+
+input::placeholder{
+    color:#64748b;
+}
+
+input:hover{
+    border-color:#475569;
+}
+
+input:focus{
+    border-color:#3b82f6;
+
+    box-shadow:
+        0 0 0 4px rgba(59,130,246,.12);
+}
+
+input.valido{
+    border-color:#22c55e;
+}
+
+input.invalido{
+    border-color:#ef4444;
+}
+
+.dica{
+    margin-top:7px;
+
+    color:#64748b;
+
+    font-size:10px;
+    line-height:1.5;
+}
+
+.botao{
+    width:100%;
+    height:52px;
+
+    margin-top:8px;
+
+    border:0;
+    border-radius:14px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    font-size:14px;
+    font-weight:900;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 10px 25px rgba(37,99,235,.25);
+
+    transition:
+        transform .25s,
+        box-shadow .25s,
+        opacity .25s;
+}
+
+.botao:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 15px 30px rgba(37,99,235,.35);
+}
+
+.botao:active{
+    transform:translateY(0);
+}
+
+.botao:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.mensagem{
+    display:none;
+
+    margin-top:20px;
+    padding:14px;
+
+    border-radius:12px;
+
+    text-align:center;
+
+    font-size:13px;
+    font-weight:700;
+    line-height:1.5;
+}
+
+.mensagem.sucesso{
+    display:block;
+
+    color:#bbf7d0;
+
+    background:rgba(22,101,52,.35);
+
+    border:1px solid rgba(34,197,94,.25);
+}
+
+.mensagem.erro{
+    display:block;
+
+    color:#fecaca;
+
+    background:rgba(127,29,29,.35);
+
+    border:1px solid rgba(239,68,68,.25);
+}
+
+.mensagem.info{
+    display:block;
+
+    color:#bfdbfe;
+
+    background:rgba(30,64,175,.25);
+
+    border:1px solid rgba(59,130,246,.25);
+}
+
+.info-seguranca{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+
+    margin-top:22px;
+    padding:13px;
+
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:13px;
+
+    background:rgba(255,255,255,.035);
+
+    color:#94a3b8;
+
+    font-size:10px;
+    line-height:1.6;
+}
+
+.info-seguranca-icon{
+    flex-shrink:0;
+    font-size:18px;
+}
+
+.voltar{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:6px;
+
+    margin-top:22px;
+    padding:12px;
+
+    border-radius:12px;
+
+    color:#93c5fd;
+
+    text-align:center;
+
+    font-size:13px;
+    font-weight:800;
+
+    text-decoration:none;
+
+    transition:
+        background .25s,
+        color .25s;
+}
+
+.voltar:hover{
+    color:white;
+    background:rgba(255,255,255,.06);
+}
+
+.rodape{
+    margin-top:18px;
+
+    color:#64748b;
+
+    text-align:center;
+
+    font-size:10px;
+}
+
+@keyframes entrada{
+    from{
+        opacity:0;
+        transform:translateY(18px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@media(max-width:600px){
+
+    body{
+        padding:15px;
+    }
+
+    .container{
+        padding:25px 20px;
+        border-radius:20px;
+    }
+
+    h1{
+        font-size:24px;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        🏪
+    </div>
+
+    <h1>
+        Cadastro de Vendedor
+    </h1>
+
+    <p class="subtitulo">
+        Cadastre seus dados para começar
+        a vender aplicativos na loja.
+    </p>
+
+    <form id="formVendedor" novalidate>
+
+        <div class="secao">
+            <span>👤</span>
+            <span>Dados pessoais</span>
+        </div>
+
+        <div class="grupo">
+
+            <label for="nome">
+                Nome completo
+            </label>
+
+            <input
+                id="nome"
+                type="text"
+                placeholder="Digite seu nome completo"
+                autocomplete="name"
+                maxlength="120"
+                required
+            >
+
+            <div class="dica">
+                Informe seu nome completo.
+            </div>
+
+        </div>
+
+        <div class="grupo">
+
+            <label for="email">
+                E-mail
+            </label>
+
+            <input
+                id="email"
+                type="email"
+                placeholder="seuemail@exemplo.com"
+                autocomplete="email"
+                maxlength="180"
+                required
+            >
+
+            <div class="dica">
+                Usaremos este e-mail para enviar a aprovação e o link da Central.
+            </div>
+
+        </div>
+
+        <div class="grupo">
+
+            <label for="cpf">
+                CPF
+            </label>
+
+            <input
+                id="cpf"
+                type="text"
+                placeholder="000.000.000-00"
+                inputmode="numeric"
+                autocomplete="off"
+                maxlength="14"
+                required
+            >
+
+            <div class="dica">
+                Digite os 11 números do seu CPF.
+            </div>
+
+        </div>
+
+        <div class="secao">
+            <span>🏦</span>
+            <span>Conta bancária</span>
+        </div>
+
+        <div class="grupo">
+
+            <label for="conta">
+                Número da conta bancária
+            </label>
+
+            <input
+                id="conta"
+                type="text"
+                placeholder="Digite o número da conta"
+                inputmode="numeric"
+                autocomplete="off"
+                maxlength="30"
+                required
+            >
+
+            <div class="dica">
+                Informe somente os números da conta.
+            </div>
+
+        </div>
+
+        <button
+            type="submit"
+            class="botao"
+            id="botaoCadastrar"
+        >
+            🏪 Criar cadastro de vendedor
+        </button>
+
+    </form>
+
+    <div
+        id="mensagem"
+        class="mensagem"
+        role="alert"
+        aria-live="polite"
+    ></div>
+
+    <div class="info-seguranca">
+
+        <span class="info-seguranca-icon">
+            🔐
+        </span>
+
+        <span>
+            Seus dados são armazenados com segurança
+            e utilizados para criar seu cadastro
+            de vendedor.
+        </span>
+
+    </div>
+
+    <a
+        href="loja.html"
+        class="voltar"
+    >
+        ← Voltar para a loja
+    </a>
+
+    <div class="rodape">
+        APP STORE • Central de Vendedores
+    </div>
+
+</div>
+
+
+<script type="module">
+
+/* =========================================================
+   FIREBASE
+========================================================= */
+
+import {
+    initializeApp
+} from
+"https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    set,
+    get
+} from
+"https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+
+
+/* =========================================================
+   CONFIGURAÇÃO
+========================================================= */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyAMG8workhkRJapQm1AHSMOSIPOnSWltpw",
+
+    authDomain:
+        "minha-loja-5477a.firebaseapp.com",
+
+    databaseURL:
+        "https://minha-loja-5477a-default-rtdb.europe-west1.firebasedatabase.app",
+
+    projectId:
+        "minha-loja-5477a",
+
+    storageBucket:
+        "minha-loja-5477a.firebasestorage.app",
+
+    messagingSenderId:
+        "680448342361",
+
+    appId:
+        "1:680448342361:web:e35226b350ac4504d6f448",
+
+    measurementId:
+        "G-0FBN3SDTNR"
+};
+
+
+/* =========================================================
+   INICIAR
+========================================================= */
+
+const app =
+    initializeApp(firebaseConfig);
+
+const db =
+    getDatabase(app);
+
+
+/* =========================================================
+   ELEMENTOS
+========================================================= */
+
+const form =
+    document.getElementById("formVendedor");
+
+const mensagem =
+    document.getElementById("mensagem");
+
+const botao =
+    document.getElementById("botaoCadastrar");
+
+const nomeInput =
+    document.getElementById("nome");
+
+const emailInput =
+    document.getElementById("email");
+
+const cpfInput =
+    document.getElementById("cpf");
+
+const contaInput =
+    document.getElementById("conta");
+
+
+/* =========================================================
+   MENSAGEM
+========================================================= */
+
+function mostrarMensagem(texto, tipo){
+
+    mensagem.textContent = texto;
+
+    mensagem.className =
+        "mensagem " + tipo;
+}
+
+
+/* =========================================================
+   SOMENTE NÚMEROS
+========================================================= */
+
+function somenteNumeros(valor){
+
+    return String(valor || "")
+        .replace(/\D/g, "");
+}
+
+
+/* =========================================================
+   FORMATAR CPF
+========================================================= */
+
+cpfInput.addEventListener("input", function(){
+
+    let valor =
+        somenteNumeros(this.value)
+        .slice(0, 11);
+
+    if(valor.length > 9){
+
+        valor =
+            valor.replace(
+                /^(\d{3})(\d{3})(\d{3})(\d{2})$/,
+                "$1.$2.$3-$4"
+            );
+
+    }else if(valor.length > 6){
+
+        valor =
+            valor.replace(
+                /^(\d{3})(\d{3})(\d{1,3})$/,
+                "$1.$2.$3"
+            );
+
+    }else if(valor.length > 3){
+
+        valor =
+            valor.replace(
+                /^(\d{3})(\d{1,3})$/,
+                "$1.$2"
+            );
+    }
+
+    this.value = valor;
+});
+
+
+/* =========================================================
+   CONTA
+========================================================= */
+
+contaInput.addEventListener("input", function(){
+
+    this.value =
+        somenteNumeros(this.value)
+        .slice(0, 30);
+
+});
+
+
+/* =========================================================
+   VALIDAR CPF
+========================================================= */
+
+function validarCPF(cpf){
+
+    cpf =
+        somenteNumeros(cpf);
+
+    if(cpf.length !== 11){
+        return false;
+    }
+
+    if(/^(\d)\1{10}$/.test(cpf)){
+        return false;
+    }
+
+    let soma = 0;
+
+    for(let i = 0; i < 9; i++){
+
+        soma +=
+            Number(cpf[i]) *
+            (10 - i);
+    }
+
+    let digito =
+        11 - (soma % 11);
+
+    if(digito >= 10){
+        digito = 0;
+    }
+
+    if(digito !== Number(cpf[9])){
+        return false;
+    }
+
+    soma = 0;
+
+    for(let i = 0; i < 10; i++){
+
+        soma +=
+            Number(cpf[i]) *
+            (11 - i);
+    }
+
+    digito =
+        11 - (soma % 11);
+
+    if(digito >= 10){
+        digito = 0;
+    }
+
+    return digito === Number(cpf[10]);
+}
+
+
+/* =========================================================
+   GERAR ID DO VENDEDOR
+========================================================= */
+
+function gerarVendedorId(){
+
+    if(
+        window.crypto &&
+        typeof window.crypto.randomUUID === "function"
+    ){
+
+        return "vend_" +
+            window.crypto.randomUUID();
+    }
+
+    return "vend_" +
+        Date.now() +
+        "_" +
+        Math.random()
+            .toString(36)
+            .substring(2, 10);
+}
+
+
+/* =========================================================
+   VERIFICAR CPF
+========================================================= */
+
+async function cpfJaCadastrado(cpf){
+
+    const raiz =
+        ref(db, "vendedores");
+
+    const snapshot =
+        await get(raiz);
+
+    if(!snapshot.exists()){
+        return false;
+    }
+
+    const dados =
+        snapshot.val();
+
+    const cpfLimpo =
+        somenteNumeros(cpf);
+
+    for(const id in dados){
+
+        const vendedor =
+            dados[id];
+
+        if(!vendedor){
+            continue;
+        }
+
+        if(
+            somenteNumeros(vendedor.cpf) ===
+            cpfLimpo
+        ){
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+/* =========================================================
+   TESTE INICIAL
+========================================================= */
+
+async function testarBanco(){
+
+    try{
+
+        await get(
+            ref(db, "vendedores")
+        );
+
+        console.log(
+            "Banco conectado corretamente."
+        );
+
+    }catch(error){
+
+        console.error(
+            "Erro ao acessar o banco:",
+            error
+        );
+
+        mostrarMensagem(
+            "❌ Não foi possível acessar o banco de dados.",
+            "erro"
+        );
+    }
+}
+
+
+/* =========================================================
+   VERIFICAR BLOQUEIO DO USUÁRIO
+   ---------------------------------------------------------
+   O administrador grava banido=true e motivoBanimento em
+   usuarios/$id. Antes de criar um cadastro de vendedor,
+   verificamos e-mail e CPF.
+   ========================================================= */
+async function verificarUsuarioBloqueado(email, cpf){
+
+    const snapshot = await get(ref(db, "usuarios"));
+
+    if(!snapshot.exists()) return null;
+
+    const dados = snapshot.val() || {};
+    const emailNormalizado = String(email || "").trim().toLowerCase();
+    const cpfNormalizado = somenteNumeros(cpf);
+
+    for(const [id, usuario] of Object.entries(dados)){
+        if(!usuario || typeof usuario !== "object") continue;
+
+        const emailUsuario = String(usuario.email || "").trim().toLowerCase();
+        const cpfUsuario = somenteNumeros(usuario.cpf || "");
+        const corresponde =
+            (emailNormalizado && emailUsuario === emailNormalizado) ||
+            (cpfNormalizado && cpfUsuario === cpfNormalizado);
+
+        if(corresponde && usuario.banido === true){
+            return {
+                id,
+                motivo: String(usuario.motivoBanimento || "Conta bloqueada pelo administrador."),
+                expira: usuario.banimentoExpiraEm || null
+            };
+        }
+    }
+
+    return null;
+}
+
+/* =========================================================
+   CADASTRO
+========================================================= */
+
+form.addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+        const nome =
+            nomeInput.value.trim();
+
+        const email =
+            emailInput.value.trim().toLowerCase();
+
+        const cpf =
+            somenteNumeros(
+                cpfInput.value
+            );
+
+        const conta =
+            somenteNumeros(
+                contaInput.value
+            );
+
+
+        /* =================================================
+           VALIDAR NOME
+        ================================================= */
+
+        if(nome.length < 3){
+
+            nomeInput.classList.add(
+                "invalido"
+            );
+
+            mostrarMensagem(
+                "❌ Digite seu nome completo.",
+                "erro"
+            );
+
+            nomeInput.focus();
+
+            return;
+        }
+
+        nomeInput.classList.remove(
+            "invalido"
+        );
+
+        nomeInput.classList.add(
+            "valido"
+        );
+
+
+        /* =================================================
+           VALIDAR E-MAIL
+        ================================================= */
+
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+
+            emailInput.classList.add("invalido");
+
+            mostrarMensagem(
+                "❌ Digite um e-mail válido.",
+                "erro"
+            );
+
+            emailInput.focus();
+            return;
+        }
+
+        emailInput.classList.remove("invalido");
+        emailInput.classList.add("valido");
+
+
+        /* =================================================
+           VALIDAR CPF
+        ================================================= */
+
+        if(!validarCPF(cpf)){
+
+            cpfInput.classList.add(
+                "invalido"
+            );
+
+            mostrarMensagem(
+                "❌ Digite um CPF válido.",
+                "erro"
+            );
+
+            cpfInput.focus();
+
+            return;
+        }
+
+        cpfInput.classList.remove(
+            "invalido"
+        );
+
+        cpfInput.classList.add(
+            "valido"
+        );
+
+
+        /* =================================================
+           VALIDAR CONTA
+        ================================================= */
+
+        if(conta.length < 4){
+
+            contaInput.classList.add(
+                "invalido"
+            );
+
+            mostrarMensagem(
+                "❌ Digite uma conta bancária válida.",
+                "erro"
+            );
+
+            contaInput.focus();
+
+            return;
+        }
+
+        contaInput.classList.remove(
+            "invalido"
+        );
+
+        contaInput.classList.add(
+            "valido"
+        );
+
+
+        botao.disabled = true;
+
+        botao.textContent =
+            "⏳ Verificando...";
+
+        mostrarMensagem(
+            "🔎 Verificando seus dados...",
+            "info"
+        );
+
+
+        try{
+
+            /* =============================================
+               USUÁRIO BLOQUEADO
+            ============================================= */
+
+            const bloqueio = await verificarUsuarioBloqueado(email, cpf);
+
+            if(bloqueio){
+                const validade = bloqueio.expira
+                    ? " O bloqueio possui prazo de expiração."
+                    : " O bloqueio é permanente.";
+
+                mostrarMensagem(
+                    "🚫 Seu cadastro está bloqueado. Motivo: " + bloqueio.motivo + validade,
+                    "erro"
+                );
+
+                botao.disabled = false;
+                botao.textContent =
+                    "🏪 Criar cadastro de vendedor";
+                return;
+            }
+
+            /* =============================================
+               CPF DUPLICADO
+            ============================================= */
+
+            const existe =
+                await cpfJaCadastrado(cpf);
+
+
+            if(existe){
+
+                mostrarMensagem(
+                    "⚠️ Este CPF já possui cadastro de vendedor.",
+                    "erro"
+                );
+
+                botao.disabled = false;
+
+                botao.textContent =
+                    "🏪 Criar cadastro de vendedor";
+
+                return;
+            }
+
+
+            /* =============================================
+               ID
+            ============================================= */
+
+            const vendedorId =
+                gerarVendedorId();
+
+
+            /* =============================================
+               HORÁRIO
+            ============================================= */
+
+            const agora =
+                Date.now();
+
+
+            /* =============================================
+               OBJETO COMPATÍVEL COM AS RULES
+               
+               As Rules exigem:
+               id
+               nome
+               cpf
+               contaBancaria
+               status
+               criadoEm
+               atualizadoEm
+            ============================================= */
+
+            const vendedor = {
+
+                id:
+                    vendedorId,
+
+                nome:
+                    nome,
+
+                email:
+                    email,
+
+                cpf:
+                    cpf,
+
+                contaBancaria:
+                    conta,
+
+                status:
+                    "pendente",
+
+                aprovado:
+                    false,
+
+                criadoEm:
+                    agora,
+
+                atualizadoEm:
+                    agora
+
+            };
+
+
+            /* =============================================
+               REFERÊNCIA EXATA
+               
+               vendedores/
+                    vend_xxxxx
+            ============================================= */
+
+            const vendedorRef =
+                ref(
+                    db,
+                    "vendedores/" +
+                    vendedorId
+                );
+
+
+            botao.textContent =
+                "💾 Salvando...";
+
+            mostrarMensagem(
+                "💾 Criando seu cadastro...",
+                "info"
+            );
+
+
+            /* =============================================
+               GRAVAR
+            ============================================= */
+
+            await set(
+                vendedorRef,
+                vendedor
+            );
+
+
+            /* =============================================
+               CONFIRMAR GRAVAÇÃO
+            ============================================= */
+
+            const confirmacao =
+                await get(
+                    vendedorRef
+                );
+
+
+            if(!confirmacao.exists()){
+
+                throw new Error(
+                    "O cadastro não foi confirmado pelo banco."
+                );
+            }
+
+
+            /* =============================================
+               SALVAR LOCALMENTE
+            ============================================= */
+
+            localStorage.setItem(
+                "vendedorId",
+                vendedorId
+            );
+
+            localStorage.setItem(
+                "nomeVendedor",
+                nome
+            );
+
+            localStorage.setItem(
+                "emailVendedor",
+                email
+            );
+
+            localStorage.setItem(
+                "cpfVendedor",
+                cpf
+            );
+
+            localStorage.setItem(
+                "statusVendedor",
+                "ativo"
+            );
+
+            localStorage.setItem(
+                "vendedorCadastrado",
+                "true"
+            );
+
+
+            /* =============================================
+               CRIAR PERFIL DO CHAT
+               
+               Compatível com:
+               chatVendedores/$vendedorId/perfil
+            ============================================= */
+
+            const perfilChat = {
+
+                vendedorId:
+                    vendedorId,
+
+                nome:
+                    nome,
+
+                ativo:
+                    false,
+
+                criadoEm:
+                    agora,
+
+                atualizadoEm:
+                    agora
+
+            };
+
+
+            const perfilRef =
+                ref(
+                    db,
+                    "chatVendedores/" +
+                    vendedorId +
+                    "/perfil"
+                );
+
+
+            await set(
+                perfilRef,
+                perfilChat
+            );
+
+
+            /* =============================================
+               SUCESSO
+            ============================================= */
+
+            mostrarMensagem(
+                "✅ Cadastro enviado! Aguarde a aprovação do administrador. O link da Central será enviado para seu e-mail.",
+                "sucesso"
+            );
+
+            botao.textContent =
+                "⏳ Aguardando aprovação";
+
+            form.reset();
+            botao.disabled = true;
+
+
+        }catch(error){
+
+            console.error(
+                "ERRO COMPLETO:",
+                error
+            );
+
+            let texto =
+                "❌ Não foi possível salvar o cadastro.";
+
+            if(
+                error &&
+                error.code ===
+                "PERMISSION_DENIED"
+            ){
+
+                texto +=
+                    " Permission denied.";
+
+            }else if(
+                error &&
+                error.message
+            ){
+
+                texto +=
+                    " " +
+                    error.message;
+            }
+
+
+            mostrarMensagem(
+                texto,
+                "erro"
+            );
+
+
+            botao.disabled =
+                false;
+
+            botao.textContent =
+                "🏪 Criar cadastro de vendedor";
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INICIAR
+========================================================= */
+
+testarBanco();
+
+</script>
+
+</body>
+
+</html>

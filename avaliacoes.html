@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111827">
+<title>Avaliações | Minha Loja de Aplicativos</title>
+<style>
+/* =========================================================
+   AVALIAÇÕES — VISUAL MODERNO, LIMPO E RESPONSIVO
+========================================================= */
+:root{--bg:#f3f6fb;--card:#fff;--text:#172033;--muted:#718096;--line:#e7ebf2;--primary:#4f46e5;--primary2:#7c3aed;--star:#f6b73c;--shadow:0 14px 40px rgba(23,32,51,.08)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,Segoe UI,Arial,sans-serif;background:linear-gradient(180deg,#eef2ff 0,#f8fafc 300px,var(--bg) 100%);color:var(--text);min-height:100vh}
+button{font:inherit}
+.header{position:sticky;top:0;z-index:20;background:rgba(17,24,39,.94);backdrop-filter:blur(14px);color:#fff;box-shadow:0 8px 28px rgba(15,23,42,.16)}
+.header-inner{max-width:1100px;margin:auto;min-height:72px;padding:0 20px;display:flex;align-items:center;gap:16px}
+.logo{font-size:20px;font-weight:850;letter-spacing:-.3px;display:flex;align-items:center;gap:9px}.logo span{opacity:.9}
+.btn-voltar{border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.08);color:#fff;border-radius:12px;padding:10px 15px;cursor:pointer;transition:.2s;font-weight:700}.btn-voltar:hover{background:rgba(255,255,255,.16);transform:translateY(-1px)}
+.container{max-width:1100px;margin:0 auto;padding:34px 20px 70px}
+.produto-topo{position:relative;overflow:hidden;background:linear-gradient(135deg,#111827,#1e293b);color:#fff;border-radius:24px;padding:30px;display:flex;align-items:center;gap:20px;box-shadow:0 18px 45px rgba(15,23,42,.18);margin-bottom:20px}.produto-topo:after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;right:-80px;top:-100px;background:rgba(124,58,237,.28);filter:blur(5px)}
+.produto-imagem{position:relative;z-index:1;width:82px;height:82px;border-radius:20px;object-fit:cover;background:#fff;box-shadow:0 8px 25px rgba(0,0,0,.2);flex:none}.produto-info{position:relative;z-index:1;min-width:0}.produto-info h1{font-size:30px;line-height:1.15;margin-bottom:8px;word-break:break-word;letter-spacing:-.7px}.produto-info p{color:#cbd5e1;font-size:15px}
+.resumo{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px;display:flex;align-items:center;gap:26px;margin-bottom:24px;box-shadow:var(--shadow)}
+.nota-box{min-width:150px;text-align:center;padding-right:26px;border-right:1px solid var(--line)}.nota{font-size:52px;font-weight:900;line-height:1;letter-spacing:-2px}.nota-label{color:var(--muted);font-size:13px;margin-top:7px;font-weight:700}.resumo-detalhes{flex:1}.estrelas-media{font-size:30px;letter-spacing:4px;color:var(--star);line-height:1;margin-bottom:10px}.total{color:var(--muted);font-size:14px;font-weight:600}.barra{margin-top:16px;height:8px;background:#edf0f5;border-radius:99px;overflow:hidden;max-width:460px}.barra span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--star),#ffd76a);border-radius:inherit;transition:width .35s ease}
+.lista{display:grid;gap:14px}.lista-cabecalho{display:flex;align-items:center;justify-content:space-between;margin:4px 2px 2px}.lista-cabecalho h2{font-size:20px;letter-spacing:-.3px}.lista-cabecalho small{color:var(--muted)}
+.avaliacao{background:var(--card);border:1px solid var(--line);border-radius:19px;padding:21px;box-shadow:0 8px 25px rgba(23,32,51,.055);animation:entrada .25s ease;transition:.2s}.avaliacao:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(23,32,51,.09)}
+.avaliacao-topo{display:flex;align-items:center;gap:13px;margin-bottom:13px}.avatar{width:43px;height:43px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#eef2ff,#ede9fe);color:#4f46e5;font-weight:900;flex:none}.avaliacao-meta{min-width:0;flex:1}.avaliacao-usuario{font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.avaliacao-data{font-size:12px;color:#9aa4b2;margin-top:3px}.avaliacao h3{color:var(--star);font-size:20px;letter-spacing:2px;line-height:1}.avaliacao p{color:#3f4b5f;line-height:1.65;white-space:pre-wrap;word-break:break-word;font-size:15px}.selo-novo{font-size:11px;font-weight:800;color:#4f46e5;background:#eef2ff;border-radius:99px;padding:5px 9px;margin-left:auto}.avaliacao-footer{margin-top:15px;padding-top:12px;border-top:1px solid #f0f2f6;color:#a0a8b5;font-size:12px}
+.estado{background:var(--card);border:1px solid var(--line);border-radius:19px;padding:42px 25px;text-align:center;color:var(--muted);box-shadow:var(--shadow)}.estado strong{display:block;color:var(--text);font-size:17px;margin-bottom:5px}.spinner{width:32px;height:32px;border:3px solid #e6e9ef;border-top-color:var(--primary);border-radius:50%;animation:girar .8s linear infinite;margin:0 auto 14px}@keyframes girar{to{transform:rotate(360deg)}}@keyframes entrada{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.avaliacao-acoes{position:relative;margin-left:auto}.btn-menu-comentario{border:0;background:#f1f5f9;color:#475569;width:34px;height:34px;border-radius:10px;font-size:22px;cursor:pointer}.menu-comentario{position:absolute;right:0;top:40px;z-index:30;display:none;min-width:190px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px;box-shadow:0 15px 35px rgba(15,23,42,.16)}.menu-comentario.aberto{display:block}.menu-comentario button{display:block;width:100%;border:0;background:transparent;text-align:left;padding:10px 11px;border-radius:8px;cursor:pointer;font-weight:700}.menu-comentario button:hover{background:#f1f5f9}.menu-comentario .btn-denunciar-comentario{color:#dc2626}.menu-comentario .btn-excluir-comentario{color:#b91c1c}.modal-denuncia{position:fixed;inset:0;background:rgba(15,23,42,.68);display:none;align-items:center;justify-content:center;padding:20px;z-index:100}.modal-denuncia.aberto{display:flex}.modal-denuncia-card{width:min(100%,560px);max-height:92vh;overflow:auto;background:#fff;border-radius:24px;padding:28px;box-shadow:0 25px 70px rgba(0,0,0,.25)}.modal-denuncia-topo{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px}.modal-denuncia-icone{font-size:27px}.modal-denuncia-titulo{flex:1}.modal-denuncia-card h2{margin:0;font-size:24px;color:#111827}.modal-denuncia-fechar{border:0;background:#f1f5f9;color:#475569;width:38px;height:38px;border-radius:50%;font-size:22px;cursor:pointer}.modal-denuncia-card>p{margin:8px 0 20px;color:#4b5563;font-size:15px;line-height:1.5}.denuncia-comentario-alvo{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:14px 16px;margin-bottom:20px}.denuncia-comentario-autor{display:flex;align-items:center;gap:9px;font-weight:800;color:#111827;margin-bottom:6px}.denuncia-comentario-texto{color:#64748b;font-size:14px;line-height:1.45;white-space:pre-wrap;word-break:break-word}.denuncia-campo{margin-top:16px}.denuncia-campo label{display:block;font-weight:800;color:#111827;margin-bottom:8px}.denuncia-campo select,.denuncia-campo textarea{box-sizing:border-box;width:100%;border:1px solid #d9dee8;border-radius:13px;background:#fff;padding:13px;font:inherit;color:#111827;outline:none}.denuncia-campo select{height:50px}.denuncia-campo textarea{min-height:145px;resize:vertical}.modal-denuncia-acoes{display:flex;gap:12px;justify-content:flex-end;margin-top:20px}.modal-denuncia-acoes button{border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer}.btn-cancelar-denuncia{background:#eef1f5;color:#475569}.btn-enviar-denuncia{background:#dc2626;color:#fff}.btn-enviar-denuncia:disabled{opacity:.45;cursor:not-allowed}.denuncia-status{font-size:13px;margin-top:10px}.denuncia-status.erro{color:#dc2626}.denuncia-status.sucesso{color:#16a34a}@media(max-width:650px){.header-inner{min-height:64px;padding:0 13px}.logo{font-size:17px}.btn-voltar{padding:9px 12px}.container{padding:20px 12px 45px}.produto-topo{padding:21px;border-radius:19px}.produto-imagem{width:65px;height:65px;border-radius:16px}.produto-info h1{font-size:22px}.resumo{padding:20px;gap:16px;border-radius:19px}.nota-box{min-width:105px;padding-right:16px}.nota{font-size:42px}.estrelas-media{font-size:23px;letter-spacing:2px}.lista-cabecalho h2{font-size:18px}.avaliacao{padding:18px}.selo-novo{display:none}}
+
+.aviso-toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);z-index:300;min-width:min(90vw,360px);max-width:90vw;padding:14px 18px;border-radius:14px;background:#111827;color:#fff;box-shadow:0 15px 40px rgba(0,0,0,.22);font-weight:800;font-size:14px;text-align:center;opacity:0;pointer-events:none;transition:.25s ease}
+.aviso-toast.mostrar{opacity:1;transform:translate(-50%,0)}
+.aviso-toast.sucesso{background:#16a34a}
+.aviso-toast.erro{background:#dc2626}
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     CABEÇALHO
+========================================================= -->
+<header class="header">
+ <div class="header-inner">
+  <button class="btn-voltar" id="btnVoltar" type="button">← Voltar</button>
+  <div class="logo">⭐ <span>Avaliações</span></div>
+ </div>
+</header>
+
+<!-- =========================================================
+     CONTEÚDO
+========================================================= -->
+<main class="container">
+ <section class="produto-topo">
+  <img class="produto-imagem" id="produtoImagem" alt="">
+  <div class="produto-info">
+   <h1 id="produtoNome">Avaliações do aplicativo</h1>
+   <p id="produtoSubtitulo">Veja o que os clientes estão dizendo.</p>
+  </div>
+ </section>
+
+ <!-- =======================================================
+      RESUMO
+ ======================================================== -->
+ <section class="resumo">
+  <div class="nota-box">
+   <div class="nota" id="notaMedia">0,0</div>
+   <div class="nota-label">NOTA MÉDIA</div>
+  </div>
+  <div class="resumo-detalhes">
+   <div class="estrelas-media" id="estrelasMedia">☆☆☆☆☆</div>
+   <div class="total" id="totalAvaliacoes">0 avaliações</div>
+   <div class="barra"><span id="barraMedia"></span></div>
+  </div>
+ </section>
+
+ <!-- =======================================================
+      LISTA — O MAIS NOVO FICA SEMPRE NO TOPO
+ ======================================================== -->
+ <div class="lista-cabecalho"><h2>💬 Comentários dos clientes</h2><small>Mais recentes primeiro</small></div>
+ <section id="listaAvaliacoes" class="lista">
+  <div class="estado"><div class="spinner"></div>Carregando avaliações...</div>
+ </section>
+</main>
+
+<div id="avisoToast" class="aviso-toast" role="status" aria-live="polite"></div>
+<div class="modal-denuncia" id="modalDenuncia" aria-hidden="true"><div class="modal-denuncia-card" role="dialog" aria-modal="true"><div class="modal-denuncia-topo"><div class="modal-denuncia-icone">🚩</div><div class="modal-denuncia-titulo"><h2>Denunciar comentário</h2></div><button class="modal-denuncia-fechar" id="btnFecharDenuncia" type="button" aria-label="Fechar">×</button></div><p>Ajude a manter a Pre Store segura. Selecione o motivo que melhor descreve o problema.</p><div class="denuncia-comentario-alvo"><div class="denuncia-comentario-autor">👤 <span id="denunciaAutor">Cliente</span></div><div class="denuncia-comentario-texto" id="denunciaComentario">Comentário selecionado</div></div><div class="denuncia-campo"><label for="motivoDenunciaSelect">Motivo da denúncia</label><select id="motivoDenunciaSelect"><option value="">Selecione um motivo</option><option value="spam">Spam ou propaganda</option><option value="ofensivo">Conteúdo ofensivo</option><option value="odio">Discurso de ódio</option><option value="sexual">Conteúdo sexual</option><option value="falso">Informação falsa ou enganosa</option><option value="fraude">Golpe ou tentativa de fraude</option><option value="outro">Outro</option></select></div><div class="denuncia-campo"><label for="motivoDenuncia">Explicação</label><textarea id="motivoDenuncia" maxlength="500" placeholder="Explique o motivo da denúncia"></textarea></div><div class="denuncia-status" id="denunciaStatus"></div><div class="modal-denuncia-acoes"><button class="btn-cancelar-denuncia" id="btnCancelarDenuncia" type="button">Cancelar</button><button class="btn-enviar-denuncia" id="btnEnviarDenuncia" type="button" disabled>🚩 Enviar denúncia</button></div></div></div>
+<script type="module">
+/* =========================================================
+   FIREBASE
+========================================================= */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, onValue, push, set, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+ apiKey: "AIzaSyAMG8workhkRJapQm1AHSMOSIPOnSWltpw",
+ authDomain: "minha-loja-5477a.firebaseapp.com",
+ databaseURL: "https://minha-loja-5477a-default-rtdb.europe-west1.firebasedatabase.app",
+ projectId: "minha-loja-5477a"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const auth = getAuth(app);
+let usuarioAutenticado = null;
+let comentarioDenunciaAtual = null;
+
+/* =========================================================
+   IDENTIFICAÇÃO DO PRODUTO
+   A página recebe o ID pela URL:
+   avaliacoes.html?id=ID_DO_PRODUTO
+========================================================= */
+const parametros = new URLSearchParams(window.location.search);
+const id = parametros.get("id");
+
+const lista = document.getElementById("listaAvaliacoes");
+const produtoNome = document.getElementById("produtoNome");
+const produtoSubtitulo = document.getElementById("produtoSubtitulo");
+const produtoImagem = document.getElementById("produtoImagem");
+const notaMedia = document.getElementById("notaMedia");
+const estrelasMedia = document.getElementById("estrelasMedia");
+const totalAvaliacoes = document.getElementById("totalAvaliacoes");
+const barraMedia = document.getElementById("barraMedia");
+
+/* =========================================================
+   FUNÇÕES AUXILIARES
+========================================================= */
+function escaparHTML(valor){
+ const div=document.createElement("div");
+ div.textContent=String(valor ?? "");
+ return div.innerHTML;
+}
+
+function numeroSeguro(valor){
+ const numero=Number(valor);
+ return Number.isFinite(numero) ? numero : 0;
+}
+
+function obterTimestamp(dados){
+ return Number(
+  dados?.criadoEm ??
+  dados?.createdAt ??
+  dados?.data ??
+  dados?.timestamp ??
+  0
+ ) || 0;
+}
+
+function formatarData(timestamp){
+ if(!timestamp) return "";
+ const data=new Date(timestamp);
+ if(Number.isNaN(data.getTime())) return "";
+ return data.toLocaleDateString("pt-BR",{
+  day:"2-digit",month:"2-digit",year:"numeric",
+  hour:"2-digit",minute:"2-digit"
+ });
+}
+
+/* =========================================================
+   RESUMO
+========================================================= */
+function atualizarResumo(avaliacoes){
+ const total=avaliacoes.length;
+ const soma=avaliacoes.reduce((acumulado,item)=>{
+  return acumulado + Math.max(0,Math.min(5,numeroSeguro(item.nota)));
+ },0);
+ const media=total ? soma/total : 0;
+ const estrelas=Math.max(0,Math.min(5,Math.round(media)));
+
+ notaMedia.textContent=media.toLocaleString("pt-BR",{
+  minimumFractionDigits:1,
+  maximumFractionDigits:1
+ });
+ estrelasMedia.textContent="★".repeat(estrelas)+"☆".repeat(5-estrelas);
+ totalAvaliacoes.textContent=`${total} ${total===1 ? "avaliação" : "avaliações"}`;
+ barraMedia.style.width = `${(media / 5) * 100}%`;
+}
+
+/* =========================================================
+   CRIAR UM COMENTÁRIO
+========================================================= */
+function criarAvaliacao(dados){
+ const div=document.createElement("article"); div.className="avaliacao"; div.dataset.usuarioId=String(dados?.usuarioId||"");
+ const nota=Math.max(0,Math.min(5,Math.round(numeroSeguro(dados.nota))));
+ const estrelas="★".repeat(nota)+"☆".repeat(5-nota);
+ const usuario=escaparHTML(dados.nome??dados.usuario??dados.nomeUsuario??"Cliente");
+ const comentario=escaparHTML(dados.comentario??dados.texto??"Sem comentário.");
+ const dataTexto=formatarData(obterTimestamp(dados));
+ const dono=!!usuarioAutenticado?.uid&&String(dados.usuarioId||"")===String(usuarioAutenticado.uid);
+ div.innerHTML=`<div class="avaliacao-topo"><div class="avatar">👤</div><div class="avaliacao-meta"><div class="avaliacao-usuario">${usuario}</div>${dataTexto?`<div class="avaliacao-data">${dataTexto}</div>`:""}</div>${obterTimestamp(dados)>=Date.now()-604800000?`<span class="selo-novo">NOVO</span>`:""}<div class="avaliacao-acoes"><button class="btn-menu-comentario" type="button" aria-label="Mais opções" title="Mais opções">⋮</button><div class="menu-comentario"><button class="btn-denunciar-comentario" type="button">🚩 Denunciar comentário</button>${dono?'<button class="btn-excluir-comentario" type="button">🗑️ Excluir comentário</button>':''}</div></div></div><h3>${estrelas}</h3><p>${comentario}</p><div class="avaliacao-footer">Avaliação do cliente</div>`;
+ const menu=div.querySelector(".menu-comentario");
+ div.querySelector(".btn-menu-comentario").onclick=e=>{e.stopPropagation();document.querySelectorAll(".menu-comentario.aberto").forEach(m=>{if(m!==menu)m.classList.remove("aberto")});menu.classList.toggle("aberto")};
+ const den=div.querySelector(".btn-denunciar-comentario"); if(den) den.onclick=()=>{menu.classList.remove("aberto");abrirDenuncia(dados)};
+ const exc=div.querySelector(".btn-excluir-comentario"); if(exc) exc.onclick=()=>{menu.classList.remove("aberto");excluirComentario(dados)};
+ lista.appendChild(div);
+}
+
+let avisoTimer=null;
+function mostrarAviso(mensagem,tipo="sucesso"){
+ const aviso=document.getElementById("avisoToast");
+ if(!aviso)return;
+ clearTimeout(avisoTimer);
+ aviso.textContent=mensagem;
+ aviso.className=`aviso-toast ${tipo} mostrar`;
+ avisoTimer=setTimeout(()=>aviso.classList.remove("mostrar"),2600);
+}
+
+function atualizarBotaoDenuncia(){const categoria=document.getElementById("motivoDenunciaSelect").value,explicacao=document.getElementById("motivoDenuncia").value.trim();document.getElementById("btnEnviarDenuncia").disabled=!(categoria&&explicacao.length>=5)}
+function abrirDenuncia(dados){comentarioDenunciaAtual=dados;document.getElementById("denunciaAutor").textContent=dados?.nome??dados?.usuario??dados?.nomeUsuario??"Cliente";document.getElementById("denunciaComentario").textContent=dados?.comentario??dados?.texto??"Comentário sem texto";document.getElementById("motivoDenunciaSelect").value="";document.getElementById("motivoDenuncia").value="";document.getElementById("denunciaStatus").className="denuncia-status";document.getElementById("denunciaStatus").textContent="";document.getElementById("btnEnviarDenuncia").disabled=true;document.getElementById("modalDenuncia").classList.add("aberto");document.getElementById("modalDenuncia").setAttribute("aria-hidden","false")}
+function fecharDenuncia(){document.getElementById("modalDenuncia").classList.remove("aberto");document.getElementById("modalDenuncia").setAttribute("aria-hidden","true");comentarioDenunciaAtual=null}
+async function enviarDenuncia(){const categoria=document.getElementById("motivoDenunciaSelect").value,motivo=document.getElementById("motivoDenuncia").value.trim(),st=document.getElementById("denunciaStatus");if(!categoria||motivo.length<5){st.className="denuncia-status erro";st.textContent="Selecione um motivo e explique a denúncia com pelo menos 5 caracteres.";return}const botao=document.getElementById("btnEnviarDenuncia");botao.disabled=true;try{await set(push(ref(db,"denunciasAplicativos")),{tipo:"comentario_avaliacao",status:"pendente",categoria,motivo,produtoId:id,comentarioId:comentarioDenunciaAtual?.id||"",comentario:comentarioDenunciaAtual?.comentario??comentarioDenunciaAtual?.texto??"",denunciadoNome:comentarioDenunciaAtual?.nome??comentarioDenunciaAtual?.usuario??comentarioDenunciaAtual?.nomeUsuario??"Cliente",denuncianteId:usuarioAutenticado?.uid||"visitante",criadoEm:Date.now()});st.className="denuncia-status sucesso";st.textContent="Denúncia enviada para análise.";setTimeout(()=>{fecharDenuncia();mostrarAviso("🚩 Denúncia enviada com sucesso!","sucesso")},700)}catch(e){st.className="denuncia-status erro";st.textContent="Não foi possível enviar a denúncia.";atualizarBotaoDenuncia()}}
+
+async function excluirComentario(dados){
+ if(!usuarioAutenticado?.uid||String(dados.usuarioId||"")!==String(usuarioAutenticado.uid)){
+  mostrarAviso("⚠️ Você só pode excluir seu próprio comentário.","erro");
+  return;
+ }
+ if(!confirm("Tem certeza que deseja excluir seu comentário?")) return;
+ try{
+  await remove(ref(db,"avaliacoes/"+id+"/"+dados.id));
+  mostrarAviso("🗑️ Comentário excluído com sucesso!","sucesso");
+ }catch(e){
+  console.error("Erro ao excluir comentário:",e);
+  mostrarAviso("❌ Não foi possível excluir o comentário.","erro");
+ }
+}
+
+function carregarAvaliacoes(){
+ if(!id){
+  atualizarResumo([]);
+  lista.innerHTML=`<div class="estado">❌ Nenhum produto foi informado.</div>`;
+  return;
+ }
+
+ onValue(ref(db,"avaliacoes/"+id),snapshot=>{
+  lista.innerHTML="";
+
+  if(!snapshot.exists()){
+   atualizarResumo([]);
+   lista.innerHTML=`<div class="estado">💬 Nenhuma avaliação ainda.</div>`;
+   return;
+  }
+
+  const avaliacoes=[];
+  snapshot.forEach(item=>{
+   avaliacoes.push({id:item.key,...(item.val() || {})});
+  });
+
+  // MAIS NOVO PRIMEIRO — MAIS ANTIGO POR ÚLTIMO
+  avaliacoes.sort((a,b)=>{
+   const diferenca=obterTimestamp(b)-obterTimestamp(a);
+   return diferenca || String(b.id || "").localeCompare(String(a.id || ""));
+  });
+
+  atualizarResumo(avaliacoes);
+  avaliacoes.forEach(criarAvaliacao);
+ },erro=>{
+  console.error("Erro ao carregar avaliações:",erro);
+  lista.innerHTML=`<div class="estado">❌ Não foi possível carregar as avaliações.</div>`;
+ });
+}
+
+/* =========================================================
+   CARREGAR NOME DO PRODUTO
+   A página principal pode continuar usando o mesmo Firebase.
+========================================================= */
+function normalizarImagem(valor){
+ if(typeof valor === "string" && valor.trim()) return valor.trim();
+ if(valor && typeof valor === "object"){
+  const url=valor.url ?? valor.downloadURL ?? valor.downloadUrl ?? valor.src ?? valor.dataUrl ?? valor.dataURL ?? "";
+  if(typeof url === "string" && url.trim()) return url.trim();
+ }
+ return "";
+}
+
+function resolverUrlImagem(url){
+ const valor=normalizarImagem(url);
+ if(!valor) return "";
+ try{
+  return new URL(valor, window.location.origin).href;
+ }catch{
+  return valor;
+ }
+}
+
+function extrairImagemProduto(produto){
+ if(!produto || typeof produto !== "object") return "";
+ const candidatos=[
+  produto.imagem, produto.imagemUrl, produto.foto, produto.fotoUrl,
+  produto.logo, produto.icone, produto.iconeUrl, produto.image,
+  produto.imageUrl, produto.thumbnail, produto.capa, produto.capaUrl
+ ];
+ for(const candidato of candidatos){
+  const imagem=normalizarImagem(candidato);
+  if(imagem) return imagem;
+ }
+ return "";
+}
+
+function aplicarDadosProduto(produto){
+ if(!produto || typeof produto !== "object") return;
+ produtoNome.textContent=produto.nome ?? produto.nomeApp ?? produto.titulo ?? "Avaliações do aplicativo";
+ produtoSubtitulo.textContent="Veja o que os clientes estão dizendo sobre este aplicativo.";
+
+ const imagem=resolverUrlImagem(extrairImagemProduto(produto));
+ if(imagem){
+  produtoImagem.src=imagem;
+  produtoImagem.alt=`Foto do aplicativo ${produtoNome.textContent}`;
+  produtoImagem.style.display="block";
+  produtoImagem.onerror=()=>{
+   produtoImagem.style.display="none";
+  };
+ }
+}
+
+async function carregarProduto(){
+ if(!id) return;
+
+ // Primeiro tenta o servidor, que junta /produtos e /aplicativos.
+ // Assim a página de avaliações usa exatamente a mesma foto do produto.
+ try{
+  const resposta=await fetch(`/api/produtos/${encodeURIComponent(id)}/resumo`,{
+   cache:"no-store",
+   headers:{Accept:"application/json"}
+  });
+  if(resposta.ok){
+   const dados=await resposta.json();
+   if(dados?.produto){
+    aplicarDadosProduto(dados.produto);
+    return;
+   }
+  }
+ }catch(erro){
+  console.warn("Servidor não respondeu ao resumo do produto:",erro);
+ }
+
+ // Fallback direto no Firebase para não quebrar a página caso a rota
+ // do servidor ainda não esteja disponível durante uma atualização.
+ const caminhos=[`produtos/${id}`,`aplicativos/${id}`];
+ let indice=0;
+
+ const tentarFirebase=()=>{
+  if(indice>=caminhos.length) return;
+  const caminho=caminhos[indice++];
+  onValue(ref(db,caminho),snapshot=>{
+   if(snapshot.exists()){
+    aplicarDadosProduto(snapshot.val() || {});
+   }else{
+    tentarFirebase();
+   }
+  },erro=>{
+   console.warn(`Erro lendo ${caminho}:`,erro);
+   tentarFirebase();
+  },{onlyOnce:true});
+ };
+
+ tentarFirebase();
+}
+
+/* =========================================================
+   VOLTAR
+========================================================= */
+document.getElementById("btnVoltar").addEventListener("click",()=>{
+ if(history.length>1){ history.back(); }
+ else { window.location.href="index.html"; }
+});
+
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
+onAuthStateChanged(auth,u=>{usuarioAutenticado=u||null;carregarAvaliacoes()});
+document.addEventListener("click",e=>{if(!e.target.closest(".avaliacao-acoes"))document.querySelectorAll(".menu-comentario.aberto").forEach(m=>m.classList.remove("aberto"))});
+document.getElementById("btnCancelarDenuncia").onclick=fecharDenuncia;document.getElementById("btnFecharDenuncia").onclick=fecharDenuncia;document.getElementById("btnEnviarDenuncia").onclick=enviarDenuncia;document.getElementById("motivoDenunciaSelect").onchange=atualizarBotaoDenuncia;document.getElementById("motivoDenuncia").oninput=atualizarBotaoDenuncia;document.getElementById("modalDenuncia").onclick=e=>{if(e.target.id==="modalDenuncia")fecharDenuncia()};
+carregarProduto();
+</script>
+</body>
+</html>
