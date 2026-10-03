@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aplicativos Salvos | Minha Loja de Aplicativos</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#f1f5f9,#e2e8f0);color:#111827;min-height:100vh}header{background:linear-gradient(135deg,#111827,#1e293b);color:#fff;padding:22px 18px;box-shadow:0 5px 25px #0003}.header-inner{width:min(1100px,100%);margin:auto;display:flex;align-items:center;justify-content:space-between;gap:15px}.logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800}.logo-icon{width:42px;height:42px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2563eb,#7c3aed);border-radius:13px;font-size:22px}.btn-voltar{border:1px solid #ffffff25;background:#ffffff12;color:#fff;border-radius:11px;padding:11px 16px;font-weight:800;cursor:pointer}.container{width:min(1100px,calc(100% - 30px));margin:30px auto 50px}.titulo{margin-bottom:22px}.titulo h1{margin:0 0 7px;font-size:32px}.titulo p{margin:0;color:#64748b}.lista{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:#fff;border:1px solid #e5e7eb;border-radius:22px;overflow:hidden;box-shadow:0 10px 30px #0f172a12}.foto{width:100%;height:210px;display:block;object-fit:cover;background:#e2e8f0}.conteudo{padding:18px}.conteudo h2{font-size:19px;margin:0 0 8px;word-break:break-word}.categoria{display:inline-block;padding:6px 10px;background:#eff6ff;color:#2563eb;border-radius:20px;font-size:12px;font-weight:800;margin-bottom:12px}.preco{font-size:21px;font-weight:900;color:#16a34a;margin-bottom:14px}.acoes{display:grid;grid-template-columns:1fr;gap:9px}.btn{border:0;border-radius:11px;padding:12px;font-weight:800;cursor:pointer}.abrir{background:#2563eb;color:#fff}.excluir{background:#fee2e2;color:#b91c1c}.vazio{background:#fff;border:1px solid #e5e7eb;border-radius:22px;padding:55px 25px;text-align:center;box-shadow:0 10px 30px #0f172a12}.vazio .icone{font-size:50px;margin-bottom:10px}.vazio h2{margin:0 0 8px}.vazio p{color:#64748b;margin:0 0 18px}.btn-loja{background:#2563eb;color:#fff;border:0;border-radius:11px;padding:12px 18px;font-weight:800;cursor:pointer}.loading{text-align:center;background:#fff;padding:35px;border-radius:20px;color:#64748b}.toast{position:fixed;right:20px;bottom:20px;background:#111827;color:#fff;padding:14px 18px;border-radius:13px;box-shadow:0 15px 40px #0005;opacity:0;transform:translateY(20px);pointer-events:none;transition:.25s}.toast.mostrar{opacity:1;transform:translateY(0)}@media(max-width:850px){.lista{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.header-inner{flex-direction:column;align-items:stretch}.logo{justify-content:center}.btn-voltar{width:100%}.container{width:calc(100% - 20px);margin:18px auto 35px}.titulo h1{font-size:27px}.lista{grid-template-columns:1fr}.foto{height:230px}.acoes{grid-template-columns:1fr}}
+.pacote-mini{margin-top:12px;padding:12px;border:1px solid #c7d2fe;background:linear-gradient(135deg,#eff6ff,#f5f3ff);border-radius:14px}.pacote-mini strong{display:block;font-size:13px;margin-bottom:4px}.pacote-mini small{display:block;color:#64748b;font-size:12px;line-height:1.4}.pacote-mini .btn-pacote-mini{width:100%;margin-top:9px;background:#4f46e5;color:#fff}.pacote-mini.disponivel{border-color:#bbf7d0;background:#f0fdf4}.pacote-mini.disponivel .btn-pacote-mini{background:#16a34a}
+</style>
+
+<style id="bloqueio-usuario-css">
+#bloqueioUsuarioOverlay{
+ position:fixed;inset:0;z-index:2147483647;display:none;align-items:center;justify-content:center;
+ padding:20px;background:rgba(2,6,23,.82);backdrop-filter:blur(8px);
+}
+#bloqueioUsuarioOverlay.ativo{display:flex}
+.bloqueio-usuario-card{
+ width:min(560px,100%);background:#fff;border-radius:24px;padding:30px;
+ box-shadow:0 30px 100px rgba(0,0,0,.35);text-align:center;
+}
+.bloqueio-usuario-icone{font-size:54px;margin-bottom:10px}
+.bloqueio-usuario-card h2{margin:0 0 10px;font-size:26px;color:#991b1b}
+.bloqueio-usuario-card p{margin:8px 0;color:#475569;line-height:1.6}
+#bloqueioUsuarioMotivo{
+ margin:18px 0;padding:16px;text-align:left;white-space:pre-wrap;word-break:break-word;
+ background:#fef2f2;border:1px solid #fecaca;border-radius:14px;color:#7f1d1d;font-weight:700;
+}
+#btnVoltarLojaBloqueioUsuario{
+ width:100%;margin-top:8px;padding:13px 16px;border:0;border-radius:12px;
+ background:#991b1b;color:#fff;font-weight:800;cursor:pointer;
+}
+body.usuario-bloqueado{overflow:hidden}
+body.usuario-bloqueado>*:not(#bloqueioUsuarioOverlay){pointer-events:none;user-select:none}
+#bloqueioUsuarioOverlay,#bloqueioUsuarioOverlay *{pointer-events:auto}
+</style>
+
+</head>
+<body>
+<header><div class="header-inner"><div class="logo"><div class="logo-icon">📱</div><span>Minha Loja de Aplicativos</span></div><button class="btn-voltar" id="btnVoltar">⬅️ Voltar para a loja</button></div></header>
+<main class="container"><section class="titulo"><h1>💾 Aplicativos salvos</h1><p>Aqui aparecem os aplicativos que você salvou, com foto, nome e preço.</p></section><section id="lista" class="lista"><div class="loading">Carregando aplicativos salvos...</div></section></main>
+<div class="toast" id="toast"></div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import{getDatabase,ref,get,remove}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+const firebaseConfig={apiKey:"AIzaSyAMG8workhkRJapQm1AHSMOSIPOnSWltpw",authDomain:"minha-loja-5477a.firebaseapp.com",databaseURL:"https://minha-loja-5477a-default-rtdb.europe-west1.firebasedatabase.app",projectId:"minha-loja-5477a"};
+const app=initializeApp(firebaseConfig),db=getDatabase(app),auth=getAuth(app);const lista=document.getElementById("lista"),toast=document.getElementById("toast");let usuarioAtual=null,dadosSalvos={};
+const moeda=v=>Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function urlImagem(item){
+  if(!item || typeof item !== 'object') return '';
+  const nomes=['imagem','imagemUrl','imagemURL','foto','fotoUrl','fotoURL','logo','logoUrl','logoURL','icone','iconeUrl','capa','thumbnail','image','imageUrl','downloadURL','downloadUrl','src','dataUrl','dataURL','imagemBase64','fotoBase64','base64'];
+  const procurar=(obj,prof=0)=>{
+    if(!obj || prof>4) return '';
+    if(typeof obj==='string'){
+      const v=obj.trim();
+      if(v.startsWith('data:image/')||v.startsWith('http://')||v.startsWith('https://')||v.startsWith('/')||v.startsWith('./')) return v;
+      return '';
+    }
+    if(typeof obj!=='object') return '';
+    for(const nome of nomes){
+      const achado=procurar(obj[nome],prof+1);
+      if(achado) return achado;
+    }
+    for(const [chave,valor] of Object.entries(obj)){
+      if(/imagem|image|foto|photo|logo|icone|icon|capa|thumbnail|base64|url/i.test(chave)){
+        const achado=procurar(valor,prof+1);
+        if(achado) return achado;
+      }
+    }
+    return '';
+  };
+  return procurar(item);
+}
+function mostrarToast(msg){toast.textContent=msg;toast.classList.add("mostrar");clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>toast.classList.remove("mostrar"),2800)}
+function obterBackupLocal(uid){try{const bruto=JSON.parse(localStorage.getItem("aplicativosSalvos")||"{}");return bruto[uid]||bruto.visitante||{};}catch{return{};}}
+function render(){const itens=Object.entries(dadosSalvos||{}).map(([id,item])=>({id:String(item?.produtoId??item?.id??id),...item}));if(!itens.length){lista.className="";lista.innerHTML='<div class="vazio"><div class="icone">💾</div><h2>Nenhum aplicativo salvo</h2><p>Quando você clicar em “Salvar aplicativo”, ele aparecerá aqui com a foto.</p><button class="btn-loja" id="btnIrLoja">📱 Ver aplicativos</button></div>';document.getElementById("btnIrLoja").onclick=voltarLoja;return;}lista.className="lista";lista.innerHTML=itens.map(item=>{const id=esc(item.id),nome=esc(item.nome??item.nomeApp??item.titulo??"Aplicativo"),categoria=esc(item.categoria??item.categoriaApp??"Aplicativo"),preco=moeda(item.preco??item.precoApp??item.valor??0),foto=esc(urlImagem(item));return `<article class="card" data-card-id="${id}" style="cursor:pointer"><img class="foto" src="${foto||"app.jpg"}" alt="${nome}" loading="lazy" onerror="this.onerror=null;this.src='app.jpg'"><div class="conteudo"><span class="categoria">${categoria}</span><h2>${nome}</h2><div class="preco">${preco}</div><div class="acoes"><button class="btn excluir" data-excluir="${id}">🗑️ Remover</button></div></div></article>`;}).join("");lista.querySelectorAll("[data-card-id]").forEach(card=>{card.addEventListener("click",()=>abrirProduto(card.dataset.cardId));});lista.querySelectorAll("[data-excluir]").forEach(b=>b.onclick=(evento)=>{evento.stopPropagation();excluirAplicativo(b.dataset.excluir);});lista.querySelectorAll("[data-pacote]").forEach(b=>b.onclick=(evento)=>{evento.stopPropagation();abrirProduto(b.dataset.pacote);});}
+function abrirProduto(id){if(id)location.href="produto.html?id="+encodeURIComponent("aplicativos:"+id);}
+async function excluirAplicativo(id){if(!id)return;const item=dadosSalvos[id],nome=item?.nome??"este aplicativo";if(!confirm(`Remover "${nome}" dos aplicativos salvos?`))return;if(usuarioAtual){try{await remove(ref(db,"aplicativosSalvos/"+usuarioAtual.uid+"/"+id));}catch(e){console.error(e);mostrarToast("❌ Não foi possível remover do Firebase.");return;}}try{const bruto=JSON.parse(localStorage.getItem("aplicativosSalvos")||"{}");const chave=usuarioAtual?.uid||"visitante";if(bruto[chave])delete bruto[chave][id];localStorage.setItem("aplicativosSalvos",JSON.stringify(bruto));}catch{}delete dadosSalvos[id];render();mostrarToast("✅ Aplicativo removido.");}
+async function carregarSalvos(usuario){
+  const uid=usuario?.uid||"";
+  let firebaseDados={};
+
+  if(uid){
+    try{
+      const snap=await get(ref(db,"aplicativosSalvos/"+uid));
+      if(snap.exists()&&snap.val()&&typeof snap.val()==="object"){
+        firebaseDados=snap.val();
+      }
+    }catch(e){
+      console.warn("Erro ao carregar aplicativos salvos do Firebase:",e);
+    }
+  }
+
+  const localDados=obterBackupLocal(uid);
+  dadosSalvos=Object.keys(firebaseDados).length?firebaseDados:localDados;
+
+  const entradas=Object.entries(dadosSalvos||{});
+
+  await Promise.all(entradas.map(async([chave,itemOriginal])=>{
+    let item=(itemOriginal&&typeof itemOriginal==="object")?itemOriginal:{};
+    const produtoId=String(item?.produtoId??item?.id??chave)
+      .replace(/^aplicativos:/,'')
+      .trim();
+
+    if(!produtoId) return;
+
+    /*
+      O aplicativo salvo pode ter somente o ID/nome. Nesse caso,
+      buscamos o produto original para pegar a mesma foto publicada.
+      Também fazemos a busca mesmo quando existe uma foto salva, para
+      recuperar a foto atual do produto caso a salva esteja quebrada.
+    */
+    const caminhos=[
+      "produtos/"+produtoId,
+      "aplicativos/"+produtoId,
+      "apps/"+produtoId,
+      "produtos/aplicativos/"+produtoId
+    ];
+
+    for(const caminho of caminhos){
+      try{
+        const snap=await get(ref(db,caminho));
+
+        if(snap.exists() && snap.val() && typeof snap.val()==="object"){
+          const produto=snap.val();
+          const imagemProduto=urlImagem(produto);
+          const imagemSalva=urlImagem(item);
+
+          /*
+            A foto publicada no produto tem prioridade quando existe.
+            Assim, "Aplicativos salvos" mostra a mesma imagem da loja.
+          */
+          dadosSalvos[chave]={
+            ...produto,
+            ...item,
+            id:item?.id??produto?.id??produtoId,
+            produtoId:item?.produtoId??produto?.produtoId??produtoId,
+            imagem:imagemProduto ? (produto.imagem??produto.imagemUrl??produto.logo??produto.imagemURL) :
+                   (item?.imagem??item?.imagemUrl??item?.imagemURL??item?.logo??imagemSalva)
+          };
+
+          if(urlImagem(dadosSalvos[chave])) break;
+        }
+      }catch(e){
+        console.warn("Falha ao buscar "+caminho,e);
+      }
+    }
+  }));
+
+  render();
+}
+function voltarLoja(){location.href="loja.html";}document.getElementById("btnVoltar").onclick=voltarLoja;onAuthStateChanged(auth,async usuario=>{usuarioAtual=usuario||null;await carregarSalvos(usuarioAtual);});
+</script>
+<div id="bloqueioUsuarioOverlay" role="alertdialog" aria-modal="true" aria-labelledby="tituloBloqueioUsuario">
+  <div class="bloqueio-usuario-card">
+    <div class="bloqueio-usuario-icone">🚫</div>
+    <h2 id="tituloBloqueioUsuario">Conta bloqueada</h2>
+    <p>Seu acesso à loja foi bloqueado pelo administrador.</p>
+    <p><strong>Motivo do bloqueio:</strong></p>
+    <div id="bloqueioUsuarioMotivo">O administrador não informou o motivo.</div>
+    <button id="btnVoltarLojaBloqueioUsuario" type="button">🏪 Voltar para a loja</button>
+  </div>
+</div>
+<script type="module" id="bloqueio-usuario-script">
+import { getApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const appBloqueioUsuario = getApps().length ? getApp() : null;
+if (appBloqueioUsuario) {
+  const dbBloqueioUsuario = getDatabase(appBloqueioUsuario);
+  const authBloqueioUsuario = getAuth(appBloqueioUsuario);
+  const overlay = document.getElementById("bloqueioUsuarioOverlay");
+  const motivoEl = document.getElementById("bloqueioUsuarioMotivo");
+  const btnVoltar = document.getElementById("btnVoltarLojaBloqueioUsuario");
+
+  function bloqueioExpirou(dados){
+    const expira = Number(dados?.banimentoExpiraEm || 0);
+    return !!expira && expira <= Date.now();
+  }
+
+  function aplicarBloqueioUsuario(dados){
+    const bloqueado = !!dados?.banido && !bloqueioExpirou(dados);
+    if (bloqueado) {
+      motivoEl.textContent = String(dados?.motivoBanimento || "O administrador não informou o motivo.");
+      overlay.classList.add("ativo");
+      document.body.classList.add("usuario-bloqueado");
+    } else {
+      overlay.classList.remove("ativo");
+      document.body.classList.remove("usuario-bloqueado");
+    }
+  }
+
+  onAuthStateChanged(authBloqueioUsuario, usuario => {
+    if (!usuario) {
+      aplicarBloqueioUsuario(null);
+      return;
+    }
+    onValue(ref(dbBloqueioUsuario, "usuarios/" + usuario.uid), snap => {
+      aplicarBloqueioUsuario(snap.exists() ? (snap.val() || {}) : {});
+    }, erro => console.error("Erro ao verificar bloqueio da conta:", erro));
+  });
+
+  btnVoltar?.addEventListener("click", () => {
+    window.location.href = "loja.html";
+  });
+}
+</script>
+
+</body></html>

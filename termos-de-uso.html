@@ -1,0 +1,2188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<meta
+    name="theme-color"
+    content="#0f172a"
+>
+
+<meta
+    name="description"
+    content="Termos de Uso da Minha Loja de Aplicativos"
+>
+
+<title>Termos de Uso | Minha Loja de Aplicativos</title>
+
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+/* =========================================================
+   VARIÁVEIS
+========================================================= */
+
+:root{
+
+    --bg:#020617;
+
+    --bg2:#0f172a;
+
+    --card:#111827;
+
+    --card2:#1e293b;
+
+    --border:#334155;
+
+    --text:#f8fafc;
+
+    --muted:#94a3b8;
+
+    --blue:#2563eb;
+
+    --blue-light:#38bdf8;
+
+    --green:#16a34a;
+
+    --green-light:#22c55e;
+
+    --red:#dc2626;
+
+    --red-light:#ef4444;
+
+    --yellow:#f59e0b;
+
+    --purple:#7c3aed;
+
+    --shadow:
+        0 25px 70px rgba(0,0,0,.35);
+
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body{
+
+    min-height:100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color:var(--text);
+
+    background:
+
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(37,99,235,.25),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(124,58,237,.20),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            135deg,
+            #020617,
+            #0f172a,
+            #020617
+        );
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+    background:
+        rgba(2,6,23,.88);
+
+    backdrop-filter:
+        blur(16px);
+
+    border-bottom:
+        1px solid rgba(148,163,184,.15);
+
+}
+
+
+.header-content{
+
+    width:
+        min(1180px, calc(100% - 30px));
+
+    margin:auto;
+
+    min-height:72px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+}
+
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:20px;
+
+    font-weight:800;
+
+}
+
+
+.logo-icon{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            var(--purple)
+        );
+
+    box-shadow:
+        0 8px 25px rgba(37,99,235,.3);
+
+}
+
+
+.header-status{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:var(--muted);
+
+    font-size:13px;
+
+}
+
+
+.status-dot{
+
+    width:8px;
+
+    height:8px;
+
+    border-radius:50%;
+
+    background:var(--green-light);
+
+    box-shadow:
+        0 0 10px var(--green-light);
+
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.container{
+
+    width:
+        min(1000px, calc(100% - 30px));
+
+    margin:
+        40px auto 70px;
+
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    text-align:center;
+
+    margin-bottom:35px;
+
+}
+
+
+.hero-icon{
+
+    width:78px;
+
+    height:78px;
+
+    margin:
+        0 auto 20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:22px;
+
+    font-size:38px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #172554,
+            #312e81
+        );
+
+    border:
+        1px solid #3730a3;
+
+    box-shadow:
+        0 15px 40px rgba(37,99,235,.20);
+
+}
+
+
+.hero h1{
+
+    font-size:
+        clamp(30px, 5vw, 46px);
+
+    margin-bottom:12px;
+
+    letter-spacing:-1px;
+
+}
+
+
+.hero p{
+
+    max-width:700px;
+
+    margin:auto;
+
+    color:var(--muted);
+
+    line-height:1.7;
+
+}
+
+
+/* =========================================================
+   ATUALIZAÇÃO
+========================================================= */
+
+.atualizacao{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin-top:18px;
+
+}
+
+
+.atualizacao span{
+
+    padding:8px 14px;
+
+    border-radius:30px;
+
+    background:#0f172a;
+
+    border:1px solid var(--border);
+
+    color:#cbd5e1;
+
+    font-size:12px;
+
+}
+
+
+/* =========================================================
+   CARD PRINCIPAL
+========================================================= */
+
+.documento{
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(17,24,39,.97),
+            rgba(15,23,42,.97)
+        );
+
+    border:
+        1px solid rgba(148,163,184,.16);
+
+    border-radius:24px;
+
+    box-shadow:var(--shadow);
+
+    overflow:hidden;
+
+}
+
+
+/* =========================================================
+   BARRA DO DOCUMENTO
+========================================================= */
+
+.documento-topo{
+
+    padding:18px 25px;
+
+    border-bottom:
+        1px solid rgba(148,163,184,.12);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+}
+
+
+.documento-topo strong{
+
+    font-size:14px;
+
+}
+
+
+.documento-topo span{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+}
+
+
+/* =========================================================
+   CONTEÚDO
+========================================================= */
+
+.conteudo{
+
+    padding:35px;
+
+}
+
+
+.secao{
+
+    padding-bottom:30px;
+
+    margin-bottom:30px;
+
+    border-bottom:
+        1px solid rgba(148,163,184,.10);
+
+}
+
+
+.secao:last-child{
+
+    border-bottom:0;
+
+    margin-bottom:0;
+
+}
+
+
+.secao h2{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:22px;
+
+    margin-bottom:14px;
+
+}
+
+
+.secao h2 span{
+
+    width:36px;
+
+    height:36px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:10px;
+
+    background:#172554;
+
+    font-size:17px;
+
+}
+
+
+.secao p{
+
+    color:#cbd5e1;
+
+    line-height:1.8;
+
+    margin-top:10px;
+
+}
+
+
+.secao ul{
+
+    margin-top:15px;
+
+    padding-left:22px;
+
+}
+
+
+.secao li{
+
+    color:#cbd5e1;
+
+    line-height:1.8;
+
+    margin:8px 0;
+
+}
+
+
+.secao li::marker{
+
+    color:var(--blue-light);
+
+}
+
+
+/* =========================================================
+   AVISOS
+========================================================= */
+
+.aviso{
+
+    margin-top:18px;
+
+    padding:20px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    gap:14px;
+
+    border:1px solid;
+
+}
+
+
+.aviso-icon{
+
+    font-size:24px;
+
+}
+
+
+.aviso-conteudo{
+
+    flex:1;
+
+}
+
+
+.aviso strong{
+
+    display:block;
+
+    margin-bottom:8px;
+
+}
+
+
+.aviso p{
+
+    margin:0;
+
+}
+
+
+.aviso-red{
+
+    background:
+        rgba(127,29,29,.18);
+
+    border-color:
+        rgba(239,68,68,.35);
+
+}
+
+
+.aviso-red strong{
+
+    color:#fca5a5;
+
+}
+
+
+.aviso-yellow{
+
+    background:
+        rgba(120,53,15,.18);
+
+    border-color:
+        rgba(245,158,11,.35);
+
+}
+
+
+.aviso-yellow strong{
+
+    color:#fcd34d;
+
+}
+
+
+.aviso-green{
+
+    background:
+        rgba(20,83,45,.18);
+
+    border-color:
+        rgba(34,197,94,.30);
+
+}
+
+
+.aviso-green strong{
+
+    color:#86efac;
+
+}
+
+
+/* =========================================================
+   REGRAS DE COMENTÁRIOS
+========================================================= */
+
+.regras-comentarios{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:14px;
+
+    margin-top:20px;
+
+}
+
+
+.regra{
+
+    padding:18px;
+
+    border-radius:15px;
+
+    background:#0f172a;
+
+    border:1px solid var(--border);
+
+}
+
+
+.regra-icon{
+
+    font-size:25px;
+
+    margin-bottom:10px;
+
+}
+
+
+.regra strong{
+
+    display:block;
+
+    margin-bottom:7px;
+
+}
+
+
+.regra p{
+
+    font-size:14px;
+
+    line-height:1.6;
+
+    margin:0;
+
+    color:var(--muted);
+
+}
+
+
+/* =========================================================
+   BANIMENTO
+========================================================= */
+
+.banimento{
+
+    margin-top:20px;
+
+    padding:22px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(127,29,29,.35),
+            rgba(69,10,10,.25)
+        );
+
+    border:
+        1px solid rgba(239,68,68,.35);
+
+}
+
+
+.banimento h3{
+
+    color:#fca5a5;
+
+    margin-bottom:12px;
+
+}
+
+
+.banimento p{
+
+    margin:0;
+
+}
+
+
+/* =========================================================
+   CONTATO
+========================================================= */
+
+.contato{
+
+    margin-top:20px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:15px;
+
+}
+
+
+.contato-card{
+
+    padding:20px;
+
+    background:#0f172a;
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+}
+
+
+.contato-card span{
+
+    display:block;
+
+    color:var(--muted);
+
+    font-size:13px;
+
+    margin-bottom:8px;
+
+}
+
+
+.contato-card strong{
+
+    font-size:17px;
+
+}
+
+
+/* =========================================================
+   ACEITE
+========================================================= */
+
+.aceite{
+
+    margin-top:35px;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(30,64,175,.25),
+            rgba(49,46,129,.20)
+        );
+
+    border:
+        1px solid rgba(96,165,250,.25);
+
+}
+
+
+.aceite h2{
+
+    margin-bottom:10px;
+
+}
+
+
+.aceite p{
+
+    color:#cbd5e1;
+
+    line-height:1.7;
+
+    margin-bottom:20px;
+
+}
+
+
+/* =========================================================
+   BOTÕES
+========================================================= */
+
+.botoes{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:12px;
+
+}
+
+
+button,
+.botao{
+
+    min-height:52px;
+
+    border:0;
+
+    border-radius:13px;
+
+    padding:14px 18px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    text-decoration:none;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    transition:
+        .2s ease;
+
+}
+
+
+button:hover,
+.botao:hover{
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+button:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+}
+
+
+.btn-aceitar{
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--green),
+            #15803d
+        );
+
+    box-shadow:
+        0 8px 25px rgba(22,163,74,.20);
+
+}
+
+
+.btn-voltar{
+
+    color:white;
+
+    background:
+        #334155;
+
+}
+
+
+.btn-voltar:hover{
+
+    background:#475569;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+#status{
+
+    margin-top:18px;
+
+    min-height:22px;
+
+    text-align:center;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+}
+
+
+.status-sucesso{
+
+    color:#86efac;
+
+}
+
+
+.status-erro{
+
+    color:#fca5a5;
+
+}
+
+
+/* =========================================================
+   RODAPÉ
+========================================================= */
+
+footer{
+
+    text-align:center;
+
+    color:#64748b;
+
+    font-size:13px;
+
+    line-height:1.7;
+
+    margin-top:30px;
+
+}
+
+
+footer strong{
+
+    color:#94a3b8;
+
+}
+
+
+/* =========================================================
+   RESPONSIVO
+========================================================= */
+
+@media(max-width:700px){
+
+    .header-content{
+
+        min-height:65px;
+
+    }
+
+
+    .header-status{
+
+        display:none;
+
+    }
+
+
+    .container{
+
+        margin-top:25px;
+
+    }
+
+
+    .conteudo{
+
+        padding:22px;
+
+    }
+
+
+    .documento-topo{
+
+        padding:15px 18px;
+
+    }
+
+
+    .regras-comentarios,
+    .contato,
+    .botoes{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .secao h2{
+
+        font-size:19px;
+
+    }
+
+
+    .hero h1{
+
+        font-size:31px;
+
+    }
+
+}
+
+
+@media(max-width:420px){
+
+    .container{
+
+        width:
+            calc(100% - 20px);
+
+    }
+
+
+    .conteudo{
+
+        padding:18px;
+
+    }
+
+
+    .hero-icon{
+
+        width:65px;
+
+        height:65px;
+
+        font-size:30px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <div class="header-content">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                📱
+            </div>
+
+            <span>
+                Minha Loja
+            </span>
+
+        </div>
+
+
+        <div class="header-status">
+
+            <span class="status-dot"></span>
+
+            Plataforma ativa
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     CONTEÚDO
+===================================================== -->
+
+<main class="container">
+
+
+    <section class="hero">
+
+        <div class="hero-icon">
+            📜
+        </div>
+
+        <h1>
+            Termos de Uso
+        </h1>
+
+        <p>
+            Leia atentamente as regras da Minha Loja de
+            Aplicativos antes de utilizar nossa plataforma.
+        </p>
+
+        <div class="atualizacao">
+
+            <span>
+                📅 Atualizado em 2026
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         DOCUMENTO
+    ================================================= -->
+
+    <article class="documento">
+
+
+        <div class="documento-topo">
+
+            <strong>
+                📄 Documento oficial
+            </strong>
+
+            <span>
+                Versão 1.0
+            </span>
+
+        </div>
+
+
+        <div class="conteudo">
+
+
+            <!-- =================================================
+                 1
+            ================================================= -->
+
+            <section class="secao">
+
+                <h2>
+
+                    <span>🎯</span>
+
+                    1. Objetivo da plataforma
+
+                </h2>
+
+                <p>
+
+                    A Minha Loja de Aplicativos é uma
+                    plataforma destinada à divulgação,
+                    comercialização e distribuição de
+                    aplicativos, softwares, conteúdos digitais
+                    e serviços relacionados à tecnologia.
+
+                </p>
+
+                <p>
+
+                    Ao utilizar a plataforma, o usuário declara
+                    que compreende e aceita as regras
+                    apresentadas neste documento.
+
+                </p>
+
+            </section>
+
+
+            <!-- =================================================
+                 2
+            ================================================= -->
+
+            <section class="secao">
+
+                <h2>
+
+                    <span>👤</span>
+
+                    2. Conta do usuário
+
+                </h2>
+
+                <p>
+
+                    O usuário deve fornecer informações
+                    verdadeiras, completas e atualizadas
+                    durante o cadastro.
+
+                </p>
+
+                <ul>
+
+                    <li>
+                        Não utilizar identidade falsa.
+                    </li>
+
+                    <li>
+                        Não compartilhar sua conta com terceiros
+                        de forma indevida.
+                    </li>
+
+                    <li>
+                        Manter suas informações de acesso seguras.
+                    </li>
+
+                    <li>
+                        Não utilizar a plataforma para atividades
+                        ilegais.
+                    </li>
+
+                </ul>
+
+            </section>
+
+
+            <!-- =================================================
+                 3
+            ================================================= -->
+
+            <section class="secao">
+
+                <h2>
+
+                    <span>🛒</span>
+
+                    3. Compras e produtos
+
+                </h2>
+
+                <p>
+
+                    Os produtos disponíveis na plataforma podem
+                    possuir preços, condições, descrições e
+                    formas de entrega diferentes.
+
+                </p>
+
+                <ul>
+
+                    <li>
+                        O comprador deve conferir as informações
+                        do produto antes da compra.
+                    </li>
+
+                    <li>
+                        O pagamento deve ser realizado através
+                        dos meios disponibilizados pela plataforma.
+                    </li>
+
+                    <li>
+                        A liberação do produto depende da
+                        confirmação do pagamento.
+                    </li>
+
+                    <li>
+                        Produtos digitais podem possuir regras
+                        específicas de utilização.
+                    </li>
+
+                </ul>
+
+            </section>
+
+
+            <!-- =================================================
+                 4
+            ================================================= -->
+
+            <section class="secao">
+
+                <h2>
+
+                    <span>🔐</span>
+
+                    4. Licença de utilização
+
+                </h2>
+
+                <p>
+
+                    A compra de um aplicativo ou conteúdo digital
+                    não significa automaticamente a transferência
+                    dos direitos autorais do produto.
+
+                </p>
+
+                <ul>
+
+                    <li>
+                        Não é permitido revender produtos sem autorização.
+                    </li>
+
+                    <li>
+                        Não é permitido distribuir cópias ilegalmente.
+                    </li>
+
+                    <li>
+                        Não é permitido remover sistemas de proteção
+                        ou identificação do produto.
+                    </li>
+
+                    <li>
+                        O uso deve respeitar a licença fornecida
+                        pelo vendedor.
+                    </li>
+
+                </ul>
+
+            </section>
+
+
+            <!-- =================================================
+                 5
+            ================================================= -->
+
+            <section class="secao">
+
+                <h2>
+
+                    <span>💬</span>
+
+                    5. Comentários e avaliações
+
+                </h2>
+
+                <p>
+
+                    A área de comentários e avaliações deve ser
+                    utilizada de maneira responsável e respeitosa.
+
+                </p>
+
+
+                <div class="regras-comentarios">
+
+
+                    <div class="regra">
+
+                        <div class="regra-icon">
+                            🤝
+                        </div>
+
+                        <strong>
+                            Respeito
+                        </strong>
+
+                        <p>
+                            Trate outros usuários, vendedores
+                            e administradores com respeito.
+                        </p>
+
+                    </div>
+
+
+                    <div class="regra">
+
+                        <div class="regra-icon">
+                            🚫
+                        </div>
+
+                        <strong>
+                            Sem ofensas
+                        </strong>
+
+                        <p>
+                            Não publique insultos, ameaças,
+                            ataques pessoais ou discurso ofensivo.
+                        </p>
+
+                    </div>
+
+
+                    <div class="regra">
+
+                        <div class="regra-icon">
+                            🛡️
+                        </div>
+
+                        <strong>
+                            Sem conteúdo ilegal
+                        </strong>
+
+                        <p>
+                            É proibida a publicação de conteúdo
+                            ilegal ou que incentive atividades ilegais.
+                        </p>
+
+                    </div>
+
+
+                    <div class="regra">
+
+                        <div class="regra-icon">
+                            📢
+                        </div>
+
+                        <strong>
+                            Sem spam
+                        </strong>
+
+                        <p>
+                            Não utilize comentários para spam,
+                            propaganda abusiva ou divulgação indevida.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="aviso-red">
+
+                    <div class="aviso">
+
+                        <div class="aviso-icon">
+                            🚫
+                        </div>
+
+                        <div class="aviso-conteudo">
+
+                            <strong>
+                                Comentários que violarem as regras
+                            </strong>
+
+                            <p>
+                                Poderão ser removidos pela administração.
+                                Dependendo da gravidade ou reincidência,
+                                a conta responsável poderá ser suspensa
+                                ou banida da plataforma.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 6
+            ================================================= -->
+
+            <section class="secao">
+
+                <h2>
+
+                    <span>🚫</span>
+
+                    6. Banimento e suspensão
+
+                </h2>
+
+                <p>
+
+                    A Minha Loja poderá restringir, suspender ou
+                    banir contas que descumpram as regras da
+                    plataforma.
+
+                </p>
+
+
+                <div class="banimento">
+
+                    <h3>
+                        🚨 Situações que podem resultar em banimento
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Ofensas ou desrespeito grave contra usuários.
+                        </li>
+
+                        <li>
+                            Ameaças ou comportamento abusivo.
+                        </li>
+
+                        <li>
+                            Fraudes ou tentativas de fraude.
+                        </li>
+
+                        <li>
+                            Uso de informações falsas.
+                        </li>
+
+                        <li>
+                            Distribuição ilegal de aplicativos.
+                        </li>
+
+                        <li>
+                            Tentativas de invasão ou comprometimento
+                            da segurança da plataforma.
+                        </li>
+
+                        <li>
+                            Spam ou utilização abusiva dos comentários.
+                        </li>
+
+                        <li>
+                            Reincidência em violações das regras.
+                        </li>
+
+                    </ul>
+
+                    <p>
+
+                        Dependendo da situação, o acesso à conta
+                        poderá ser bloqueado temporária ou
+                        permanentemente.
+
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 7
+            ================================================= -->
+
+            <section class="secao">
+
+                <h2>
+
+                    <span>🏪</span>
+
+                    7. Regras para vendedores
+
+                </h2>
+
+                <p>
+
+                    Os vendedores também devem respeitar as regras
+                    da plataforma e fornecer informações corretas
+                    sobre seus produtos.
+
+                </p>
+
+                <ul>
+
+                    <li>
+                        Publicar somente produtos permitidos.
+                    </li>
+
+                    <li>
+                        Não publicar conteúdo ilegal.
+                    </li>
+
+                    <li>
+                        Não utilizar imagens ou materiais sem
+                        autorização.
+                    </li>
+
+                    <li>
+                        Informar corretamente preço e descrição.
+                    </li>
+
+                    <li>
+                        Respeitar os compradores.
+                    </li>
+
+                    <li>
+                        Não utilizar avaliações falsas.
+                    </li>
+
+                    <li>
+                        Não tentar manipular vendas ou avaliações.
+                    </li>
+
+                </ul>
+
+            </section>
+
+
+            <!-- =================================================
+                 8
+            ================================================= -->
+
+            <section class="secao">
+
+                <h2>
+
+                    <span>💰</span>
+
+                    8. Reembolsos
+
+                </h2>
+
+                <p>
+
+                    Solicitações de reembolso serão analisadas
+                    conforme as condições da compra, as políticas
+                    da plataforma e a legislação brasileira
+                    aplicável.
+
+                </p>
+
+                <div class="aviso-yellow">
+
+                    <div class="aviso">
+
+                        <div class="aviso-icon">
+                            ⚠️
+                        </div>
+
+                        <div class="aviso-conteudo">
+
+                            <strong>
+                                Importante
+                            </strong>
+
+                            <p>
+                                O envio de informações falsas para
+                                obter um reembolso pode resultar em
+                                restrições na conta.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 9
+            ================================================= -->
+
+            <section class="secao">
+
+                <h2>
+
+                    <span>🔒</span>
+
+                    9. Privacidade e segurança
+
+                </h2>
+
+                <p>
+
+                    Informações fornecidas pelos usuários podem ser
+                    utilizadas para funcionamento da plataforma,
+                    processamento de compras, segurança, suporte
+                    e prevenção de abusos.
+
+                </p>
+
+                <p>
+
+                    A utilização dos dados deve respeitar as
+                    políticas de privacidade aplicáveis e a
+                    legislação brasileira.
+
+                </p>
+
+            </section>
+
+
+            <!-- =================================================
+                 10
+            ================================================= -->
+
+            <section class="secao">
+
+                <h2>
+
+                    <span>⚙️</span>
+
+                    10. Alterações da plataforma
+
+                </h2>
+
+                <p>
+
+                    Recursos, funcionalidades, preços, regras e
+                    políticas da plataforma podem ser alterados
+                    quando necessário.
+
+                </p>
+
+                <p>
+
+                    A versão mais recente destes Termos de Uso
+                    será considerada a versão aplicável após sua
+                    publicação.
+
+                </p>
+
+            </section>
+
+
+            <!-- =================================================
+                 11
+            ================================================= -->
+
+            <section class="secao">
+
+                <h2>
+
+                    <span>📞</span>
+
+                    11. Atendimento
+
+                </h2>
+
+                <p>
+
+                    Para assuntos relacionados à loja, o usuário
+                    poderá utilizar o contato disponibilizado pela
+                    administração.
+
+                </p>
+
+
+                <div class="contato">
+
+                    <div class="contato-card">
+
+                        <span>
+                            📱 Telefone da loja
+                        </span>
+
+                        <strong>
+                            55 22 3555-553
+                        </strong>
+
+                    </div>
+
+
+                    <div class="contato-card">
+
+                        <span>
+                            🏪 Plataforma
+                        </span>
+
+                        <strong>
+                            Minha Loja de Aplicativos
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 12
+            ================================================= -->
+
+            <section class="secao">
+
+                <h2>
+
+                    <span>✅</span>
+
+                    12. Aceitação
+
+                </h2>
+
+                <p>
+
+                    Ao clicar em "Aceito os Termos de Uso",
+                    você declara que leu, compreendeu e concorda
+                    com as regras apresentadas nesta página.
+
+                </p>
+
+                <div class="aviso-green">
+
+                    <div class="aviso">
+
+                        <div class="aviso-icon">
+                            🛡️
+                        </div>
+
+                        <div class="aviso-conteudo">
+
+                            <strong>
+                                Utilize a plataforma com responsabilidade
+                            </strong>
+
+                            <p>
+                                Respeite outros usuários, vendedores,
+                                compradores e a equipe responsável
+                                pela plataforma.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ACEITE
+            ================================================= -->
+
+            <section class="aceite">
+
+                <h2>
+                    📋 Confirmar aceitação
+                </h2>
+
+                <p>
+
+                    Confirme abaixo que você leu e concorda
+                    com os Termos de Uso da Minha Loja.
+
+                </p>
+
+
+                <div class="botoes">
+
+                    <button
+                        id="btnAceitar"
+                        class="btn-aceitar"
+                        onclick="aceitarTermos()"
+                    >
+                        ✅ Aceito os Termos de Uso
+                    </button>
+
+
+                    <a
+                        href="loja.html"
+                        class="botao btn-voltar"
+                    >
+                        🏠 Voltar para a Loja
+                    </a>
+
+                </div>
+
+
+                <div id="status"></div>
+
+            </section>
+
+
+        </div>
+
+    </article>
+
+
+    <!-- =================================================
+         RODAPÉ
+    ================================================= -->
+
+    <footer>
+
+        <strong>
+            Minha Loja de Aplicativos
+        </strong>
+
+        <br>
+
+        © 2026 — Todos os direitos reservados.
+
+        <br>
+
+        Ao utilizar a plataforma, você concorda com
+        as regras estabelecidas neste documento.
+
+    </footer>
+
+
+</main>
+
+
+<!-- =====================================================
+     FIREBASE
+===================================================== -->
+
+<script type="module">
+
+
+import {
+    initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import {
+    getDatabase,
+    ref,
+    push,
+    set
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+/* =========================================================
+   CONFIGURAÇÃO FIREBASE
+========================================================= */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyAMG8workhkRJapQm1AHSMOSIPOnSWltpw",
+
+    authDomain:
+        "minha-loja-5477a.firebaseapp.com",
+
+    databaseURL:
+        "https://minha-loja-5477a-default-rtdb.europe-west1.firebasedatabase.app",
+
+    projectId:
+        "minha-loja-5477a",
+
+    storageBucket:
+        "minha-loja-5477a.firebasestorage.app",
+
+    messagingSenderId:
+        "680448342361",
+
+    appId:
+        "1:680448342361:web:e35226b350ac4504d6f448",
+
+    measurementId:
+        "G-0FBN3SDTNR"
+
+};
+
+
+/* =========================================================
+   FIREBASE
+========================================================= */
+
+const app =
+    initializeApp(
+        firebaseConfig
+    );
+
+
+const db =
+    getDatabase(app);
+
+
+/* =========================================================
+   ACEITAR TERMOS
+========================================================= */
+
+window.aceitarTermos =
+async function(){
+
+    const botao =
+        document.getElementById(
+            "btnAceitar"
+        );
+
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    if(
+        botao.disabled
+    ){
+
+        return;
+
+    }
+
+
+    botao.disabled =
+        true;
+
+
+    botao.innerHTML =
+        "⏳ Salvando aceitação...";
+
+
+    status.className =
+        "";
+
+
+    status.textContent =
+        "Registrando sua aceitação...";
+
+
+    try{
+
+
+        /*
+         * Identificação básica da sessão.
+         */
+
+        const clienteId =
+            localStorage.getItem(
+                "clienteId"
+            )
+            ||
+            "cliente_" +
+            Date.now();
+
+
+        localStorage.setItem(
+            "clienteId",
+            clienteId
+        );
+
+
+        const novo =
+            push(
+                ref(
+                    db,
+                    "termosAceitos"
+                )
+            );
+
+
+        await set(
+            novo,
+            {
+
+                clienteId:
+                    clienteId,
+
+                aceitou:
+                    true,
+
+                versao:
+                    "1.0",
+
+                data:
+                    new Date()
+                    .toISOString(),
+
+                dataLocal:
+                    new Date()
+                    .toLocaleString(
+                        "pt-BR"
+                    ),
+
+                navegador:
+                    navigator.userAgent
+
+            }
+        );
+
+
+        /*
+         * Salvar localmente que os termos
+         * já foram aceitos.
+         */
+
+        localStorage.setItem(
+            "termosAceitos",
+            "true"
+        );
+
+
+        localStorage.setItem(
+            "versaoTermos",
+            "1.0"
+        );
+
+
+        status.className =
+            "status-sucesso";
+
+
+        status.innerHTML =
+            "✅ Termos aceitos com sucesso!";
+
+
+        botao.innerHTML =
+            "✔ Termos Aceitos";
+
+
+        setTimeout(
+            ()=>{
+
+                window.location.href =
+                    "loja.html";
+
+            },
+            1500
+        );
+
+
+    }catch(erro){
+
+        console.error(
+            "Erro ao salvar termos:",
+            erro
+        );
+
+
+        botao.disabled =
+            false;
+
+
+        botao.innerHTML =
+            "✅ Aceito os Termos de Uso";
+
+
+        status.className =
+            "status-erro";
+
+
+        status.innerHTML =
+            "❌ Não foi possível registrar a aceitação. Tente novamente.";
+
+    }
+
+};
+
+
+/* =========================================================
+   VOLTAR
+========================================================= */
+
+window.voltarLoja =
+function(){
+
+    window.location.href =
+        "loja.html";
+
+};
+
+</script>
+
+
+</body>
+
+</html>

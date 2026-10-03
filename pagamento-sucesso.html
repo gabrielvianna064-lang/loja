@@ -1,0 +1,20 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Confirmação do pagamento | Minha Loja</title><style>*{box-sizing:border-box}body{font-family:Arial,sans-serif;background:#e8f5e9;min-height:100vh;margin:0;display:grid;place-items:center;padding:20px;color:#1f2937}.card{background:white;max-width:540px;width:100%;padding:35px 25px;border-radius:18px;text-align:center;box-shadow:0 12px 38px #0002}h1{color:#15803d;font-size:30px}p{line-height:1.6}.icon{font-size:65px}.btn{display:inline-block;margin-top:22px;padding:14px 22px;border-radius:12px;background:#15803d;color:#fff;text-decoration:none;font-weight:bold}.btn:hover{background:#166534}#detalhes{color:#64748b;font-size:13px;overflow-wrap:anywhere}#aviso{color:#92400e}</style></head><body><main class="card"><div class="icon" id="icone">⏳</div><h1 id="titulo">Verificando sua compra...</h1><p id="mensagem">Aguardando confirmação e liberação do aplicativo.</p><p id="aviso"></p><p id="detalhes"></p><a id="voltar" class="btn" href="loja.html" hidden>⬇️ Ir para o produto e baixar APK</a></main><script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+const app=initializeApp({apiKey:'AIzaSyAMG8workhkRJapQm1AHSMOSIPOnSWltpw',authDomain:'minha-loja-5477a.firebaseapp.com',databaseURL:'https://minha-loja-5477a-default-rtdb.europe-west1.firebasedatabase.app',projectId:'minha-loja-5477a'}),auth=getAuth(app);
+const params=new URLSearchParams(location.search),ultimo=(()=>{try{return JSON.parse(sessionStorage.getItem('ultimaCompraPix')||'null')}catch{return null}})();
+const id=params.get('id')||ultimo?.produtoId||null;
+const pagamentoId=params.get('pagamentoId')||(ultimo?.produtoId===id?ultimo?.pagamentoId:null);
+const el=n=>document.getElementById(n),voltar=el('voltar');
+if(id){voltar.href='produto.html?id='+encodeURIComponent(id);}
+if(pagamentoId)el('detalhes').textContent='Pagamento: '+pagamentoId;
+let usuario=null,concluido=false,tentativas=0,consultando=false;
+function apresentarAprovado(){concluido=true;el('icone').textContent='✅';el('titulo').textContent='Compra aprovada!';el('mensagem').textContent='Seu aplicativo está liberado para download.';el('aviso').textContent='';voltar.hidden=false;}
+async function consultar(){if(concluido||consultando||!usuario||!id)return;consultando=true;try{
+const token=await usuario.getIdToken();const r=await fetch('/api/produtos/'+encodeURIComponent(id)+'/download/status',{headers:{Authorization:'Bearer '+token},cache:'no-store'});const d=await r.json();
+if(r.ok&&d.liberado===true){apresentarAprovado();return;}
+el('titulo').textContent='Aguardando liberação';el('mensagem').textContent='Estamos verificando a confirmação do pagamento e sua licença.';
+if(pagamentoId){const p=await fetch('/api/pagamento/'+encodeURIComponent(pagamentoId)+'/status',{cache:'no-store'});if(p.ok){const dados=await p.json();if(['rejected','cancelled','refunded','charged_back'].includes(dados.status)){el('icone').textContent='❌';el('titulo').textContent='Pagamento não aprovado';el('mensagem').textContent='Confira o pagamento e tente novamente.';return;}}}
+}catch(e){el('aviso').textContent='Não foi possível consultar agora. Tentaremos novamente.';}finally{consultando=false;if(!concluido&&++tentativas<120)setTimeout(consultar,5000);}}
+onAuthStateChanged(auth,u=>{usuario=u;if(!id){el('titulo').textContent='Escolha seu aplicativo';el('mensagem').textContent='Abra esta página a partir da compra na loja.';voltar.href='loja.html';voltar.textContent='⬅️ Voltar para a loja';voltar.hidden=false;return;}if(!u){el('titulo').textContent='Entre na sua conta';el('mensagem').textContent='Faça login na loja para consultar sua compra.';voltar.href='loja.html';voltar.textContent='⬅️ Entrar na loja';voltar.hidden=false;return;}consultar();});
+</script></body></html>
