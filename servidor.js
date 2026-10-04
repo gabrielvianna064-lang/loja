@@ -54,7 +54,7 @@ function enviarAtualizacaoCentral(vendedorId, motivo = "atualizacao") {
 // CONFIGURAÇÃO
 // ============================================================
 
-const PORTA = Number(process.env.PORTA || 3000);
+const PORTA = Number(process.env.PORT || process.env.PORTA || 3000);
 const BASE_URL = String(process.env.BASE_URL || "").trim().replace(/\/$/, "");
 
 const MP_ACCESS_TOKEN = String(process.env.MP_ACCESS_TOKEN || "").trim();
@@ -68,7 +68,7 @@ const MP_PAYMENT_ACCESS_TOKEN = MP_TEST_MODE ? MP_TEST_ACCESS_TOKEN : MP_ACCESS_
 const MP_PAYMENT_PUBLIC_KEY = MP_TEST_MODE ? MP_TEST_PUBLIC_KEY : MP_PUBLIC_KEY;
 const MP_REDIRECT_URI = String(
     process.env.MP_REDIRECT_URI ||
-    "https://loja-bvjb.onrender.com/mercadopago/callback"
+    "https://loja-dys9.onrender.com/mercadopago/callback"
 ).trim();
 
 const FIREBASE_DATABASE_URL = String(
@@ -3468,7 +3468,7 @@ app.get("/api/maketiplace/config", (_req, res) => {
     });
 });
 
-app.listen(PORTA, () => {
+app.listen(PORTA, "0.0.0.0", () => {
     console.log("");
     console.log("==========================================");
     console.log("        LOJA DE APLICATIVOS");
