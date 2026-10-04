@@ -479,7 +479,12 @@ app.post("/api/upload-arquivo", (req, res) => {
 });
 
 
-// DOWNLOAD PROTEGIDO: identidade Firebase + pedido pago + licença ativa.
+// DOWNLOAD PROTEGIDO: identidade Firebase + pedido aprovado + licença ativa.
+function pagamentoFoiAprovado(status) {
+    const valor = String(status ?? "").trim().toLowerCase();
+    return ["pago", "approved", "aprovado", "paid"].includes(valor);
+}
+
 async function usuarioFirebaseDoToken(req) {
     const token = String(req.headers.authorization || "").replace(/^Bearer\s+/i, "").trim();
     if (!token) return null;
@@ -501,7 +506,7 @@ async function autorizarDownload(req, res, enviarArquivo) {
         const pedidos = await firebaseGet("pedidos") || {};
         let pedidoValido = null;
         for (const pedido of Object.values(pedidos)) {
-            if (String(pedido?.produtoId || "") !== produtoId || String(pedido?.compradorId || "") !== usuario.localId || pedido?.status !== "pago" || !pedido?.licencaId) continue;
+            if (String(pedido?.produtoId || "") !== produtoId || String(pedido?.compradorId || "") !== usuario.localId || !pagamentoFoiAprovado(pedido?.status) || !pedido?.licencaId) continue;
             const licenca = await firebaseGet(`licencas/${encodeURIComponent(String(pedido.licencaId))}`);
             if (licenca?.status === "ativa" && String(licenca.produtoId) === produtoId && String(licenca.compradorId) === usuario.localId) { pedidoValido = pedido; break; }
         }
