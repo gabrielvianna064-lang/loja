@@ -68,7 +68,7 @@ const MP_PAYMENT_ACCESS_TOKEN = MP_TEST_MODE ? MP_TEST_ACCESS_TOKEN : MP_ACCESS_
 const MP_PAYMENT_PUBLIC_KEY = MP_TEST_MODE ? MP_TEST_PUBLIC_KEY : MP_PUBLIC_KEY;
 const MP_REDIRECT_URI = String(
     process.env.MP_REDIRECT_URI ||
-    "https://loja-dys9.onrender.com/mercadopago/callback"
+    `${String(process.env.BASE_URL || `http://localhost:${PORTA}`).trim().replace(/\/$/, "")}/mercadopago/callback`
 ).trim();
 
 const FIREBASE_DATABASE_URL = String(
@@ -3468,7 +3468,7 @@ app.get("/api/maketiplace/config", (_req, res) => {
     });
 });
 
-app.listen(PORTA, "0.0.0.0", () => {
+app.listen(PORTA, () => {
     console.log("");
     console.log("==========================================");
     console.log("        LOJA DE APLICATIVOS");
