@@ -55,7 +55,7 @@ function enviarAtualizacaoCentral(vendedorId, motivo = "atualizacao") {
 // ============================================================
 
 const PORTA = Number(process.env.PORT || process.env.PORTA || 3000);
-const BASE_URL = String(process.env.BASE_URL || "https://loja-6jiz.onrender.com").trim().replace(/\/$/, "");
+const BASE_URL = String(process.env.BASE_URL || "https://loja-6fv6.onrender.com").trim().replace(/\/$/, "");
 
 const MP_ACCESS_TOKEN = String(process.env.MP_ACCESS_TOKEN || "").trim();
 const MP_CLIENT_ID = String(process.env.MP_CLIENT_ID || "").trim();
@@ -1324,16 +1324,23 @@ function hashDispositivo(dispositivoId) {
 // ============================================================
 
 app.get("/", (req, res) => {
-    const arquivo = path.join(__dirname, "loja.html");
-    res.sendFile(arquivo, erro => {
-        if (erro && !res.headersSent) {
-            res.send(`
-                <h1>LOJA DE APLICATIVOS</h1>
-                <p>Servidor funcionando.</p>
-                <p><a href="/central-do-vendedor">Central do Vendedor</a></p>
-            `);
+    const arquivos = ["loja.html", "index.html"];
+    const enviar = (indice) => {
+        if (indice >= arquivos.length) {
+            return res.status(200).send(`<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Minha Loja de Aplicativos</title>
+<style>body{font-family:Arial,sans-serif;margin:0;background:#f1f5f9;color:#0f172a;display:grid;place-items:center;min-height:100vh}.card{background:#fff;padding:32px;border-radius:18px;box-shadow:0 10px 30px #0001;max-width:620px;width:calc(100% - 40px)}a{display:inline-block;margin:8px 8px 0 0;padding:12px 16px;border-radius:10px;background:#2563eb;color:#fff;text-decoration:none;font-weight:700}.status{color:#16a34a;font-weight:700}</style></head>
+<body><main class="card"><h1>Minha Loja de Aplicativos</h1><p class="status">● Servidor online</p><p>O servidor da loja está funcionando corretamente.</p>
+<p><a href="/status">Ver status</a><a href="/central-do-vendedor">Central do vendedor</a><a href="/admin">Administrador</a></p></main></body></html>`);
         }
-    });
+        const arquivo = path.join(__dirname, arquivos[indice]);
+        res.sendFile(arquivo, erro => {
+            if (erro && !res.headersSent) enviar(indice + 1);
+        });
+    };
+    enviar(0);
 });
 
 app.get("/status", (req, res) => {
