@@ -55,7 +55,7 @@ function enviarAtualizacaoCentral(vendedorId, motivo = "atualizacao") {
 // ============================================================
 
 const PORTA = Number(process.env.PORT || process.env.PORTA || 3000);
-const BASE_URL = String(process.env.BASE_URL || "").trim().replace(/\/$/, "");
+const BASE_URL = String(process.env.BASE_URL || "https://loja-6jiz.onrender.com").trim().replace(/\/$/, "");
 
 const MP_ACCESS_TOKEN = String(process.env.MP_ACCESS_TOKEN || "").trim();
 const MP_CLIENT_ID = String(process.env.MP_CLIENT_ID || "").trim();
@@ -68,7 +68,7 @@ const MP_PAYMENT_ACCESS_TOKEN = MP_TEST_MODE ? MP_TEST_ACCESS_TOKEN : MP_ACCESS_
 const MP_PAYMENT_PUBLIC_KEY = MP_TEST_MODE ? MP_TEST_PUBLIC_KEY : MP_PUBLIC_KEY;
 const MP_REDIRECT_URI = String(
     process.env.MP_REDIRECT_URI ||
-    `${String(process.env.BASE_URL || `http://localhost:${PORTA}`).trim().replace(/\/$/, "")}/mercadopago/callback`
+    `${BASE_URL}/mercadopago/callback`
 ).trim();
 
 const FIREBASE_DATABASE_URL = String(
@@ -97,8 +97,7 @@ const REEMBOLSO_JANELA_MINUTOS = 2;
 const REEMBOLSO_JANELA_MS = REEMBOLSO_JANELA_MINUTOS * 60 * 1000;
 const FIREBASE_WEB_API_KEY = String(process.env.FIREBASE_WEB_API_KEY || "AIzaSyAMG8workhkRJapQm1AHSMOSIPOnSWltpw").trim();
 const PUBLIC_URL = String(
-    process.env.BASE_URL ||
-    (() => { try { return new URL(MP_REDIRECT_URI).origin; } catch { return `http://localhost:${PORTA}`; } })()
+    process.env.BASE_URL || BASE_URL || `http://localhost:${PORTA}`
 ).trim().replace(/\/$/, "");
 
 const smtpConfigurado = Boolean(SMTP_HOST && SMTP_USER && SMTP_PASS);
@@ -490,37 +489,198 @@ async function usuarioFirebaseDoToken(req) {
     return (await resposta.json()).users?.[0] || null;
 }
 
+async function sincronizarCompraAprovadaParaUsuario(produtoId, compradorId, pedidos) {
+    const candidatos = Object.entries(pedidos || {}).filter(([_, pedido]) => {
+        if (!pedido) return false;
+        if (String(pedido.produtoId || "") !== String(produtoId)) return false;
+        if (String(pedido.compradorId || "") !== String(compradorId)) return false;
+        if (!pedido.pagamentoId) return false;
+        if (pedido.status === "pago" && pedido.licencaId) return false;
+        return ["pending", "aguardando_pagamento", "in_process", "approved", ""]
+            .includes(String(pedido.status || "").toLowerCase());
+    });
+
+    for (const [pedidoId, pedido] of candidatos) {
+        try {
+            const vendedorId = String(pedido.vendedorId || "").trim();
+            const vendedorMP = vendedorId
+                ? await firebaseGet(`vendedores/${encodeURIComponent(vendedorId)}/mercadoPago`)
+                : null;
+
+            const token = texto(vendedorMP?.access_token) || MP_ACCESS_TOKEN;
+            if (!token) continue;
+
+            const resultado = await processarPagamentoAprovado(String(pedido.pagamentoId), token);
+
+            if (resultado?.aprovado === true || resultado?.licenca?.id || resultado?.licencaId) {
+                return {
+                    pedidoId,
+                    pedido: await firebaseGet(`pedidos/${encodeURIComponent(pedidoId)}`) || pedido
+                };
+            }
+        } catch (erro) {
+            // Um pagamento pendente ou token inválido não deve impedir
+            // a verificação dos demais pedidos do mesmo produto.
+            console.warn(
+                `Não foi possível sincronizar pagamento ${pedido.pagamentoId}:`,
+                erro.message
+            );
+        }
+    }
+
+    return null;
+}
+
 async function autorizarDownload(req, res, enviarArquivo) {
     try {
         const usuario = await usuarioFirebaseDoToken(req);
-        if (!usuario?.localId) return res.status(401).json({ liberado: false, erro: "Entre na sua conta." });
-        const produtoId = String(req.params.produtoId || "");
-        if (!/^[a-zA-Z0-9_-]{1,160}$/.test(produtoId)) return res.status(400).json({ liberado: false, erro: "Produto inválido." });
-        const produto = await firebaseGet(`produtos/${produtoId}`);
-        if (!produto) return res.status(404).json({ liberado: false, erro: "Produto não encontrado." });
-        const pedidos = await firebaseGet("pedidos") || {};
-        let pedidoValido = null;
-        for (const pedido of Object.values(pedidos)) {
-            if (String(pedido?.produtoId || "") !== produtoId || String(pedido?.compradorId || "") !== usuario.localId || pedido?.status !== "pago" || !pedido?.licencaId) continue;
-            const licenca = await firebaseGet(`licencas/${encodeURIComponent(String(pedido.licencaId))}`);
-            if (licenca?.status === "ativa" && String(licenca.produtoId) === produtoId && String(licenca.compradorId) === usuario.localId) { pedidoValido = pedido; break; }
+        if (!usuario?.localId) {
+            return res.status(401).json({ liberado: false, erro: "Entre na sua conta." });
         }
-        if (!pedidoValido) return res.status(403).json({ liberado: false, erro: "Pagamento ainda não aprovado ou licença indisponível." });
-        const bruto = produto.apkUrl || produto.apk?.url || produto.arquivoApk?.url || produto.downloadUrl;
+
+        const produtoId = String(req.params.produtoId || "");
+        if (!/^[a-zA-Z0-9_-]{1,160}$/.test(produtoId)) {
+            return res.status(400).json({ liberado: false, erro: "Produto inválido." });
+        }
+
+        const produto = await firebaseGet(`produtos/${produtoId}`);
+        if (!produto) {
+            return res.status(404).json({ liberado: false, erro: "Produto não encontrado." });
+        }
+
+        let pedidos = await firebaseGet("pedidos") || {};
+        let pedidoValido = null;
+
+        const procurarLicenca = async () => {
+            for (const pedido of Object.values(pedidos)) {
+                if (
+                    String(pedido?.produtoId || "") !== produtoId ||
+                    String(pedido?.compradorId || "") !== usuario.localId ||
+                    String(pedido?.status || "").toLowerCase() !== "pago" ||
+                    !pedido?.licencaId
+                ) continue;
+
+                const licenca = await firebaseGet(
+                    `licencas/${encodeURIComponent(String(pedido.licencaId))}`
+                );
+
+                if (
+                    licenca?.status === "ativa" &&
+                    String(licenca.produtoId) === produtoId &&
+                    String(licenca.compradorId) === usuario.localId
+                ) {
+                    return pedido;
+                }
+            }
+            return null;
+        };
+
+        // Primeiro usa a licença já criada, que é o caminho normal.
+        pedidoValido = await procurarLicenca();
+
+        // Se o webhook ainda não criou a licença, consulta/processa a
+        // aprovação diretamente no Mercado Pago e tenta novamente.
+        if (!pedidoValido) {
+            const sincronizado = await sincronizarCompraAprovadaParaUsuario(
+                produtoId,
+                usuario.localId,
+                pedidos
+            );
+
+            if (sincronizado) {
+                pedidos = await firebaseGet("pedidos") || {};
+                pedidoValido = await procurarLicenca();
+            }
+        }
+
+        if (!pedidoValido) {
+            return res.status(403).json({
+                liberado: false,
+                erro: "Pagamento ainda não aprovado ou licença indisponível."
+            });
+        }
+
+        const bruto =
+            produto.apkUrl ||
+            produto.apk?.url ||
+            produto.arquivoApk?.url ||
+            produto.downloadUrl;
+
         const url = typeof bruto === "string" ? bruto : bruto?.url;
-        if (!url) return res.status(404).json({ liberado: false, erro: "APK não cadastrado." });
+
+        if (!url) {
+            return res.status(404).json({
+                liberado: false,
+                erro: "APK não cadastrado."
+            });
+        }
+
         let pathname;
-        try { pathname = new URL(url, PUBLIC_URL).pathname; } catch { return res.status(400).json({ liberado: false, erro: "URL inválida." }); }
-        if (!pathname.startsWith("/uploads/") || !pathname.toLowerCase().endsWith(".apk")) return res.status(409).json({ liberado: false, erro: "Configure o APK no armazenamento deste servidor." });
+        try {
+            pathname = new URL(url, PUBLIC_URL).pathname;
+        } catch {
+            return res.status(400).json({
+                liberado: false,
+                erro: "URL inválida."
+            });
+        }
+
+        if (
+            !pathname.startsWith("/uploads/") ||
+            !pathname.toLowerCase().endsWith(".apk")
+        ) {
+            return res.status(409).json({
+                liberado: false,
+                erro: "Configure o APK no armazenamento deste servidor."
+            });
+        }
+
         const partes = pathname.slice(9).split("/").map(decodeURIComponent);
-        if (partes.some(p => !p || p === "." || p === ".." || p.includes("/") || p.includes("\\"))) return res.status(400).json({ liberado: false, erro: "Caminho inválido." });
+
+        if (
+            partes.some(
+                p => !p || p === "." || p === ".." ||
+                p.includes("/") || p.includes("\\")
+            )
+        ) {
+            return res.status(400).json({
+                liberado: false,
+                erro: "Caminho inválido."
+            });
+        }
+
         const arquivo = path.resolve(PASTA_UPLOADS, ...partes);
-        if (!arquivo.startsWith(path.resolve(PASTA_UPLOADS) + path.sep)) return res.status(403).end();
-        if (!fs.existsSync(arquivo)) return res.status(404).json({ liberado: false, erro: "APK não encontrado no servidor." });
-        if (!enviarArquivo) return res.json({ liberado: true });
+
+        if (!arquivo.startsWith(path.resolve(PASTA_UPLOADS) + path.sep)) {
+            return res.status(403).end();
+        }
+
+        if (!fs.existsSync(arquivo)) {
+            return res.status(404).json({
+                liberado: false,
+                erro: "APK não encontrado no servidor."
+            });
+        }
+
+        if (!enviarArquivo) {
+            return res.json({
+                liberado: true,
+                produtoId,
+                pedidoId: String(pedidoValido.id || ""),
+                licencaId: String(pedidoValido.licencaId || "")
+            });
+        }
+
         return res.download(arquivo, path.basename(arquivo));
-    } catch (erro) { console.error("Download protegido:", erro); return res.status(500).json({ liberado: false, erro: "Falha ao verificar compra." }); }
+    } catch (erro) {
+        console.error("Download protegido:", erro);
+        return res.status(500).json({
+            liberado: false,
+            erro: "Falha ao verificar compra."
+        });
+    }
 }
+
 app.get("/api/produtos/:produtoId/download/status", (req, res) => autorizarDownload(req, res, false));
 app.get("/api/produtos/:produtoId/download", (req, res) => autorizarDownload(req, res, true));
 
@@ -1816,40 +1976,107 @@ app.post("/criar-pix", async (req, res) => {
 // ============================================================
 app.get("/api/pagamento/:pagamentoId/status", async (req,res)=>{
     try {
-        const pagamentoId=texto(req.params.pagamentoId);
-        if(!pagamentoId) return res.status(400).json({sucesso:false,erro:"Pagamento não informado."});
-
-        const pagamentos=await firebaseGet(`pagamentos/${pagamentoId}`);
-        const pedidoId=texto(pagamentos?.pedidoId);
-        let token=MP_TEST_MODE ? MP_TEST_ACCESS_TOKEN : MP_ACCESS_TOKEN;
-
-        if(pedidoId){
-            const pedido=await firebaseGet(`pedidos/${pedidoId}`);
-            if(pedido?.vendedorId){
-                const vendedorMP=await firebaseGet(`vendedores/${pedido.vendedorId}/mercadoPago`);
-                token=vendedorMP?.access_token || token;
-            }
+        const pagamentoId = texto(req.params.pagamentoId);
+        if (!pagamentoId) {
+            return res.status(400).json({
+                sucesso:false,
+                erro:"Pagamento não informado."
+            });
         }
 
-        if(!token) return res.status(400).json({sucesso:false,erro:"Token Mercado Pago não disponível."});
+        const usuario = await usuarioFirebaseDoToken(req);
+        if (!usuario?.localId) {
+            return res.status(401).json({
+                sucesso:false,
+                erro:"Entre na sua conta."
+            });
+        }
 
-        const resposta=await mercadoPagoRequest(
+        const pagamentoFirebase = await firebaseGet(`pagamentos/${pagamentoId}`);
+        const pedidoId = texto(pagamentoFirebase?.pedidoId);
+
+        if (!pedidoId) {
+            return res.status(404).json({
+                sucesso:false,
+                erro:"Pedido do pagamento não encontrado."
+            });
+        }
+
+        const pedido = await firebaseGet(`pedidos/${pedidoId}`);
+
+        if (!pedido || String(pedido.compradorId || "") !== String(usuario.localId)) {
+            return res.status(403).json({
+                sucesso:false,
+                erro:"Este pagamento não pertence à sua conta."
+            });
+        }
+
+        let token = MP_TEST_MODE ? MP_TEST_ACCESS_TOKEN : MP_ACCESS_TOKEN;
+
+        if (pedido.vendedorId) {
+            const vendedorMP = await firebaseGet(
+                `vendedores/${encodeURIComponent(pedido.vendedorId)}/mercadoPago`
+            );
+            token = vendedorMP?.access_token || token;
+        }
+
+        if (!token) {
+            return res.status(400).json({
+                sucesso:false,
+                erro:"Token Mercado Pago não disponível."
+            });
+        }
+
+        const resposta = await mercadoPagoRequest(
             `https://api.mercadopago.com/v1/payments/${encodeURIComponent(pagamentoId)}`,
             {headers:{Authorization:`Bearer ${token}`}}
         );
-        if(!resposta.ok) return res.status(resposta.status).json({
-            sucesso:false,erro:resposta.data?.message || resposta.data?.error || "Não foi possível consultar o pagamento."
-        });
 
-        const pagamento=resposta.data;
+        if (!resposta.ok) {
+            return res.status(resposta.status).json({
+                sucesso:false,
+                erro:resposta.data?.message ||
+                      resposta.data?.error ||
+                      "Não foi possível consultar o pagamento."
+            });
+        }
+
+        const pagamento = resposta.data;
+
+        // Se o Mercado Pago já aprovou, processa aqui também.
+        // O webhook continua funcionando normalmente como segunda via.
+        if (pagamento.status === "approved") {
+            try {
+                await processarPagamentoAprovado(pagamentoId, token);
+            } catch (erroProcessamento) {
+                console.warn(
+                    "Pagamento aprovado, mas a licença ainda está sendo processada:",
+                    erroProcessamento.message
+                );
+            }
+        }
+
+        const pedidoAtualizado =
+            await firebaseGet(`pedidos/${pedidoId}`) || pedido;
+
         res.json({
-            sucesso:true,pagamentoId:String(pagamento.id),
-            status:pagamento.status,statusDetail:pagamento.status_detail || null,
-            aprovado:pagamento.status==="approved",pedidoId:pedidoId || null
+            sucesso:true,
+            pagamentoId:String(pagamento.id),
+            produtoId:String(pedidoAtualizado.produtoId || ""),
+            status:pagamento.status,
+            statusDetail:pagamento.status_detail || null,
+            aprovado:pagamento.status === "approved",
+            pedidoId,
+            pedidoStatus:pedidoAtualizado.status || null,
+            licencaId:pedidoAtualizado.licencaId || null,
+            licencaStatus:pedidoAtualizado.licencaStatus || null
         });
     } catch(erro) {
         console.error("ERRO STATUS PIX:",erro);
-        res.status(500).json({sucesso:false,erro:erro.message});
+        res.status(500).json({
+            sucesso:false,
+            erro:erro.message
+        });
     }
 });
 
@@ -3468,16 +3695,16 @@ app.get("/api/maketiplace/config", (_req, res) => {
     });
 });
 
-app.listen(PORTA, () => {
+app.listen(PORTA, "0.0.0.0", () => {
     console.log("");
     console.log("==========================================");
     console.log("        LOJA DE APLICATIVOS");
     console.log("==========================================");
-    console.log(`Servidor: http://localhost:${PORTA}`);
-    console.log(`Status: http://localhost:${PORTA}/status`);
-    console.log(`Login do vendedor: http://localhost:${PORTA}/login-vendedor`);
-    console.log(`Central do vendedor: http://localhost:${PORTA}/central-do-vendedor`);
-    console.log(`Central do administrador: http://localhost:${PORTA}/admin`);
+    console.log(`Servidor: ${BASE_URL}`);
+    console.log(`Status: ${BASE_URL}/status`);
+    console.log(`Login do vendedor: ${BASE_URL}/login-vendedor`);
+    console.log(`Central do vendedor: ${BASE_URL}/central-do-vendedor`);
+    console.log(`Central do administrador: ${BASE_URL}/admin`);
     console.log(`OAuth: ${MP_REDIRECT_URI}`);
     console.log(`Mercado Pago modo: ${MP_TEST_MODE ? "TESTE" : "PRODUÇÃO"}`);
     console.log(`Mercado Pago global: ${MP_TEST_MODE ? (MP_TEST_ACCESS_TOKEN ? "CREDENCIAL DE TESTE CONFIGURADA" : "CREDENCIAL DE TESTE AUSENTE") : (MP_ACCESS_TOKEN ? "CONFIGURADO" : "NÃO CONFIGURADO")}`);
